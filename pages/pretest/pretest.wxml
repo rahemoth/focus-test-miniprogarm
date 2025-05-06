@@ -1,0 +1,29 @@
+<view class="container" bindtouchstart="touchStart" bindtouchend="touchEnd">
+  <!-- 测试表切换按钮 -->
+  <view class="test-tabs">
+    <button data-index="0" bindtap="switchTest">测试表1</button>
+    <button data-index="1" bindtap="switchTest">测试表2</button>
+    <button data-index="2" bindtap="switchTest">测试表3</button>
+  </view>
+
+  <!-- 表格显示 -->
+  <view class="table-container">
+    <view wx:for="{{tableData}}" wx:for-item="row" wx:for-index="i" class="table-row">
+      <view wx:for="{{row}}" wx:for-item="cell" wx:for-index="j" class="table-cell {{currentRow === i && currentCol === j ? 'active' : ''}} {{selectedCells[i][j] ? 'selected-' + selectedCells[i][j] : ''}}">
+        <image src="{{getImageSrc(cell)}}" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button bindtap="handleRelated">相关(A)</button>
+    <button bindtap="handleUnrelated">不相关(B)</button>
+    <button bindtap="handleInvalid">无效(C)</button>
+  </view>
+
+  <!-- 测试完成提示 -->
+  <view wx:if="{{isTestCompleted}}" class="completion-message">
+    测试完成！
+  </view>
+</view>

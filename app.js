@@ -1,19 +1,12 @@
-// app.js
 App({
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    // 直接跳转到 pretest 页面，跳过登录流程
+    wx.navigateTo({
+      url: '/pages/pretest/pretest'
+    });
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
   },
   globalData: {
-    userInfo: null
+    userInfo: null // 初始时没有用户信息
   }
-})
+});
