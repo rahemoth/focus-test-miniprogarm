@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "t-progress": "/miniprogram_npm/tdesign-miniprogram/progress/progress",
+    "t-grid-item": "/miniprogram_npm/tdesign-miniprogram/grid-item/grid-item",
+    "t-grid": "/miniprogram_npm/tdesign-miniprogram/grid/grid"
+  }
+}
