@@ -1,209 +1,231 @@
-.page-container {
-  padding: 20rpx;
-  background: #f5f7fa;
-  min-height: 100vh;
+/* 全局样式 */
+.page-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+}
+
+.swiper-container {
+  height: 100%;
+}
+
+.test-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
 .test-header {
-  background: white;
-  border-radius: 16rpx;
-  padding: 20rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
-}
-
-.header-title {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333;
   text-align: center;
-  margin-bottom: 20rpx;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
-.notice-panel {
-  margin-bottom: 20rpx;
+.title {
+  font-size: 18px;
+  color: #2d3436;
+  margin-bottom: 5px;
 }
 
-.notice-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15rpx;
-  background: #f0f7ff;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  color: #1890ff;
+.header-decoration {
+  height: 3px;
+  width: 80px;
+  background: linear-gradient(90deg, #FFA500 0%, #FF6B6B 100%);
+  margin: 0 auto;
+  border-radius: 2px;
 }
 
-.arrow {
-  font-size: 36rpx;
-  transition: transform 0.3s;
+.notice_box {
+  margin-bottom: 10px;
 }
 
-.arrow.open {
-  transform: rotate(90deg);
+.notice {
+  font-size: 12px;
+  color: #333;
+  text-align: left;
 }
 
-.notice-content {
-  padding: 15rpx;
-  font-size: 26rpx;
-  color: #666;
-  line-height: 1.6;
+.notice text {
+  display: block;
+  margin-bottom: 5px;
 }
 
-.highlight {
-  color: #ff6b6b;
-  font-weight: bold;
-}
-
-.targets-area {
-  margin: 20rpx 0;
-}
-
-.targets-display, .special-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 10rpx 0;
-}
-
-.instruction {
-  color: #ff6b6b;
-  font-size: 28rpx;
-  margin-bottom: 10rpx;
-}
-
-.points-images {
-  display: flex;
-  gap: 20rpx;
-}
-
-.example-img {
-  width: 60rpx;
-  height: 60rpx;
-}
-
+/* 表格样式 */
 .table-container {
-  background: white;
-  border-radius: 16rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+  flex: 1;
+  overflow: auto;
+  margin: 10px 0;
+  border: 1px solid #2374ee;
+  border-radius: 8px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
-th {
-  background: #1890ff;
+.header {
+  display: flex;
+  justify-content: space-between; /* 使列之间的间距均匀分布 */
+  background: #2161eb;
   color: white;
-  padding: 15rpx;
-  font-size: 26rpx;
-  position: sticky;
-  top: 0;
+  padding: 8px;
+  font-size: 12px;
   text-align: center;
+}
+
+.header th {
+  flex: 1; /* 每个列占据相同的宽度 */
 }
 
 .points-header {
-  width: 120rpx;
-  background: #1080e0;
+  width: 80px;
+  background: #2b5ff0;
 }
 
-td {
-  background: white;
-  padding: 0;
+.cell {
+  width: 33.33%; /* 3列 = 每列33.33%宽度 */
+  height: 80px; /* 增大高度适应4行 */
+  border: 1px solid #ddd;
   text-align: center;
-  border: 2rpx solid #f1f3f5;
-  width: 60rpx;
-  height: 60rpx;
+  vertical-align: middle;
+  box-sizing: border-box;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.cell text {
+  font-size: 24px; /* 调整字体大小 */
+  color: red; /* 文字颜色 */
+}
+
+/* 特殊单元格样式 */
 .selected-cell {
-  background-color: #bae7ff !important;
+  background-color: #74b9ff !important;
 }
 
 .current-position {
-  border-color: #ff6b6b !important;
-  box-shadow: 0 0 0 3rpx rgba(255, 107, 107, 0.3) !important;
+  border: 2px solid #ff6b6b !important;
   animation: pulse 1.5s infinite;
 }
 
+.point-cell {
+  background-color: #ffff00 !important;
+}
+
 .special-cell {
-  background-color: #ffd591 !important;
+  background-color: #ff8c00 !important;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+/* 阳性符号显示 */
+.targets-display, .special-display {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px; /* 调整阳性符号显示的位置 */
+}
+
+.points-display, .special-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.instruction {
+  color: orangered;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.points-images {
+  display: flex;
+  gap: 10px;
+}
+
+.example-text {
+  font-size: 24px; /* 调整字体大小 */
+  color: red; /* 文字颜色 */
 }
 
 .row-points-indicator {
-  background: #fafafa;
-  padding: 10rpx;
-  width: 120rpx !important;
-  border-right: 2rpx solid #eee;
+  background: #f8f9fa;
+  padding: 5px;
+  width: 80px;
+  border-right: 1px solid #dee2e6;
 }
 
 .row-points {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10rpx;
+  gap: 5px;
 }
 
-.point-cell {
-  background-color: #fff566 !important;
-}
-
-.action-buttons {
+/* 操作按钮 */
+.control-panel {
   display: flex;
   justify-content: space-between;
-  margin: 20rpx 0;
+  margin-top: 10px;
 }
 
 .btn {
   flex: 1;
-  margin: 0 10rpx;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-}
-
-.related {
-  background: #52c41a;
+  margin: 0 5px;
+  padding: 10px;
+  border-radius: 5px;
   color: white;
+  font-size: 14px;
 }
 
-.unrelated {
-  background: #faad14;
-  color: white;
-}
+.related-btn { background: #4CAF50; }
+.unrelated-btn { background:#FF6B6B; }
+.invalid-btn { background: #FF9800; }
 
-.invalid {
-  background: #ff4d4f;
-  color: white;
-}
+/* 媒体查询 */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
 
-.bottom-nav {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30rpx;
-}
+  .header th {
+    flex: none;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
 
-.nav-btn {
-  flex: 1;
-  margin: 0 10rpx;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  background: #1890ff;
-  color: white;
-}
+  .points-header {
+    width: 100%;
+  }
 
-.end-btn {
-  background: #fa8c16;
-}
+  .cell {
+    width: 100%;
+    height: auto;
+    padding: 10px 0;
+  }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.3); }
-  70% { box-shadow: 0 0 0 12rpx rgba(255, 107, 107, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+  .control-panel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    flex: none;
+    width: 80%;
+    margin: 5px 0;
+  }
 }

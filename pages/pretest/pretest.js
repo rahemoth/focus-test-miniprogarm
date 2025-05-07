@@ -10,7 +10,8 @@ Page({
     special: null,
     rowPoints: [],
     showNotice: false,
-    touchStartX: 0
+    touchStartX: 0,
+    tableBackgroundColor: 'white' // 默认底色为白色
   },
 
   onLoad() {
@@ -18,12 +19,11 @@ Page({
     this.prepareNextTest(0);
   },
 
-  // 准备下一个测试
   prepareNextTest(nextIndex) {
     this.setData({
       currentTestIndex: nextIndex,
       isTestCompleted: false,
-      selectedCells: Array(5).fill().map(() => Array(5).fill('')), // 修改为5行5列
+      selectedCells: Array(4).fill().map(() => Array(3).fill('')), // 修改为4行3列
       currentRow: 0,
       currentCol: 0,
       count: 0
@@ -52,7 +52,6 @@ Page({
     }
   },
 
-  // 获取随机点
   getRandomPoints(min, max) {
     let first = Math.floor(Math.random() * (max - min + 1)) + min;
     let second = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -62,67 +61,60 @@ Page({
     return [first, second];
   },
 
-  // 生成表1数据
   generateTable1Data() {
-    console.log('生成表1数据');
     const { points } = this.data;
     const data = [];
-    const normalNumbers = Array.from({ length: 8 }, (_, i) => i)
+    const normalNumbers = Array.from({ length: 10 }, (_, i) => i)
         .filter(n => !points.includes(n));
   
-    const totalPoints = 10; // 修改为10个点，适合5x5表格
+    const totalPoints = 6; // 修改为6个点，适合4x3表格
     const pointPositions = [];
     while (pointPositions.length < totalPoints) {
-      const pos = Math.floor(Math.random() * 25); // 5x5表格总单元格数为25
+      const pos = Math.floor(Math.random() * 12); // 4x3表格总单元格数为12
       if (!pointPositions.includes(pos)) pointPositions.push(pos);
     }
   
-    let counter = 0;
-    for (let i = 0; i < 5; i++) { // 修改为5行
+    for (let i = 0; i < 4; i++) { // 修改为4行
       const row = [];
-      for (let j = 0; j < 5; j++) { // 修改为5列
-        if (pointPositions.includes(counter)) {
+      for (let j = 0; j < 3; j++) { // 修改为3列
+        if (pointPositions.includes(i * 3 + j)) {
           row.push(points[Math.random() < 0.5 ? 0 : 1]);
         } else {
           row.push(normalNumbers[Math.floor(Math.random() * normalNumbers.length)]);
         }
-        counter++;
       }
       data.push(row);
     }
     this.setData({ tableData: data });
     console.log('表1数据生成完成', data);
-    console.log('tableData:', this.data.tableData);
-console.log('points:', this.data.points);
   },
 
-  // 生成表2数据
   generateTable2Data() {
     console.log('开始生成表2数据');
     const data = [];
     const rowPoints = [];
   
     // 为每一行生成随机点
-    for (let i = 0; i < 5; i++) { // 5行
+    for (let i = 0; i < 4; i++) { // 4行
       rowPoints.push(this.getRandomPoints(0, 7));
     }
     console.log('行点生成完成:', rowPoints);
   
-    for (let i = 0; i < 5; i++) { // 5行
-      const groupIndex = Math.floor(i / 1); // 每行一个组
+    for (let i = 0; i < 4; i++) { // 4行
+      const groupIndex = Math.floor(i / 2); // 每两行一个组
       const currentPoints = rowPoints[groupIndex];
-      const normalNumbers = Array.from({ length: 8 }, (_, i) => i)
+      const normalNumbers = Array.from({ length: 10 }, (_, i) => i)
           .filter(n => !currentPoints.includes(n));
   
       const row = [];
       const pointCols = [];
       while (pointCols.length < 2) {
-        const col = Math.floor(Math.random() * 5); // 5列
+        const col = Math.floor(Math.random() * 3); // 3列
         if (!pointCols.includes(col)) pointCols.push(col);
       }
       console.log(`第${i}行的点列:`, pointCols);
   
-      for (let j = 0; j < 5; j++) { // 5列
+      for (let j = 0; j < 3; j++) { // 3列
         if (pointCols.includes(j)) {
           row.push(currentPoints[Math.floor(Math.random() * 2)]);
         } else {
@@ -139,7 +131,7 @@ console.log('points:', this.data.points);
     });
     console.log('表2数据生成完成:', data);
   },
-  // 生成表3数据
+
   generateTable3Data() {
     console.log('开始生成表3数据');
     const { special } = this.data;
@@ -147,23 +139,23 @@ console.log('points:', this.data.points);
     const rowPoints = [];
   
     // 为每一行生成随机点
-    for (let i = 0; i < 5; i++) { // 5行
+    for (let i = 0; i < 4; i++) { // 4行
       rowPoints.push(this.getRandomPoints(0, 7));
     }
     console.log('行点生成完成:', rowPoints);
   
-    for (let i = 0; i < 5; i++) { // 5行
-      const groupIndex = Math.floor(i / 1); // 每行一个组
+    for (let i = 0; i < 4; i++) { // 4行
+      const groupIndex = Math.floor(i / 2); // 每两行一个组
       const currentPoints = rowPoints[groupIndex];
-      const normalNumbers = Array.from({ length: 8 }, (_, i) => i)
+      const normalNumbers = Array.from({ length: 10 }, (_, i) => i)
           .filter(n => !currentPoints.includes(n) && n !== special);
   
       const row = [];
-      const specialCol = Math.floor(Math.random() * 4); // 避免越界
+      const specialCol = Math.floor(Math.random() * 2); // 避免越界
       const pointCols = [];
   
       while (pointCols.length < 2) {
-        const col = Math.floor(Math.random() * 5); // 5列
+        const col = Math.floor(Math.random() * 3); // 3列
         if (col !== specialCol && col !== specialCol + 1 && !pointCols.includes(col)) {
           pointCols.push(col);
         }
@@ -172,7 +164,7 @@ console.log('points:', this.data.points);
   
       const shouldPutPointAfterSpecial = Math.random() < 0.7;
   
-      for (let j = 0; j < 5; j++) { // 5列
+      for (let j = 0; j < 3; j++) { // 3列
         if (j === specialCol) {
           row.push(special);
         } else if (shouldPutPointAfterSpecial && j === specialCol + 1) {
@@ -194,39 +186,18 @@ console.log('points:', this.data.points);
     console.log('表3数据生成完成:', data);
   },
 
-  // 获取行points
-  getRowPoints(rowIndex) {
-    const { currentTestIndex, points, rowPoints } = this.data;
-    if (currentTestIndex === 0) {
-      return points;
-    } else {
-      const groupIndex = Math.floor(rowIndex / 1); // 修改为每行一个组
-      return rowPoints[groupIndex];
-    }
-  },
-
-  // 判断是否是阳性符号单元格
-  isPointCell(rowIndex, cell) {
-    const [currentPoint1, currentPoint2] = this.getRowPoints(rowIndex);
-    return cell === currentPoint1 || cell === currentPoint2;
-  },
-
-  // 处理相关按钮
   handleRelated() {
     this.processSelection('A');
   },
 
-  // 处理不相关按钮
   handleUnrelated() {
     this.processSelection('B');
   },
 
-  // 处理无效按钮
   handleInvalid() {
     this.processSelection('C');
   },
 
-  // 处理选择
   processSelection(type) {
     const { currentRow, currentCol, isTestCompleted, selectedCells } = this.data;
     if (isTestCompleted || currentRow < 0 || currentCol < 0) return;
@@ -242,7 +213,6 @@ console.log('points:', this.data.points);
     this.moveToNextCell();
   },
 
-  // 移动到下一个单元格
   moveToNextCell() {
     let { currentRow, currentCol, tableData, selectedCells } = this.data;
     let attempts = 0;
@@ -279,37 +249,31 @@ console.log('points:', this.data.points);
     });
   },
 
-  // 切换测试表
   switchTest(e) {
     const index = parseInt(e.currentTarget.dataset.index);
     this.prepareNextTest(index);
   },
 
-  // 返回测试页面
   goBackToTest() {
     wx.navigateBack();
   },
 
-  // 获取图片路径
   getImageSrc(value) {
     return `/images/${value}.png`;
   },
 
-  // 切换说明显示
   toggleNotice() {
     this.setData({
       showNotice: !this.data.showNotice
     });
   },
 
-  // 触摸开始
   touchStart(e) {
     this.setData({
       touchStartX: e.touches[0].clientX
     });
   },
 
-  // 触摸结束
   touchEnd(e) {
     const { touchStartX } = this.data;
     const touchEndX = e.changedTouches[0].clientX;
@@ -326,5 +290,14 @@ console.log('points:', this.data.points);
         this.prepareNextTest(nextIndex);
       }
     }
+  },
+
+  changeTableColor() {
+    const colors = ['white', '#f0f0f0f0', '#e0e0e0e0', '#d0d0d0d0'];
+    const currentIndex = colors.indexOf(this.data.tableBackgroundColor);
+    const nextIndex = (currentIndex + 1) % colors.length;
+    this.setData({
+      tableBackgroundColor: colors[nextIndex]
+    });
   }
 });
