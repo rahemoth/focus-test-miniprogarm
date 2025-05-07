@@ -2,51 +2,26 @@
   <!-- 表单登录区域 -->
   <form bindsubmit="handleSubmit" style="position: relative; left: 0rpx; top: 691rpx">
     <!-- 用户名输入 -->
-    <td-input
-      label="用户名"
-      placeholder="请输入用户名"
-      name="username"
-      bordered
-      clearable
-      value="{{formData.username}}"
-      bind:change="onInputChange"
-    ></td-input>
+    <td-input label="用户名" placeholder="请输入用户名" name="username" bordered clearable value="{{formData.username}}" bind:change="onInputChange"></td-input>
 
-    <block wx:if="{{!isLogin}}"> <!-- 新增注册专属区域 -->
-  <td-input
-    label="确认密码"
-    placeholder="请再次输入密码"
-    name="confirmPassword"
-    password
-    bordered
-    clearable
-    value="{{formData.confirmPassword}}"
-    bind:change="onInputChange"
-  ></td-input>
-</block>
+    <block wx:if="{{!isLogin}}">
+      <!-- 新增注册专属区域 -->
+      <td-input label="密码" placeholder="请输入密码" name="confirmPassword" password bordered clearable value="{{formData.confirmPassword}}" bind:change="onInputChange"></td-input>
+    </block>
 
 
     <!-- 登录注册按钮 -->
     <view class="form-btns">
-      <td-button
-        size="small"
-        plain
-        bindtap="switchTab"
-        data-type="register"
-      >注册账号</td-button>
-      
-      <td-button
-        size="small"
-        theme="primary"
-        formType="submit"
-      >立即登录</td-button>
+      <td-button size="small" plain bindtap="switchTab" data-type="register">注册账号</td-button>
+
+      <td-button size="small" theme="primary" formType="submit">立即登录</td-button>
     </view>
   </form>
 
   <!-- 分割线 -->
   <view class="divider">
     <view class="divider-line"></view>
-    
+
     <view class="divider-line"></view>
   </view>
 
@@ -57,4 +32,5 @@
       微信一键登录
     </button>
   </view>
+  <image style="position: relative; left: 0rpx; top: -606rpx" src="https://mmbiz.qpic.cn/mmbiz_png/icTdbqWNOwNQ0ia79enzYJBsZ3CIkLQGe39qeOxbpT9oM9KaCthzBa0PF75xzBGjZQGlM69TDggxpNX7ACibCjjtw/0?wx_fmt=png&t=1614824466" />
 </view>
