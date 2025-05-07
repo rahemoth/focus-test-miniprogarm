@@ -8,3 +8,14 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+:root {
+  --td-brand-color: #000000; /* 修改所有组件主题色 */
+}
+.container {
+  transition: all 0.3s ease-in-out;
+}
+@media (min-width: 768px) {
+  .container {
+    padding: 60rpx 20%;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "td-button": "tdesign-miniprogram/button/button",
+    "td-input": "tdesign-miniprogram/input/input"
+  }
+}

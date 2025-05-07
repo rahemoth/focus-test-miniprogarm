@@ -1,0 +1,55 @@
+/* 表单按钮容器 */
+.form-btns {
+  display: flex;
+  gap: 30rpx;
+  margin: 60rpx 0;
+  justify-content: flex-end; /* 按钮右对齐 */
+}
+
+/* 授权区域新样式 */
+.auth-section {
+  position: fixed;
+  bottom: 120rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-tip {
+  color: #999;
+  font-size: 28rpx;
+  margin-bottom: 40rpx;
+}
+
+.auth-btn {
+  background: none;
+  border: 1rpx solid #07c160 !important;
+  color: #07c160 !important;
+  border-radius: 50rpx;
+  padding: 24rpx 80rpx; /* 调整左右内边距 */
+  width: auto; /* 改为自适应宽度 */
+  min-width: 400rpx; /* 设置最小宽度 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  line-height: 1.4;
+}
+
+.auth-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+/* 调整分割线位置 */
+.divider {
+  margin: 80rpx 0 160rpx; /* 增大上下间距 */
+}
+
+.container {
+  min-height: 100vh;
+  padding-bottom: 300rpx; /* 留出底部空间 */
+}

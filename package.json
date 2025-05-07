@@ -1,5 +1,23 @@
 {
   "dependencies": {
     "tdesign-miniprogram": "^1.9.1"
-  }
+  },
+  "name": "program1",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahemoth/program1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rahemoth/program1/issues"
+  },
+  "homepage": "https://github.com/rahemoth/program1#readme",
+  "description": ""
 }
