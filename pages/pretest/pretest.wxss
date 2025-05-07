@@ -88,21 +88,23 @@ table {
   width: 80px;
   background: #2b5ff0;
 }
+
 .cell {
-  width: 20%; /* 5列 = 每列20%宽度 */
+  width: 33.33%; /* 3列 = 每列33.33%宽度 */
   height: 80px; /* 增大高度适应4行 */
   border: 1px solid #ddd;
   text-align: center;
   vertical-align: middle;
   box-sizing: border-box;
   background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.cell image {
-  width: 50px;
-  height: 50px;
-  display: block;
-  margin: 0 auto;
+.cell text {
+  font-size: 24px; /* 调整字体大小 */
+  color: red; /* 文字颜色 */
 }
 
 /* 特殊单元格样式 */
@@ -133,7 +135,7 @@ table {
 .targets-display, .special-display {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 5px; /* 调整阳性符号显示的位置 */
 }
 
 .points-display, .special-display {
@@ -153,9 +155,9 @@ table {
   gap: 10px;
 }
 
-.example-img {
-  width: 40px;
-  height: 40px;
+.example-text {
+  font-size: 24px; /* 调整字体大小 */
+  color: red; /* 文字颜色 */
 }
 
 .row-points-indicator {
@@ -189,10 +191,41 @@ table {
 }
 
 .related-btn { background: #4CAF50; }
-.unrelated-btn { background: #f44336; }
+.unrelated-btn { background:#FF6B6B; }
 .invalid-btn { background: #FF9800; }
 
-.highlight {
-  color: orangered;
-  font-weight: bold;
+/* 媒体查询 */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header th {
+    flex: none;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .points-header {
+    width: 100%;
+  }
+
+  .cell {
+    width: 100%;
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .control-panel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    flex: none;
+    width: 80%;
+    margin: 5px 0;
+  }
 }
