@@ -6,6 +6,17 @@
   justify-content: flex-end; /* 按钮右对齐 */
 }
 
+/* 禁用图标字体 */
+.t-icon {
+  display: none !important;
+}
+
+/* 替代方案使用内置图标 */
+.t-cell__left-icon::before {
+  content: '\e7ae'; /* 使用微信原生图标 */
+  font-family: 'weui';
+}
+
 /* 授权区域新样式 */
 .auth-section {
   position: fixed;
