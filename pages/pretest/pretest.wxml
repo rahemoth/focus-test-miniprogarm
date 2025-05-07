@@ -1,29 +1,178 @@
-<view class="container" bindtouchstart="touchStart" bindtouchend="touchEnd">
-  <!-- 测试表切换按钮 -->
-  <view class="test-tabs">
-    <button data-index="0" bindtap="switchTest">测试表1</button>
-    <button data-index="1" bindtap="switchTest">测试表2</button>
-    <button data-index="2" bindtap="switchTest">测试表3</button>
-  </view>
+<view class="page-wrapper">
+  <swiper class="swiper-container" current="{{currentTestIndex}}" bindchange="swiperChange">
+    <!-- 表1 -->
+    <swiper-item>
+      <view class="test-container">
+        <view class="test-header">
+          <view class="notice_box">
+            <view class="notice">
+              <text>第一阶段（表1）是全表仅有两种阳性符号（在表头有显示），按相关按钮为选中阳性符号，其他符号按不相关按钮标记。</text>
+              <text>注：每阶段的测试时长为五分钟。</text>
+            </view>
+          </view>
+          <view class="title">神经类型调试表1</view>
+          <view class="header-decoration"></view>
+          
+          <view class="targets-display">
+            <view class="points-display">
+              <text class="instruction">阳性符号:</text>
+              <view class="points-images">
+                <image src="{{getImageSrc(points[0])}}" class="example-img"></image>
+                <image src="{{getImageSrc(points[1])}}" class="example-img"></image>
+              </view>
+            </view>
+          </view>
+        </view>
 
-  <!-- 表格显示 -->
-  <view class="table-container">
-    <view wx:for="{{tableData}}" wx:for-item="row" wx:for-index="i" class="table-row">
-      <view wx:for="{{row}}" wx:for-item="cell" wx:for-index="j" class="table-cell {{currentRow === i && currentCol === j ? 'active' : ''}} {{selectedCells[i][j] ? 'selected-' + selectedCells[i][j] : ''}}">
-        <image src="{{getImageSrc(cell)}}" mode="aspectFit"></image>
+        <view class="table-container">
+          <table>
+            <thead>
+              <tr class="header">
+                <th wx:for="{{5}}" wx:key="*this" class="column-header">{{item + 1}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr wx:for="{{tableData}}" wx:key="index">
+                <td 
+                  wx:for="{{item}}" 
+                  wx:key="colIndex"
+                  class="cell {{selectedCells[index][colIndex] ? 'selected-cell' : ''}} {{currentRow === index && currentCol === colIndex ? 'current-position' : ''}} {{isPointCell(index, item) ? 'point-cell' : ''}}"
+                  bindtap="handleCellTap"
+                  data-row="{{index}}"
+                  data-col="{{colIndex}}"
+                >
+                  <image src="{{getImageSrc(item)}}" mode="aspectFit"></image>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </view>
+
+        <view class="control-panel">
+          <button class="btn related-btn" bindtap="handleRelated">相关</button>
+          <button class="btn unrelated-btn" bindtap="handleUnrelated">不相关</button>
+          <button class="btn invalid-btn" bindtap="handleInvalid">无效</button>
+        </view>
       </view>
-    </view>
-  </view>
+    </swiper-item>
 
-  <!-- 操作按钮 -->
-  <view class="action-buttons">
-    <button bindtap="handleRelated">相关(A)</button>
-    <button bindtap="handleUnrelated">不相关(B)</button>
-    <button bindtap="handleInvalid">无效(C)</button>
-  </view>
+    <!-- 表2 -->
+    <swiper-item>
+      <view class="test-container">
+        <view class="test-header">
+          <view class="notice_box">
+            <view class="notice">
+              <text>第二阶段（表2）是每两行刷新一组阳性符号，显示在每两行的左侧表头，同样是按相关按钮选中阳性符号，按不相关按钮标记其他符号。</text>
+              <text>注：每阶段的测试时长为五分钟。</text>
+            </view>
+          </view>
+          <view class="title">神经类型调试表2</view>
+          <view class="header-decoration"></view>
+        </view>
 
-  <!-- 测试完成提示 -->
-  <view wx:if="{{isTestCompleted}}" class="completion-message">
-    测试完成！
-  </view>
+        <view class="table-container">
+          <table>
+            <thead>
+              <tr class="header">
+                <th class="points-header">阳性符号</th>
+                <th wx:for="{{5}}" wx:key="*this" class="column-header">{{item + 1}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr wx:for="{{tableData}}" wx:key="index">
+                <td 
+                  wx:if="{{index % 2 === 0}}" 
+                  class="row-points-indicator" 
+                  rowspan="2"
+                >
+                  <view class="row-points">
+                    <image src="{{getImageSrc(rowPoints[Math.floor(index / 2)][0])}}" class="example-img"></image>
+                    <image src="{{getImageSrc(rowPoints[Math.floor(index / 2)][1])}}" class="example-img"></image>
+                  </view>
+                </td>
+                <td 
+                  wx:for="{{item}}" 
+                  wx:key="colIndex"
+                  class="cell {{selectedCells[index][colIndex] ? 'selected-cell' : ''}} {{currentRow === index && currentCol === colIndex ? 'current-position' : ''}} {{isPointCell(index, item) ? 'point-cell' : ''}}"
+                  bindtap="handleCellTap"
+                  data-row="{{index}}"
+                  data-col="{{colIndex}}"
+                >
+                  <image src="{{getImageSrc(item)}}" mode="aspectFit"></image>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </view>
+
+        <view class="control-panel">
+          <button class="btn related-btn" bindtap="handleRelated">相关</button>
+          <button class="btn unrelated-btn" bindtap="handleUnrelated">不相关</button>
+          <button class="btn invalid-btn" bindtap="handleInvalid">无效</button>
+        </view>
+      </view>
+    </swiper-item>
+
+    <!-- 表3 -->
+    <swiper-item>
+      <view class="test-container">
+        <view class="test-header">
+          <view class="notice_box">
+            <view class="notice">
+              <text>第三阶段（表3）是在第二阶段的基础上增加了一个特殊符号（其显示在表头），在按相关按钮选中阳性符号、不相关按钮标记其他符号的基础上，增加了一个当特殊符号后紧跟的是阳性符号时，需按无效按钮标记的操作。</text>
+              <text>注：每阶段的测试时长为五分钟。</text>
+            </view>
+          </view>
+          <view class="title">神经类型调试表3</view>
+          <view class="header-decoration"></view>
+          
+          <view class="special-display">
+            <text class="instruction">特殊符号:</text>
+            <image src="{{getImageSrc(special)}}" class="example-img"></image>
+          </view>
+        </view>
+
+        <view class="table-container">
+          <table>
+            <thead>
+              <tr class="header">
+                <th class="points-header">阳性符号</th>
+                <th wx:for="{{5}}" wx:key="*this" class="column-header">{{item + 1}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr wx:for="{{tableData}}" wx:key="index">
+                <td 
+                  wx:if="{{index % 2 === 0}}" 
+                  class="row-points-indicator" 
+                  rowspan="2"
+                >
+                  <view class="row-points">
+                    <image src="{{getImageSrc(rowPoints[Math.floor(index / 2)][0])}}" class="example-img"></image>
+                    <image src="{{getImageSrc(rowPoints[Math.floor(index / 2)][1])}}" class="example-img"></image>
+                  </view>
+                </td>
+                <td 
+                  wx:for="{{item}}" 
+                  wx:key="colIndex"
+                  class="cell {{selectedCells[index][colIndex] ? 'selected-cell' : ''}} {{currentRow === index && currentCol === colIndex ? 'current-position' : ''}} {{isPointCell(index, item) ? 'point-cell' : ''}} {{item === special ? 'special-cell' : ''}}"
+                  bindtap="handleCellTap"
+                  data-row="{{index}}"
+                  data-col="{{colIndex}}"
+                >
+                  <image src="{{getImageSrc(item)}}" mode="aspectFit"></image>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </view>
+
+        <view class="control-panel">
+          <button class="btn related-btn" bindtap="handleRelated">相关</button>
+          <button class="btn unrelated-btn" bindtap="handleUnrelated">不相关</button>
+          <button class="btn invalid-btn" bindtap="handleInvalid">无效</button>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
 </view>
