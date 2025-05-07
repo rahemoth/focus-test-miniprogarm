@@ -1,11 +1,11 @@
-<view class="container">
+<view class="container {{isLogin? '' : 'center-container'}}">
     <!-- 表单登录区域 -->
-    <form bindsubmit="handleSubmit" style="position: relative; left: 0rpx; top: 612rpx">
+    <form bindsubmit="handleSubmit" class="{{isLogin? '' : 'center-form'}}" style="position: relative; left: 0rpx; top: 122rpx">
         <!-- 用户名输入 -->
         <td-input label="用户名" placeholder="请输入用户名" data-name="username" bordered clearable value="{{formData.username}}" bind:change="onInputChange"></td-input>
-        <!-- 密码输入，无论登录还是注册都显示 -->
+        <!-- 密码输入 -->
         <td-input label="密码" placeholder="请输入密码" data-name="password" password bordered clearable value="{{formData.password}}" bind:change="onInputChange"></td-input>
-        <!-- 确认密码输入框，仅在注册时显示 -->
+        <!-- 确认密码输入 -->
         <block wx:if="{{!isLogin}}">
             <td-input label="确认密码" placeholder="请再次输入密码" data-name="confirmPassword" password bordered clearable value="{{formData.confirmPassword}}" bind:change="onInputChange"></td-input>
         </block>
@@ -15,20 +15,21 @@
             <td-button size="small" plain bindtap="switchTab" data-type="register" wx:if="{{isLogin}}">注册账号</td-button>
             <td-button size="small" theme="primary" bindtap="handleSubmit" wx:if="{{!isLogin}}">{{registerButtonText}}</td-button>
             <td-button size="small" theme="primary" bindtap="handleSubmit" wx:if="{{isLogin}}">立即登录</td-button>
+            <td-button class="back-to-login" size="small" bindtap="backToLogin" wx:if="{{!isLogin}}">返回登录</td-button>
         </view>
     </form>
 
     <!-- 分割线 -->
-    <view class="divider">
+    <view class="divider" wx:if="{{isLogin}}">
         <view class="divider-line"></view>
         <view class="divider-line"></view>
     </view>
 
     <!-- 微信授权登录 -->
-    <view class="auth-section">
+    <view class="auth-section" wx:if="{{isLogin}}">
         <text class="auth-tip">其他登录方式</text>
         <button class="auth-btn" open-type="getUserInfo" bindgetuserinfo="handleUserInfo">
             微信一键登录
         </button>
     </view>
-</view>    
+</view>

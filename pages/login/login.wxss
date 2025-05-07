@@ -3,7 +3,9 @@
   display: flex;
   gap: 30rpx;
   margin: 60rpx 0;
-  justify-content: flex-end; /* 按钮右对齐 */
+  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 /* 禁用图标字体 */
@@ -53,6 +55,7 @@
   width: 40rpx;
   height: 40rpx;
   margin-right: 20rpx;
+  /* 如果.auth-icon 是用于显示图标，你可能需要进一步调整其样式以确保图标正确显示 */
 }
 
 /* 调整分割线位置 */
@@ -63,4 +66,35 @@
 .container {
   min-height: 100vh;
   padding-bottom: 300rpx; /* 留出底部空间 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  /* 移除 justify-content: center; */
+  align-items: center;
+  min-height: 100vh;
+}
+
+.center-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.back-to-login {
+  background-color: #ccc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 30rpx;
+  width: 400rpx;
+  padding: 24rpx 80rpx;
+  margin-top: 5rpx; /* 减小上边距，使按钮更靠近上方按钮 */
 }
