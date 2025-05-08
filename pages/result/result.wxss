@@ -1,0 +1,388 @@
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #333;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  display: block;
+  margin: 0 auto;
+}
+
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-container {
+  padding-left: 20%;
+  padding-right: 20%;
+  background: radial-gradient(ellipse at bottom, #e7d8d8 0%, #ffffff 100%);
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* 星空样式 */
+.night {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  transform: rotateZ(139deg);
+  top: -50%;
+  left: -50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.shooting_star {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
+  border-radius: 999px;
+  filter: drop-shadow(0 0 6px #699bff);
+  animation:
+      tail 3000ms ease-in-out infinite,
+      shooting 3000ms ease-in-out infinite;
+}
+
+@keyframes tail {
+  0% { width: 0; }
+  30% { width: 100px; }
+  100% { width: 0; }
+}
+
+@keyframes shooting {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(300px); }
+}
+
+.shooting_star::before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px * 2);
+  right: 0;
+  height: 2px;
+  background: linear-gradient(-45deg, rgba(0, 0, 255, 0), #5f91ff, rgba(0, 0, 255, 0));
+  transform: translateX(50%) rotateZ(45deg);
+  border-radius: 100%;
+  animation: shining 3000ms ease-in-out infinite;
+}
+
+.shooting_star::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px * 2);
+  right: 0;
+  height: 2px;
+  background: linear-gradient(-45deg, rgba(0, 0, 255, 0), #5f91ff, rgba(0, 0, 255, 0));
+  transform: translateX(50%) rotateZ(-45deg);
+  border-radius: 100%;
+  animation: shining 3000ms ease-in-out infinite;
+}
+
+@keyframes shining {
+  0% { width: 0; }
+  50% { width: 30px; }
+  100% { width: 0; }
+}
+
+.user-info {
+  width: 95%;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 15px;
+    border: 1px solid rgba(95, 145, 255, 0.5);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    color: #000000;
+    text-align: center;
+  }
+  .box {
+    display: flex; /* 启用 Flexbox 布局 */
+    justify-content: space-between; /* 平均分配子元素之间的空间 */
+    flex-wrap: wrap; /* 当空间不足时允许换行 */
+    padding: 1.5rem;
+    margin: 0; /* 重置默认的外边距 */
+  }
+  
+  
+  .info-item p {
+    margin: 0; /* 重置默认的外边距 */
+    white-space: pre-wrap; /* 保留空白符序列，但是正常换行 */
+  }
+.result-summary{
+  width:95%;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 15px;
+  border: 1px solid rgba(25, 110, 238, 0.5);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+.user-info h2, .result-summary h2 {
+  font-size: 1.8rem; /* 保持字体大小不变 */
+  color: rgb(255, 254, 254);
+  background-color: rgba(52, 152, 219, 0.7);
+  margin-bottom: 1.2rem;
+  padding: 0.5rem 1.5rem; /* 调整内边距，增加背景的横向大小 */
+  border-radius: 15px;
+}
+.metrics-container {
+  margin-top: 1.5rem;
+}
+
+.metrics-grid {
+  height:100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  background-color: rgba(23, 151, 236, 0.7);
+  padding: 0.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.metric-item {
+  width: 150%;
+  gap: 1px;
+  background-color: rgba(106, 191, 248, 0.7);
+  display: flex;
+  align-items: flex-start;
+  padding:1.2em;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-item:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.metric-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(27, 97, 248, 0.9);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 6px rgba(108, 92, 231, 0.2);
+}
+
+.metric-content {
+  flex: 1;
+}
+
+.metric-title {
+  font-size: 0.9rem;
+  color: black;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3436;
+  display: flex;
+  align-items: baseline;
+}
+
+.metric-unit {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 0.3rem;
+  font-weight: 500;
+}
+
+.progress-bar {
+  margin-top: 0.8rem;
+  height: 6px;
+  background: #f1f3f5;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFA500 0%, #FF6B6B 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neural-type {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background-color: rgba(52, 152, 219, 0.7);
+  border-radius: 12px;
+  border-left: 4px solid rgba(27, 97, 248, 0.9);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.type-value {
+  color: orange;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-left: 0.8rem;
+  text-shadow: 0 2px 4px rgba(108, 92, 231, 0.2);
+}
+
+.type-analysis {
+  margin-top: 2rem;
+  background-color: rgba(52, 152, 219, 0.7);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.analysis-header {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.analysis-header h3 {
+  font-size: 1.4rem;
+  color: white;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+
+.analysis-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.analysis-section {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1.5rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.analysis-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.1);
+}
+
+.analysis-section h4 {
+  font-size: 1.1rem;
+  color: darkorange;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.analysis-section h4::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 4px;
+  height: 16px;
+  background: linear-gradient(90deg, #FFA500 0%, #FF6B6B 100%);
+  border-radius: 2px;
+}
+
+.analysis-section p {
+  font-size: 0.95rem;
+  color: black;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.analysis-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.analysis-section li {
+  font-size: 0.95rem;
+  color: black;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.analysis-section li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: orangered;
+  font-weight: bold;
+}
+/* {
+  box-sizing: border-box; /* 确保 padding 和 border 不会增加盒子的总宽度和高度 */
+
+.action-buttons {
+  display: flex; /* 启用 Flexbox 布局 */
+  justify-content: center; /* 水平居中对齐 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 1rem; /* 按钮之间的间距 */
+  margin-top: 2rem; /* 与上方内容的间距 */
+}
+
+.btn {
+  padding: 0.9rem 2rem; /* 按钮内边距 */
+  border-radius: 12px; /* 圆角边框 */
+  font-weight: 600; /* 字体加粗 */
+  cursor: pointer; /* 鼠标悬停上去显示为手型 */
+  transition: all 0.3s ease; /* 平滑过渡效果 */
+  border: none; /* 无边框 */
+  font-size: 1.1rem; /* 字体大小 */
+  position: relative; /* 相对定位 */
+  overflow: hidden; /* 隐藏溢出部分 */
+  flex: 1; /* 按钮占据可用空间 */
+  text-align: center; /* 文本居中 */
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  color: white;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}

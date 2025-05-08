@@ -1,0 +1,83 @@
+<view class="page-wrapper">
+   <view class="page-container">
+    流星雨背景
+    <view class="night">
+      <view wx:for="{{Array(20).fill()}}" wx:key="index" class="shooting_star" style="{{getStarStyle(index)}}"></view> 
+    </view> 
+
+    <!-- 用户信息 -->
+    <view class="user-info">
+  <h2>用户信息</h2>
+  <view class="box">
+    <view class="info-item">
+      <p><strong>用户名：</strong>{{userInfo.username || '未知'}}</p>
+    </view>
+    <view class="info-item">
+      <p><strong>用户ID：</strong>{{userInfo.id || '未知'}}</p>
+    </view>
+    <view class="info-item">
+      <p><strong>用户角色：</strong>{{userInfo.role || '未知'}}</p>
+    </view>
+  </view>
+</view>
+
+    <!-- 测试总结 -->
+    <view class="result-summary">
+      <h2>测试总结</h2>
+      <view class="metrics-container">
+        <view class="metrics-grid">
+          <view class="metric-row">
+            <view class="metric-item">
+              <view class="metric-icon">K</view>
+              <view class="metric-content">
+                <view class="metric-title">联合测验加权平均得分数</view>
+                <view class="metric-value">{{formatNumber(submitData.k)}}<text class="metric-unit">分</text></view>
+              </view>
+            </view>
+            <view class="metric-item">
+              <view class="metric-icon">H</view>
+              <view class="metric-content">
+                <view class="metric-title">联合测验加权平均漏百分率</view>
+                <view class="metric-value">{{formatNumber(submitData.h)}}<text class="metric-unit">%</text></view>
+              </view>
+            </view>
+            <view class="metric-item">
+              <view class="metric-icon">G</view>
+              <view class="metric-content">
+                <view class="metric-title">联合测验加权平均错百分率</view>
+                <view class="metric-value">{{formatNumber(submitData.g)}}<text class="metric-unit">%</text></view>
+              </view>
+            </view>
+          </view>
+          
+                </view>
+      </view>
+
+      <!-- 神经类型状态分析 -->
+      <view class="neural-type">
+        <p><strong>您的神经类型状态：</strong>
+          <span class="type-value">{{getNeuralType()}}</span>
+        </p>
+      </view>
+      <view class="type-analysis">
+        <view class="analysis-header">
+          <h3>初级类型分析</h3>
+          <view class="analysis-content" wx:if="{{matchNeuralType}}">
+            <view class="analysis-section" wx:for="{{matchNeuralType.sections}}" wx:key="index">
+              <h4>{{item.title}}</h4>
+              <view>
+                <view wx:for="{{item.content}}" wx:key="index">{{item}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view> 
+    </view>
+
+    <!-- 按钮区域 -->
+    <view class="action-buttons">
+      <button class="btn btn-primary" bindtap="goToHome">返回首页</button>
+      <button class="btn btn-secondary" bindtap="downloadReport">下载报告</button>
+    </view>
+  </view>
+</view>
