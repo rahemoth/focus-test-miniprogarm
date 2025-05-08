@@ -143,11 +143,6 @@ page {
   transition: all 0.2s;
 }
 
-.flex-item:active {
-  transform: scale(0.95);
-  background: #f0f4ff;
-}
-
 .cell-image {
   width: 70%;
   height: 70%;
@@ -156,7 +151,7 @@ page {
 
 /* 单元格状态样式 */
 .selected-cell {
-  background: #74b9ff !important;
+  background: #74b9ff ;
   border-color: #2161eb;
 }
 
@@ -166,11 +161,11 @@ page {
 }
 
 .point-cell {
-  background: #fff3cd !important;
+  background: #fff3cd ;
 }
 
 .special-cell {
-  background: #ffe4c4 !important;
+  background: #ffe4c4 ;
 }
 
 @keyframes pulse {

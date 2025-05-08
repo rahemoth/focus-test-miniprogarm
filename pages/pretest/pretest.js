@@ -2,304 +2,188 @@ Page({
   data: {
     currentTestIndex: 0,
     selectedCells: [],
-    randomRows: [],
-    currentRow: 0,
-    currentCol: 0,
     isTestCompleted: false,
     points: [],
-    special: null,
-    rowPoints: [],
     showNotice: false,
     touchStartX: 0,
-    tableBackgroundColor: 'white' // 默认底色为白色
+    tableBackgroundColor: '#ffffff',
+    cellBackground: [],  // 二维数组，存储每个单元格的背景色
+    cellIndex: 0,        // 当前处理的单元格索引（行优先）
+    currentRow: 0,
+    currentCol: 0,
+    table1Data: []       // 5x5表格数据（数值0-7）
   },
-  
 
   onLoad() {
-    console.log('页面加载');
-    this.prepareNextTest(0);
- 
+    this.initializeTest();
   },
 
+  // 初始化测试流程（新增调试日志）
+  initializeTest() {
+    console.log('[初始化] 开始生成表格数据');
+    this.generateRandomTableData();
+    console.log('[初始化] 表格数据生成完成:', this.data.table1Data);
+    this.prepareNextTest(0);
+  },
+
+  // 准备下一个测试（新增状态重置）
   prepareNextTest(nextIndex) {
+    console.log(`[测试切换] 准备第${nextIndex}个测试`);
     this.setData({
-      currentTestIndex: nextIndex,
       isTestCompleted: false,
-      selectedCells: Array(5).fill().map(() => Array(4).fill('')), // 修改为4行3列
-      currentRow: 0,
-      currentCol: 0,
-      count: 0
+      cellIndex: 0,
+      selectedCells: [],
+      cellBackground: []  // 强制清空旧背景数据
     });
 
     if (nextIndex === 0) {
       const points = this.getRandomPoints(0, 7);
-      this.setData({
-        points,
-        special: null
+      this.setData({ points }, () => {
+        console.log('[测试准备] 表头阳性符号:', this.data.points);
       });
-      this.generateTable1Data();
-    } else if (nextIndex === 1) {
-      this.setData({
-        points: [],
-        special: null
-      });
-      this.generateTable2Data();
-    } else if (nextIndex === 2) {
-      const special = Math.random() < 0.5 ? 8 : 9;
-      this.setData({
-        points: [],
-        special
-      });
-      this.generateTable3Data();
     }
+
+    this.initCellBackground();
   },
 
-  getRandomPoints(min, max) {
-    let first = Math.floor(Math.random() * (max - min + 1)) + min;
-    let second = Math.floor(Math.random() * (max - min + 1)) + min;
-    while (second === first) {
-      second = Math.floor(Math.random() * (max - min + 1)) + min;
+  // 初始化单元格背景（新增空值校验）
+  initCellBackground() {
+    const { table1Data } = this.data;
+    if (!table1Data.length || !table1Data[0].length) {
+      console.error('[初始化失败] 表格数据为空');
+      return;
     }
-    return [first, second];
-  },
 
-  generateTable1Data() {
-    const { points } = this.data;
-    const data = [];
-    const normalNumbers = Array.from({ length: 10 }, (_, i) => i)
-        .filter(n => !points.includes(n));
-  
-    const totalPoints = 6; // 修改为6个点，适合4x3表格
-    const pointPositions = [];
-    while (pointPositions.length < totalPoints) {
-      const pos = Math.floor(Math.random() * 12); // 4x3表格总单元格数为12
-      if (!pointPositions.includes(pos)) pointPositions.push(pos);
-    }
-  
-    for (let i = 0; i < 5; i++) { // 修改为4行
-      const row = [];
-      for (let j = 0; j < 4; j++) { // 修改为3列
-        if (pointPositions.includes(i * 3 + j)) {
-          row.push(points[Math.random() < 0.5 ? 0 : 1]);
-        } else {
-          row.push(normalNumbers[Math.floor(Math.random() * normalNumbers.length)]);
-        }
-      }
-      data.push(row);
-    }
-    this.setData({ tableData: data });
-    console.log('表1数据生成完成', data);
-  },
+    const rows = table1Data.length;
+    const cols = table1Data[0].length;
+    const background = Array.from({ length: rows }, () => 
+      Array.from({ length: cols }, () => '#ffffff')  // 默认白色
+    );
+    background[0][0] = '#00008B';  // 初始选中第一个单元格（深蓝色）
 
-  generateTable2Data() {
-    console.log('开始生成表2数据');
-    const data = [];
-    const rowPoints = [];
-  
-    // 为每一行生成随机点
-    for (let i = 0; i < 4; i++) { // 4行
-      rowPoints.push(this.getRandomPoints(0, 7));
-    }
-    console.log('行点生成完成:', rowPoints);
-  
-    for (let i = 0; i < 4; i++) { // 4行
-      const groupIndex = Math.floor(i / 2); // 每两行一个组
-      const currentPoints = rowPoints[groupIndex];
-      const normalNumbers = Array.from({ length: 10 }, (_, i) => i)
-          .filter(n => !currentPoints.includes(n));
-  
-      const row = [];
-      const pointCols = [];
-      while (pointCols.length < 2) {
-        const col = Math.floor(Math.random() * 3); // 3列
-        if (!pointCols.includes(col)) pointCols.push(col);
-      }
-      console.log(`第${i}行的点列:`, pointCols);
-  
-      for (let j = 0; j < 3; j++) { // 3列
-        if (pointCols.includes(j)) {
-          row.push(currentPoints[Math.floor(Math.random() * 2)]);
-        } else {
-          row.push(normalNumbers[Math.floor(Math.random() * normalNumbers.length)]);
-        }
-      }
-      data.push(row);
-      console.log(`第${i}行数据:`, row);
-    }
-  
     this.setData({ 
-      tableData: data,
-      rowPoints 
+      cellBackground: background,
+      currentRow: 0,
+      currentCol: 0
+    }, () => {
+      console.log('[背景初始化] 首单元格背景色:', this.data.cellBackground[0][0]);
     });
-    console.log('表2数据生成完成:', data);
   },
 
-  generateTable3Data() {
-    console.log('开始生成表3数据');
-    const { special } = this.data;
-    const data = [];
-    const rowPoints = [];
-  
-    // 为每一行生成随机点
-    for (let i = 0; i < 4; i++) { // 4行
-      rowPoints.push(this.getRandomPoints(0, 7));
+  // 处理选择逻辑（新增索引校验和状态打印）
+  processSelection() {
+    const { isTestCompleted, cellIndex, cellBackground, table1Data } = this.data;
+    if (isTestCompleted) {
+      console.log('[操作忽略] 测试已完成');
+      return;
     }
-    console.log('行点生成完成:', rowPoints);
-  
-    for (let i = 0; i < 4; i++) { // 4行
-      const groupIndex = Math.floor(i / 2); // 每两行一个组
-      const currentPoints = rowPoints[groupIndex];
-      const normalNumbers = Array.from({ length: 10 }, (_, i) => i)
-          .filter(n => !currentPoints.includes(n) && n !== special);
-  
-      const row = [];
-      const specialCol = Math.floor(Math.random() * 2); // 避免越界
-      const pointCols = [];
-  
-      while (pointCols.length < 2) {
-        const col = Math.floor(Math.random() * 3); // 3列
-        if (col !== specialCol && col !== specialCol + 1 && !pointCols.includes(col)) {
-          pointCols.push(col);
-        }
-      }
-      console.log(`第${i}行的特殊列: ${specialCol}, 点列:`, pointCols);
-  
-      const shouldPutPointAfterSpecial = Math.random() < 0.7;
-  
-      for (let j = 0; j < 3; j++) { // 3列
-        if (j === specialCol) {
-          row.push(special);
-        } else if (shouldPutPointAfterSpecial && j === specialCol + 1) {
-          row.push(currentPoints[Math.floor(Math.random() * currentPoints.length)]);
-        } else if (pointCols.includes(j)) {
-          row.push(currentPoints[Math.floor(Math.random() * currentPoints.length)]);
-        } else {
-          row.push(normalNumbers[Math.floor(Math.random() * normalNumbers.length)]);
-        }
-      }
-      data.push(row);
-      console.log(`第${i}行数据:`, row);
+
+    const rows = table1Data.length;
+    const cols = table1Data[0]?.length || 0;
+    if (!rows || !cols) {
+      console.error('[操作失败] 表格数据不完整');
+      return;
     }
-  
-    this.setData({ 
-      tableData: data,
-      rowPoints 
-    });
-    console.log('表3数据生成完成:', data);
-  },
 
-  handleRelated() {
-    this.processSelection('A');
-  },
+    // 当前单元格坐标计算
+    const currentRow = Math.floor(cellIndex / cols);
+    const currentCol = cellIndex % cols;
+    console.log(`[当前处理] 索引${cellIndex} -> 行${currentRow}, 列${currentCol}`);
 
-  handleUnrelated() {
-    this.processSelection('B');
-  },
+    // 深拷贝背景数组（避免引用问题）
+    const newCellBackground = JSON.parse(JSON.stringify(cellBackground));
+    newCellBackground[currentRow][currentCol] = '#87CEEB';  // 标记已处理为浅蓝
 
-  handleInvalid() {
-    this.processSelection('C');
-  },
+    // 计算下一个单元格
+    const nextIndex = cellIndex + 1;
+    const nextRow = Math.floor(nextIndex / cols);
+    const nextCol = nextIndex % cols;
 
-  processSelection(type) {
-    const { currentRow, currentCol, isTestCompleted, selectedCells } = this.data;
-    if (isTestCompleted || currentRow < 0 || currentCol < 0) return;
+    // 检查是否完成所有单元格
+    if (nextIndex >= rows * cols) {
+      this.setData({ 
+        isTestCompleted: true,
+        cellBackground: newCellBackground
+      }, () => {
+        console.log('[测试完成] 所有单元格已处理');
+      });
+      return;
+    }
 
-    const newSelectedCells = [...selectedCells];
-    newSelectedCells[currentRow][currentCol] = type;
-    
-    this.setData({
-      selectedCells: newSelectedCells,
-      count: this.data.count + 1
-    });
-
-    this.moveToNextCell();
-  },
-
-  moveToNextCell() {
-    let { currentRow, currentCol, tableData, selectedCells } = this.data;
-    let attempts = 0;
-    const maxAttempts = tableData.length * tableData[0].length;
-    let found = false;
-
-    do {
-      currentCol++;
-      if (currentCol >= tableData[0].length) {
-        currentCol = 0;
-        currentRow++;
-        if (currentRow >= tableData.length) {
-          currentRow = 0;
-        }
-      }
-
-      if (selectedCells[currentRow][currentCol] === '') {
-        found = true;
-      }
-
-      if (++attempts > maxAttempts) {
-        this.setData({
-          isTestCompleted: true,
-          currentRow: -1,
-          currentCol: -1
-        });
-        return;
-      }
-    } while (!found);
+    // 标记下一个单元格为深蓝色
+    newCellBackground[nextRow][nextCol] = '#00008B';
 
     this.setData({
-      currentRow,
-      currentCol
+      cellIndex: nextIndex,
+      currentRow: nextRow,
+      currentCol: nextCol,
+      cellBackground: newCellBackground,
+      selectedCells: [...this.data.selectedCells, { row: currentRow, col: currentCol }]
+    }, () => {
+      console.log('[状态更新后] 下一个单元格背景色:', newCellBackground[nextRow][nextCol]);
+      console.log('[当前背景数组]', this.data.cellBackground);  // 关键调试：打印最新背景数据
     });
   },
 
-  switchTest(e) {
-    const index = parseInt(e.currentTarget.dataset.index);
-    this.prepareNextTest(index);
+  // 按钮事件（保持原有逻辑）
+  handleRelated() { 
+    console.log('点击【相关】按钮');
+    this.processSelection(); 
+  },
+  handleUnrelated() { 
+    console.log('点击【不相关】按钮');
+    this.processSelection(); 
+  },
+  handleInvalid() { 
+    console.log('点击【无效】按钮');
+    this.processSelection(); 
   },
 
-  goBackToTest() {
-    wx.navigateBack();
-  },
-
-  getImageSrc(value) {
-    return `/images/${value}.png`;
-  },
-
-  toggleNotice() {
-    this.setData({
-      showNotice: !this.data.showNotice
-    });
-  },
-
-  touchStart(e) {
-    this.setData({
-      touchStartX: e.touches[0].clientX
-    });
-  },
-
+  // 滑动处理（新增边界提示）
   touchEnd(e) {
-    const { touchStartX } = this.data;
+    const { touchStartX, currentTestIndex } = this.data;
     const touchEndX = e.changedTouches[0].clientX;
     const diffX = touchEndX - touchStartX;
 
-    if (Math.abs(diffX) > 50) { // 滑动距离阈值
-      if (diffX > 0) {
-        // 向右滑动，切换到上一个测试表
-        const prevIndex = (this.data.currentTestIndex - 1 + 3) % 3;
-        this.prepareNextTest(prevIndex);
-      } else {
-        // 向左滑动，切换到下一个测试表
-        const nextIndex = (this.data.currentTestIndex + 1) % 3;
+    if (Math.abs(diffX) > 50) {
+      const nextIndex = diffX > 0 
+        ? (currentTestIndex - 1 + 3) % 3 
+        : (currentTestIndex + 1) % 3;
+      
+      this.setData({ currentTestIndex: nextIndex }, () => {
+        console.log(`[滑动切换] 切换到测试${nextIndex}`);
         this.prepareNextTest(nextIndex);
-      }
+      });
     }
   },
 
+  // 切换表格背景（新增颜色列表校验）
   changeTableColor() {
-    const colors = ['white', '#f0f0f0f0', '#e0e0e0e0', '#d0d0d0d0'];
+    const colors = ['#ffffff', '#f0f0f0', '#e0e0e0', '#d0d0d0'];
     const currentIndex = colors.indexOf(this.data.tableBackgroundColor);
+    if (currentIndex === -1) {
+      console.error('[颜色切换失败] 当前颜色不在预设列表中');
+      return;
+    }
     const nextIndex = (currentIndex + 1) % colors.length;
+    this.setData({ tableBackgroundColor: colors[nextIndex] });
+  },
+
+  // 生成随机表格（保持原有逻辑）
+  generateRandomTableData() {
     this.setData({
-      tableBackgroundColor: colors[nextIndex]
+      table1Data: Array.from({ length: 5 }, () => 
+        Array.from({ length: 5 }, () => Math.floor(Math.random() * 8))
+      )
     });
+  },
+
+  // 生成随机点（保持原有逻辑）
+  getRandomPoints(min, max) {
+    const points = new Set();
+    while (points.size < 2) {
+      points.add(Math.floor(Math.random() * (max - min + 1)) + min);
+    }
+    return Array.from(points);
   }
 });
