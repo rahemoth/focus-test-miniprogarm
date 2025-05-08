@@ -3,53 +3,59 @@
     <!-- 表1 -->
     <swiper-item>
       <view class="test-container">
-        <view class="test-header">
-          <view class="notice_box" style="position: absolute; top: 10px; width: 100%;">
+        <!-- 头部区域 -->
+        <view class="test-header" style="position: relative; left: 0rpx; top: 124rpx; height: 321rpx; display: block; box-sizing: border-box">
+          <view class="notice_box">
             <view class="notice">
               <text>第一阶段（表1）是全表仅有两种阳性符号（在表头有显示），按相关按钮为选中阳性符号，其他符号按不相关按钮标记。</text>
               <text>注：每阶段的测试时长为五分钟。</text>
             </view>
           </view>
-          <view class="title" style="margin-top: 100px;">神经类型调试表1</view>
+
+          <text class="title">神经类型调试表1</text>
           <view class="header-decoration"></view>
-          
-          <view class="targets-display" style="margin-top: 10px;">
+
+          <view class="targets-display">
             <view class="points-display">
               <text class="instruction">阳性符号:</text>
               <view class="points-images">
                 <block wx:for="{{points}}" wx:key="index">
-                  <text class="example-text">{{item}}</text>
+                  <image 
+                    class="example-image" 
+                    src="{{'/images/symbols/' + item + '.png'}}" 
+                    mode="aspectFit"
+                  />
                 </block>
               </view>
             </view>
           </view>
         </view>
 
-        <view class="table-container" style="margin-top: 20px; background-color: {{tableBackgroundColor}};">
-          <table>
-            <thead>
-              <tr class="header">
-                <th wx:for="{{3}}" wx:key="*this" class="column-header">{{item + 1}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr wx:for="{{tableData}}" wx:key="index">
-                <td wx:for="{{item}}" wx:key="colIndex" class="cell {{selectedCells[index][colIndex] ? 'selected-cell' : ''}} {{currentRow === index && currentCol === colIndex ? 'current-position' : ''}} {{isPointCell(index, item) ? 'point-cell' : ''}}" bindtap="handleCellTap" data-row="{{index}}" data-col="{{colIndex}}">
-                  <text>{{item}}</text>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- 图片表格 -->
+        <view class="table-container" style="position: relative; left: 0rpx; top: 102rpx; height: 984rpx; display: block; box-sizing: border-box">
+          <view class="flex-container">
+            <view wx:for="{{5}}" wx:key="row" class="flex-row">
+              <view wx:for="{{4}}" wx:key="col" class="flex-item" bindtap="handleCellTap" data-row="{{index}}" data-col="{{index}}">
+                <image 
+                  class="cell-image" 
+                  src="{{'/images/symbols/' + item + '.png'}}" 
+                  mode="aspectFit"
+                />
+              </view>
+            </view>
+          </view>
         </view>
 
-        <view class="control-panel" style="margin-top: 10px;">
+        <!-- 操作按钮 -->
+        <view class="control-panel" style="position: relative; left: 0rpx; top: -41rpx">
           <button class="btn related-btn" bindtap="handleRelated">相关</button>
           <button class="btn unrelated-btn" bindtap="handleUnrelated">不相关</button>
           <button class="btn invalid-btn" bindtap="handleInvalid">无效</button>
-          <button class="btn change-color-btn" bindtap="changeTableColor">改变表格底色</button>
+          
         </view>
       </view>
     </swiper-item>
+  
 
     <!-- 表2 -->
     <swiper-item>
@@ -78,12 +84,21 @@
                 <td wx:if="{{index % 2 === 0}}" class="row-points-indicator" rowspan="2">
                   <view class="row-points">
                     <block wx:for="{{rowPoints[Math.floor(index / 2)]}}" wx:key="*this">
-                      <text class="example-text">{{item}}</text>
+                      <image 
+                        class="example-image" 
+                        src="{{'/images/symbols/' + item + '.png'}}" 
+                        mode="widthFix" 
+                        style="width: 30px; height: 30px;"
+                      />
                     </block>
                   </view>
                 </td>
                 <td wx:for="{{item}}" wx:key="colIndex" class="cell {{selectedCells[index][colIndex] ? 'selected-cell' : ''}} {{currentRow === index && currentCol === colIndex ? 'current-position' : ''}} {{isPointCell(index, item) ? 'point-cell' : ''}}" bindtap="handleCellTap" data-row="{{index}}" data-col="{{colIndex}}">
-                  <text>{{item}}</text>
+                  <image 
+                    src="{{'/images/symbols/' + item + '.png'}}" 
+                    mode="widthFix" 
+                    style="width: 30px; height: 30px;"
+                  />
                 </td>
               </tr>
             </tbody>
@@ -114,7 +129,12 @@
           
           <view class="special-display" style="margin-top: 10px;">
             <text class="instruction">特殊符号:</text>
-            <text class="example-text">{{special}}</text>
+            <image 
+              class="example-image" 
+              src="{{'/images/symbols/' + special + '.png'}}" 
+              mode="widthFix" 
+              style="width: 30px; height: 30px;"
+            />
           </view>
         </view>
 
@@ -131,12 +151,21 @@
                 <td wx:if="{{index % 2 === 0}}" class="row-points-indicator" rowspan="2">
                   <view class="row-points">
                     <block wx:for="{{rowPoints[Math.floor(index / 2)]}}" wx:key="*this">
-                      <text class="example-text">{{item}}</text>
+                      <image 
+                        class="example-image" 
+                        src="{{'/images/symbols/' + item + '.png'}}" 
+                        mode="widthFix" 
+                        style="width: 30px; height: 30px;"
+                      />
                     </block>
                   </view>
                 </td>
                 <td wx:for="{{item}}" wx:key="colIndex" class="cell {{selectedCells[index][colIndex] ? 'selected-cell' : ''}} {{currentRow === index && currentCol === colIndex ? 'current-position' : ''}} {{isPointCell(index, item) ? 'point-cell' : ''}} {{item === special ? 'special-cell' : ''}}" bindtap="handleCellTap" data-row="{{index}}" data-col="{{colIndex}}">
-                  <text>{{item}}</text>
+                  <image 
+                    src="{{'/images/symbols/' + item + '.png'}}" 
+                    mode="widthFix" 
+                    style="width: 30px; height: 30px;"
+                  />
                 </td>
               </tr>
             </tbody>

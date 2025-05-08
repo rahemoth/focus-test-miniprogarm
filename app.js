@@ -1,8 +1,9 @@
 App({
   onLaunch() {
-    wx.navigateTo({
-      url: '/pages/login/login'
-    });
+    // wx.navigateTo({
+    //   url: '/pages/login/login'
+    //   // url: '/pages/pretest/pretest'
+    // });
 
   },
   globalData: {

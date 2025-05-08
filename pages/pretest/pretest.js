@@ -1,8 +1,8 @@
 Page({
   data: {
     currentTestIndex: 0,
-    tableData: [],
     selectedCells: [],
+    randomRows: [],
     currentRow: 0,
     currentCol: 0,
     isTestCompleted: false,
@@ -13,17 +13,19 @@ Page({
     touchStartX: 0,
     tableBackgroundColor: 'white' // 默认底色为白色
   },
+  
 
   onLoad() {
     console.log('页面加载');
     this.prepareNextTest(0);
+ 
   },
 
   prepareNextTest(nextIndex) {
     this.setData({
       currentTestIndex: nextIndex,
       isTestCompleted: false,
-      selectedCells: Array(4).fill().map(() => Array(3).fill('')), // 修改为4行3列
+      selectedCells: Array(5).fill().map(() => Array(4).fill('')), // 修改为4行3列
       currentRow: 0,
       currentCol: 0,
       count: 0
@@ -74,9 +76,9 @@ Page({
       if (!pointPositions.includes(pos)) pointPositions.push(pos);
     }
   
-    for (let i = 0; i < 4; i++) { // 修改为4行
+    for (let i = 0; i < 5; i++) { // 修改为4行
       const row = [];
-      for (let j = 0; j < 3; j++) { // 修改为3列
+      for (let j = 0; j < 4; j++) { // 修改为3列
         if (pointPositions.includes(i * 3 + j)) {
           row.push(points[Math.random() < 0.5 ? 0 : 1]);
         } else {

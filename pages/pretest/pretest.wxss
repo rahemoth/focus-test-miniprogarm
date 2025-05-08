@@ -1,36 +1,70 @@
-/* 全局样式 */
+/* 全局基础样式 */
+page {
+  --primary-color: #2161eb;    /* 主色（蓝） */
+  --success-color: #4CAF50;    /* 成功色（绿） */
+  --warning-color: #FF9800;    /* 警告色（橙） */
+  --danger-color: #FF6B6B;     /* 危险色（红） */
+  --text-color: #2d3436;       /* 主文字色 */
+  --light-text: #666;          /* 次要文字色 */
+  --bg-color: #f5f5f5;         /* 页面背景色 */
+  --gap: 15px;                 /* 基础间距 */
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* 页面容器 */
 .page-wrapper {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f5f5f5;
+  background: var(--bg-color);
 }
 
+/* Swiper 容器 */
 .swiper-container {
   height: 100%;
 }
 
+/* 测试内容容器 */
 .test-container {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: var(--gap);
   box-sizing: border-box;
 }
 
+/* 头部区域 */
 .test-header {
-  text-align: center;
-  padding: 10px;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
+  padding: 12px;
+  margin-bottom: var(--gap);
+  text-align: center; /* 核心：表头整体文字居中 */
+}
+
+.notice_box {
   margin-bottom: 10px;
+}
+
+.notice {
+  font-size: 12px;
+  color: var(--light-text);
+  line-height: 1.5;
+}
+
+.notice text {
+  display: block;
+  margin-bottom: 5px;
 }
 
 .title {
   font-size: 18px;
-  color: #2d3436;
-  margin-bottom: 5px;
+  color: var(--text-color);
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center; 
 }
+
 
 .header-decoration {
   height: 3px;
@@ -40,192 +74,160 @@
   border-radius: 2px;
 }
 
-.notice_box {
-  margin-bottom: 10px;
+/* 阳性符号展示 */
+.targets-display {
+  margin-top: 12px;
 }
 
-.notice {
-  font-size: 12px;
-  color: #333;
-  text-align: left;
-}
-
-.notice text {
-  display: block;
-  margin-bottom: 5px;
-}
-
-/* 表格样式 */
-.table-container {
-  flex: 1;
-  overflow: auto;
-  margin: 10px 0;
-  border: 1px solid #2374ee;
-  border-radius: 8px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between; /* 使列之间的间距均匀分布 */
-  background: #2161eb;
-  color: white;
-  padding: 8px;
-  font-size: 12px;
-  text-align: center;
-}
-
-.header th {
-  flex: 1; /* 每个列占据相同的宽度 */
-}
-
-.points-header {
-  width: 80px;
-  background: #2b5ff0;
-}
-
-.cell {
-  width: 33.33%; /* 3列 = 每列33.33%宽度 */
-  height: 80px; /* 增大高度适应4行 */
-  border: 1px solid #ddd;
-  text-align: center;
-  vertical-align: middle;
-  box-sizing: border-box;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.cell text {
-  font-size: 24px; /* 调整字体大小 */
-  color: red; /* 文字颜色 */
-}
-
-/* 特殊单元格样式 */
-.selected-cell {
-  background-color: #74b9ff !important;
-}
-
-.current-position {
-  border: 2px solid #ff6b6b !important;
-  animation: pulse 1.5s infinite;
-}
-
-.point-cell {
-  background-color: #ffff00 !important;
-}
-
-.special-cell {
-  background-color: #ff8c00 !important;
-}
-
-@keyframes pulse {
-  0% { opacity: 0.8; }
-  50% { opacity: 1; }
-  100% { opacity: 0.8; }
-}
-
-/* 阳性符号显示 */
-.targets-display, .special-display {
-  display: flex;
-  justify-content: center;
-  margin-top: 5px; /* 调整阳性符号显示的位置 */
-}
-
-.points-display, .special-display {
+.points-display {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .instruction {
-  color: orangered;
+  color: #FF6B6B;
   font-size: 12px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  text-align: center; 
+  width: 100%; 
 }
 
 .points-images {
   display: flex;
   gap: 10px;
+  justify-content: center; 
 }
 
-.example-text {
-  font-size: 24px; /* 调整字体大小 */
-  color: red; /* 文字颜色 */
+.example-image {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.row-points-indicator {
-  background: #f8f9fa;
-  padding: 5px;
-  width: 80px;
-  border-right: 1px solid #dee2e6;
+/* 图片表格（flex布局） */
+.table-container {
+  flex: 1;
+  margin: 10px 0;
+  border-radius: 8px;
+  overflow: auto;
+  justify-content: center;
 }
 
-.row-points {
+.flex-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 12px; /* 行间距 */
+}
+
+.flex-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 12px; /* 列间距 */
+}
+
+.flex-item {
+  flex: 1;
+  aspect-ratio: 1/1; /* 正方形格子 */
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.flex-item:active {
+  transform: scale(0.95);
+  background: #f0f4ff;
+}
+
+.cell-image {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* 单元格状态样式 */
+.selected-cell {
+  background: #74b9ff !important;
+  border-color: #2161eb;
+}
+
+.current-position {
+  border: 2px solid #ff6b6b;
+  animation: pulse 1.5s infinite;
+}
+
+.point-cell {
+  background: #fff3cd !important;
+}
+
+.special-cell {
+  background: #ffe4c4 !important;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.3); }
+  70% { box-shadow: 0 0 0 8px rgba(255, 107, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
 }
 
 /* 操作按钮 */
 .control-panel {
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: var(--gap);
 }
 
 .btn {
   flex: 1;
-  margin: 0 5px;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 6px;
   color: white;
   font-size: 14px;
+  border: none;
 }
 
-.related-btn { background: #4CAF50; }
-.unrelated-btn { background:#FF6B6B; }
-.invalid-btn { background: #FF9800; }
+.related-btn { background: var(--success-color); }
+.unrelated-btn { background: var(--danger-color); }
+.invalid-btn { background: var(--warning-color); }
+.change-color-btn { background: #6c757d; }
 
-/* 媒体查询 */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    align-items: center;
+/* 小屏幕适配（手机） */
+@media (max-width: 480px) {
+  .test-header {
+    padding: 10px;
   }
 
-  .header th {
-    flex: none;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 5px;
+  .points-images {
+    gap: 8px;
   }
 
-  .points-header {
-    width: 100%;
+  .example-image {
+    width: 35px;
+    height: 35px;
   }
 
-  .cell {
-    width: 100%;
-    height: auto;
-    padding: 10px 0;
+  .flex-container {
+    gap: 8px;
+  }
+
+  .flex-row {
+    gap: 8px;
   }
 
   .control-panel {
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
   }
 
   .btn {
-    flex: none;
-    width: 80%;
-    margin: 5px 0;
+    flex: 1 1 45%; /* 小屏幕每行2个按钮 */
   }
 }
