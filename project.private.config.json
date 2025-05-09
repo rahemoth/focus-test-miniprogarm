@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/result/result",
+          "pathName": "pages/result/result",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/pretest/pretest",
           "pathName": "pages/pretest/pretest",
           "query": "",

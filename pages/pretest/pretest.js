@@ -11,7 +11,13 @@ Page({
     cellIndex: 0,        // 当前处理的单元格索引（行优先）
     currentRow: 0,
     currentCol: 0,
-    table1Data: []       // 5x5表格数据（数值0-7）
+    table1Data: [],       // 5x5表格数据（数值0-7）
+    totalRows: 20,
+    totalcols: 5,       // 总行数（10行）
+    visibleRows: 5,       // 可见行数（5行）
+    cellBackground: [],    // 10行5列的背景色数组
+    visibleEndRow: 4,
+    visibleStartRow: 0
   },
 
   onLoad() {
@@ -33,7 +39,8 @@ Page({
       isTestCompleted: false,
       cellIndex: 0,
       selectedCells: [],
-      cellBackground: []  // 强制清空旧背景数据
+      cellBackground: [],  // 强制清空旧背景数据
+      visibleStartRow: 0 
     });
 
     if (nextIndex === 0) {
@@ -48,23 +55,20 @@ Page({
 
   // 初始化单元格背景（新增空值校验）
   initCellBackground() {
-    const { table1Data } = this.data;
-    if (!table1Data.length || !table1Data[0].length) {
-      console.error('[初始化失败] 表格数据为空');
-      return;
-    }
+    const { totalRows, visibleRows , totalcols } = this.data;
 
-    const rows = table1Data.length;
-    const cols = table1Data[0].length;
-    const background = Array.from({ length: rows }, () => 
-      Array.from({ length: cols }, () => '#ffffff')  // 默认白色
+    
+    // 初始化10行5列的背景数组
+    const background = Array.from({ length: totalRows }, () => 
+      Array.from({ length: totalcols }, () => '#ffffff')  // 每行5个元素
     );
-    background[0][0] = '#00008B';  // 初始选中第一个单元格（深蓝色）
+    background[0][0] = '#87CEEB';  // 初始选中第一个单元格（0行0列）
 
     this.setData({ 
       cellBackground: background,
       currentRow: 0,
-      currentCol: 0
+      currentCol: 0,
+      visibleStartRow: 0  // 初始可见起始行为0
     }, () => {
       console.log('[背景初始化] 首单元格背景色:', this.data.cellBackground[0][0]);
     });
@@ -72,56 +76,86 @@ Page({
 
   // 处理选择逻辑（新增索引校验和状态打印）
   processSelection() {
-    const { isTestCompleted, cellIndex, cellBackground, table1Data } = this.data;
-    if (isTestCompleted) {
-      console.log('[操作忽略] 测试已完成');
-      return;
-    }
-
-    const rows = table1Data.length;
-    const cols = table1Data[0]?.length || 0;
-    if (!rows || !cols) {
-      console.error('[操作失败] 表格数据不完整');
-      return;
-    }
-
-    // 当前单元格坐标计算
-    const currentRow = Math.floor(cellIndex / cols);
-    const currentCol = cellIndex % cols;
+    const { 
+      isTestCompleted, 
+      cellIndex, 
+      cellBackground, 
+      visibleStartRow, 
+      visibleRows,
+      totalcols,
+      totalRows  // 从data中解构totalRows（10行）
+    } = this.data; 
+  
+    if (isTestCompleted) return;
+  
+    const currentRow = Math.floor(cellIndex / totalcols);
+    const currentCol = cellIndex % totalcols;
     console.log(`[当前处理] 索引${cellIndex} -> 行${currentRow}, 列${currentCol}`);
-
-    // 深拷贝背景数组（避免引用问题）
+  
+    // 深拷贝初始化newCellBackground
     const newCellBackground = JSON.parse(JSON.stringify(cellBackground));
-    newCellBackground[currentRow][currentCol] = '#87CEEB';  // 标记已处理为浅蓝
-
-    // 计算下一个单元格
+  
+    // 计算可见区域最后一行索引
+    const visibleEndRow = visibleStartRow + visibleRows - 1;
+  
+    // 触发滚动条件
+    if (currentRow > visibleEndRow-3 && currentCol == 4) {
+      this.setData({ 
+        visibleStartRow: visibleStartRow + 1 
+      }, () => {
+        console.log(`可见区域更新为行${visibleStartRow + 1}到行${visibleStartRow + visibleRows}`);
+      });
+    }
+  
+    // 标记当前单元格为浅蓝
+    newCellBackground[currentRow][currentCol] = '#435869';  // 此处不再报错
+  
     const nextIndex = cellIndex + 1;
-    const nextRow = Math.floor(nextIndex / cols);
-    const nextCol = nextIndex % cols;
-
-    // 检查是否完成所有单元格
-    if (nextIndex >= rows * cols) {
+    const nextRow = Math.floor(nextIndex / totalcols);
+    const nextCol = nextIndex % totalcols;
+  
+    // 检查是否完成所有单元格（10行×5列=50个单元格）
+    if (nextIndex >= totalRows * totalcols) {
       this.setData({ 
         isTestCompleted: true,
-        cellBackground: newCellBackground
-      }, () => {
-        console.log('[测试完成] 所有单元格已处理');
+        cellBackground: newCellBackground  // 保存修改后的背景数组
       });
       return;
     }
-
+  
+    // 检查下一行是否存在
+    if (!newCellBackground[nextRow]) {
+      console.error('[背景错误] 下一行不存在', nextRow);
+      return;
+    }
+  
     // 标记下一个单元格为深蓝色
-    newCellBackground[nextRow][nextCol] = '#00008B';
-
+    newCellBackground[nextRow][nextCol] = '#87CEEB';
+  
+    // 更新数据（包括cellBackground和可见区域）
     this.setData({
       cellIndex: nextIndex,
       currentRow: nextRow,
       currentCol: nextCol,
-      cellBackground: newCellBackground,
-      selectedCells: [...this.data.selectedCells, { row: currentRow, col: currentCol }]
-    }, () => {
-      console.log('[状态更新后] 下一个单元格背景色:', newCellBackground[nextRow][nextCol]);
-      console.log('[当前背景数组]', this.data.cellBackground);  // 关键调试：打印最新背景数据
+      cellBackground: newCellBackground,  // 关键：将修改后的背景数组保存回data
+      visibleEndRow: visibleStartRow + visibleRows - 1
+    });
+  },
+
+  generateRandomTableData() {
+    const{
+      totalcols,
+      totalRows
+    }=this.data;
+    const newData = Array.from({ length: totalRows }, () => 
+      Array.from({ length: totalcols }, () => {
+        const num = Math.floor(Math.random() * 8);  // 0-7的随机数
+        return num;
+      })
+    );
+    this.setData({ table1Data: newData }, () => {
+      console.log('[表格数据验证] 总行数:', this.data.table1Data.length);  // 输出10
+      console.log('[表格数据验证] 首行数值:', this.data.table1Data[0]);  // 输出5个0-7的数值
     });
   },
 
@@ -169,14 +203,7 @@ Page({
     this.setData({ tableBackgroundColor: colors[nextIndex] });
   },
 
-  // 生成随机表格（保持原有逻辑）
-  generateRandomTableData() {
-    this.setData({
-      table1Data: Array.from({ length: 5 }, () => 
-        Array.from({ length: 5 }, () => Math.floor(Math.random() * 8))
-      )
-    });
-  },
+
 
   // 生成随机点（保持原有逻辑）
   getRandomPoints(min, max) {
