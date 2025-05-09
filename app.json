@@ -2,7 +2,9 @@
   "pages": [
     "pages/login/login",
     "pages/pretest/pretest",
-    "pages/result/result"
+    "pages/result/result",
+    "pages/mine/mine"
+
   ],
   "window": {
     "navigationBarTextStyle": "black",
