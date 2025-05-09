@@ -185,7 +185,7 @@ page {
   flex: 1;
   padding: 10px;
   border-radius: 6px;
-  color: white;
+  color: rgb(73, 54, 54);
   font-size: 14px;
   border: none;
 }

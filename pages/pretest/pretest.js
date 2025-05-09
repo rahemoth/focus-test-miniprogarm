@@ -1,179 +1,340 @@
 Page({
   data: {
     currentTestIndex: 0,
-    selectedCells: [],
-    isTestCompleted: false,
-    points: [],
-    showNotice: false,
+    table1Data: [],
+    table1Points: [],
+    table1CellBackground: [],
+    table1CellIndex: 0,
+    table1CurrentRow: 0,
+    table1CurrentCol: 0,
+    table1TotalRows: 20,
+    table1TotalCols: 5,
+    table1VisibleRows: 5,
+    table1VisibleStartRow: 0,
+    table1IsTestCompleted: false,
+    
+    table2Data: [],
+    table2Points: [],
+    table2CellBackground: [],
+    table2CellIndex: 0,
+    table2CurrentRow: 0,
+    table2CurrentCol: 0,
+    table2TotalRows: 20,
+    table2TotalCols: 5,
+    table2VisibleRows: 5,
+    table2VisibleStartRow: 0,
+    table2IsTestCompleted: false,
+    
+    table3Data: [],
+    table3Points: [],
+    table3Special: 0,
+    table3CellBackground: [],
+    table3CellIndex: 0,
+    table3CurrentRow: 0,
+    table3CurrentCol: 0,
+    table3TotalRows: 20,
+    table3TotalCols: 5,
+    table3VisibleRows: 5,
+    table3VisibleStartRow: 0,
+    table3IsTestCompleted: false,
+    
     touchStartX: 0,
-    tableBackgroundColor: '#ffffff',
-    cellBackground: [],  // 二维数组，存储每个单元格的背景色
-    cellIndex: 0,        // 当前处理的单元格索引（行优先）
-    currentRow: 0,
-    currentCol: 0,
-    table1Data: [],       // 5x5表格数据（数值0-7）
-    totalRows: 20,
-    totalcols: 5,       // 总行数（10行）
-    visibleRows: 5,       // 可见行数（5行）
-    cellBackground: [],    // 10行5列的背景色数组
-    visibleEndRow: 4,
-    visibleStartRow: 0
+    tableBackgroundColor: '#ffffff'
   },
 
   onLoad() {
-    this.initializeTest();
+    this.initializeAllTables();
   },
 
-  // 初始化测试流程（新增调试日志）
-  initializeTest() {
-    console.log('[初始化] 开始生成表格数据');
-    this.generateRandomTableData();
-    console.log('[初始化] 表格数据生成完成:', this.data.table1Data);
-    this.prepareNextTest(0);
+  initializeAllTables() {
+    this.generateTable1Data();
+    this.generateTable2Data();
+    this.prepareTable3()
+    this.prepareTable1();
   },
 
-  // 准备下一个测试（新增状态重置）
-  prepareNextTest(nextIndex) {
-    console.log(`[测试切换] 准备第${nextIndex}个测试`);
-    this.setData({
-      isTestCompleted: false,
-      cellIndex: 0,
-      selectedCells: [],
-      cellBackground: [],  // 强制清空旧背景数据
-      visibleStartRow: 0 
-    });
-
-    if (nextIndex === 0) {
-      const points = this.getRandomPoints(0, 7);
-      this.setData({ points }, () => {
-        console.log('[测试准备] 表头阳性符号:', this.data.points);
-      });
-    }
-
-    this.initCellBackground();
+  // 表1相关逻辑
+  generateTable1Data() {
+    const data = Array.from({ length: this.data.table1TotalRows }, () => 
+      Array.from({ length: this.data.table1TotalCols }, () => Math.floor(Math.random() * 8))
+    );
+    this.setData({ table1Data: data });
   },
 
-  // 初始化单元格背景（新增空值校验）
-  initCellBackground() {
-    const { totalRows, visibleRows , totalcols } = this.data;
-
+  prepareTable1() {
+    const points = this.getRandomPoints(0, 7);
+    const background = Array.from({ length: this.data.table1TotalRows }, () =>
+      Array.from({ length: this.data.table1TotalCols }, () => '#ffffff')
+    );
+    background[0][0] = '#87CEEB';
     
-    // 初始化10行5列的背景数组
-    const background = Array.from({ length: totalRows }, () => 
-      Array.from({ length: totalcols }, () => '#ffffff')  // 每行5个元素
-    );
-    background[0][0] = '#87CEEB';  // 初始选中第一个单元格（0行0列）
-
-    this.setData({ 
-      cellBackground: background,
-      currentRow: 0,
-      currentCol: 0,
-      visibleStartRow: 0  // 初始可见起始行为0
-    }, () => {
-      console.log('[背景初始化] 首单元格背景色:', this.data.cellBackground[0][0]);
-    });
-  },
-
-  // 处理选择逻辑（新增索引校验和状态打印）
-  processSelection() {
-    const { 
-      isTestCompleted, 
-      cellIndex, 
-      cellBackground, 
-      visibleStartRow, 
-      visibleRows,
-      totalcols,
-      totalRows  // 从data中解构totalRows（10行）
-    } = this.data; 
-  
-    if (isTestCompleted) return;
-  
-    const currentRow = Math.floor(cellIndex / totalcols);
-    const currentCol = cellIndex % totalcols;
-    console.log(`[当前处理] 索引${cellIndex} -> 行${currentRow}, 列${currentCol}`);
-  
-    // 深拷贝初始化newCellBackground
-    const newCellBackground = JSON.parse(JSON.stringify(cellBackground));
-  
-    // 计算可见区域最后一行索引
-    const visibleEndRow = visibleStartRow + visibleRows - 1;
-  
-    // 触发滚动条件
-    if (currentRow > visibleEndRow-3 && currentCol == 4) {
-      this.setData({ 
-        visibleStartRow: visibleStartRow + 1 
-      }, () => {
-        console.log(`可见区域更新为行${visibleStartRow + 1}到行${visibleStartRow + visibleRows}`);
-      });
-    }
-  
-    // 标记当前单元格为浅蓝
-    newCellBackground[currentRow][currentCol] = '#435869';  // 此处不再报错
-  
-    const nextIndex = cellIndex + 1;
-    const nextRow = Math.floor(nextIndex / totalcols);
-    const nextCol = nextIndex % totalcols;
-  
-    // 检查是否完成所有单元格（10行×5列=50个单元格）
-    if (nextIndex >= totalRows * totalcols) {
-      this.setData({ 
-        isTestCompleted: true,
-        cellBackground: newCellBackground  // 保存修改后的背景数组
-      });
-      return;
-    }
-  
-    // 检查下一行是否存在
-    if (!newCellBackground[nextRow]) {
-      console.error('[背景错误] 下一行不存在', nextRow);
-      return;
-    }
-  
-    // 标记下一个单元格为深蓝色
-    newCellBackground[nextRow][nextCol] = '#87CEEB';
-  
-    // 更新数据（包括cellBackground和可见区域）
     this.setData({
-      cellIndex: nextIndex,
-      currentRow: nextRow,
-      currentCol: nextCol,
-      cellBackground: newCellBackground,  // 关键：将修改后的背景数组保存回data
-      visibleEndRow: visibleStartRow + visibleRows - 1
+      table1Points: points,
+      table1CellBackground: background,
+      table1CellIndex: 0,
+      table1CurrentRow: 0,
+      table1CurrentCol: 0,
+      table1VisibleStartRow: 0,
+      table1IsTestCompleted: false
     });
   },
 
-  generateRandomTableData() {
-    const{
-      totalcols,
-      totalRows
-    }=this.data;
-    const newData = Array.from({ length: totalRows }, () => 
-      Array.from({ length: totalcols }, () => {
-        const num = Math.floor(Math.random() * 8);  // 0-7的随机数
-        return num;
-      })
+  processTable1Selection() {
+    if (this.data.table1IsTestCompleted) return;
+    
+    const { table1CellIndex, table1CellBackground, table1VisibleStartRow, table1VisibleRows, table1TotalCols, table1TotalRows } = this.data;
+    const currentRow = Math.floor(table1CellIndex / table1TotalCols);
+    const currentCol = table1CellIndex % table1TotalCols;
+    
+    const newBackground = JSON.parse(JSON.stringify(table1CellBackground));
+    newBackground[currentRow][currentCol] = '#435869';
+    
+    const nextIndex = table1CellIndex + 1;
+    const nextRow = Math.floor(nextIndex / table1TotalCols);
+    const nextCol = nextIndex % table1TotalCols;
+    
+    if (nextIndex >= table1TotalRows * table1TotalCols) {
+      this.setData({
+        table1IsTestCompleted: true,
+        table1CellBackground: newBackground
+      });
+      return;
+    }
+    
+    const visibleEndRow = table1VisibleStartRow + table1VisibleRows - 1;
+    if (currentRow > visibleEndRow - 3 && currentCol == 4) {
+      this.setData({ table1VisibleStartRow: table1VisibleStartRow + 1 });
+    }
+    
+    newBackground[nextRow][nextCol] = '#87CEEB';
+    
+    this.setData({
+      table1CellIndex: nextIndex,
+      table1CurrentRow: nextRow,
+      table1CurrentCol: nextCol,
+      table1CellBackground: newBackground
+    });
+  },
+
+  handleTable1CellTap(e) {
+    const row = e.currentTarget.dataset.row;
+    const col = e.currentTarget.dataset.col;
+    this.setData({
+      table1CurrentRow: row,
+      table1CurrentCol: col
+    });
+  },
+
+  handleTable1Related() {
+    this.processTable1Selection();
+  },
+
+  handleTable1Unrelated() {
+    this.processTable1Selection();
+  },
+
+  handleTable1Invalid() {
+    this.processTable1Selection();
+  },
+
+  // 表2相关逻辑
+  generateTable2Data() {
+    const data = Array.from({ length: this.data.table2TotalRows }, () => 
+      Array.from({ length: this.data.table2TotalCols }, () => Math.floor(Math.random() * 8))
     );
-    this.setData({ table1Data: newData }, () => {
-      console.log('[表格数据验证] 总行数:', this.data.table1Data.length);  // 输出10
-      console.log('[表格数据验证] 首行数值:', this.data.table1Data[0]);  // 输出5个0-7的数值
+    this.setData({ table2Data: data });
+  },
+
+  prepareTable2() {
+    const points = this.getRandomPoints(0, 7);
+    const background = Array.from({ length: this.data.table2TotalRows }, () =>
+      Array.from({ length: this.data.table2TotalCols }, () => '#ffffff')
+    );
+    background[0][0] = '#87CEEB';
+    
+    this.setData({
+      table2Points: points,
+      table2CellBackground: background,
+      table2CellIndex: 0,
+      table2CurrentRow: 0,
+      table2CurrentCol: 0,
+      table2VisibleStartRow: 0,
+      table2IsTestCompleted: false
     });
   },
 
-  // 按钮事件（保持原有逻辑）
-  handleRelated() { 
-    console.log('点击【相关】按钮');
-    this.processSelection(); 
-  },
-  handleUnrelated() { 
-    console.log('点击【不相关】按钮');
-    this.processSelection(); 
-  },
-  handleInvalid() { 
-    console.log('点击【无效】按钮');
-    this.processSelection(); 
+  processTable2Selection() {
+    if (this.data.table2IsTestCompleted) return;
+    
+    const { table2CellIndex, table2CellBackground, table2VisibleStartRow, table2VisibleRows, table2TotalCols, table2TotalRows } = this.data;
+    const currentRow = Math.floor(table2CellIndex / table2TotalCols);
+    const currentCol = table2CellIndex % table2TotalCols;
+    
+    const newBackground = JSON.parse(JSON.stringify(table2CellBackground));
+    newBackground[currentRow][currentCol] = '#435869';
+    
+    const nextIndex = table2CellIndex + 1;
+    const nextRow = Math.floor(nextIndex / table2TotalCols);
+    const nextCol = nextIndex % table2TotalCols;
+    
+    if (nextIndex >= table2TotalRows * table2TotalCols) {
+      this.setData({
+        table2IsTestCompleted: true,
+        table2CellBackground: newBackground
+      });
+      return;
+    }
+    
+    const visibleEndRow = table2VisibleStartRow + table2VisibleRows - 1;
+    if (currentRow > visibleEndRow - 3 && currentCol == 4) {
+      this.setData({ table2VisibleStartRow: table2VisibleStartRow + 1 });
+    }
+    
+    newBackground[nextRow][nextCol] = '#87CEEB';
+    
+    this.setData({
+      table2CellIndex: nextIndex,
+      table2CurrentRow: nextRow,
+      table2CurrentCol: nextCol,
+      table2CellBackground: newBackground
+    });
   },
 
-  // 滑动处理（新增边界提示）
+  handleTable2CellTap(e) {
+    const row = e.currentTarget.dataset.row;
+    const col = e.currentTarget.dataset.col;
+    this.setData({
+      table2CurrentRow: row,
+      table2CurrentCol: col
+    });
+  },
+
+  handleTable2Related() {
+    this.processTable2Selection();
+  },
+
+  handleTable2Unrelated() {
+    this.processTable2Selection();
+  },
+
+  handleTable2Invalid() {
+    this.processTable2Selection();
+  },
+
+  // 表3相关逻辑
+  prepareTable3() {
+    const points = this.getRandomPoints(0, 7);
+    const special = Math.floor(Math.random() * 2) + 8;
+    
+    // 生成背景色数组
+    const background = Array.from({ length: this.data.table3TotalRows }, () =>
+      Array.from({ length: this.data.table3TotalCols }, () => '#ffffff')
+    );
+    background[0][0] = '#87CEEB';
+    
+    // 生成表格数据（使用正确的special值）
+    const getRandomValue = () => {
+      const baseNumbers = [0, 1, 2, 3, 4, 5, 6, 7];
+      const probability = 0.1; // 设定special被抽到的概率是10%
+      
+      if (Math.random() < probability) {
+        return special; // 使用局部变量special（确保有值）
+      } else {
+        const randomIndex = Math.floor(Math.random() * baseNumbers.length);
+        return baseNumbers[randomIndex];
+      }
+    };
+    
+    const data = Array.from({ length: this.data.table3TotalRows }, () => 
+      Array.from({ length: this.data.table3TotalCols }, getRandomValue)
+    );
+    
+    // 一次性更新所有状态
+    this.setData({
+      table3Points: points,
+      table3Special: special,
+      table3Data: data,
+      table3CellBackground: background,
+      table3CellIndex: 0,
+      table3CurrentRow: 0,
+      table3CurrentCol: 0,
+      table3VisibleStartRow: 0,
+      table3IsTestCompleted: false
+    });
+  },
+
+  processTable3Selection() {
+    if (this.data.table3IsTestCompleted) return;
+    
+    const { table3CellIndex, table3CellBackground, table3VisibleStartRow, table3VisibleRows, table3TotalCols, table3TotalRows } = this.data;
+    const currentRow = Math.floor(table3CellIndex / table3TotalCols);
+    const currentCol = table3CellIndex % table3TotalCols;
+    
+    const newBackground = JSON.parse(JSON.stringify(table3CellBackground));
+    newBackground[currentRow][currentCol] = '#435869';
+    
+    const nextIndex = table3CellIndex + 1;
+    const nextRow = Math.floor(nextIndex / table3TotalCols);
+    const nextCol = nextIndex % table3TotalCols;
+    
+    if (nextIndex >= table3TotalRows * table3TotalCols) {
+      this.setData({
+        table3IsTestCompleted: true,
+        table3CellBackground: newBackground
+      });
+      return;
+    }
+    
+    const visibleEndRow = table3VisibleStartRow + table3VisibleRows - 1;
+    if (currentRow > visibleEndRow - 3 && currentCol == 4) {
+      this.setData({ table3VisibleStartRow: table3VisibleStartRow + 1 });
+    }
+    
+    newBackground[nextRow][nextCol] = '#87CEEB';
+    
+    this.setData({
+      table3CellIndex: nextIndex,
+      table3CurrentRow: nextRow,
+      table3CurrentCol: nextCol,
+      table3CellBackground: newBackground
+    });
+  },
+
+  handleTable3CellTap(e) {
+    const row = e.currentTarget.dataset.row;
+    const col = e.currentTarget.dataset.col;
+    this.setData({
+      table3CurrentRow: row,
+      table3CurrentCol: col
+    });
+  },
+
+  handleTable3Related() {
+    this.processTable3Selection();
+  },
+
+  handleTable3Unrelated() {
+    this.processTable3Selection();
+  },
+
+  handleTable3Invalid() {
+    this.processTable3Selection();
+  },
+
+  // 公共方法
+  swiperChange(e) {
+    const index = e.detail.current;
+    this.setData({ currentTestIndex: index });
+    
+    if (index === 0) this.prepareTable1();
+    else if (index === 1) this.prepareTable2();
+    else if (index === 2) this.prepareTable3();
+  },
+
+  touchStart(e) {
+    this.setData({ touchStartX: e.touches[0].clientX });
+  },
+
   touchEnd(e) {
     const { touchStartX, currentTestIndex } = this.data;
     const touchEndX = e.changedTouches[0].clientX;
@@ -185,27 +346,20 @@ Page({
         : (currentTestIndex + 1) % 3;
       
       this.setData({ currentTestIndex: nextIndex }, () => {
-        console.log(`[滑动切换] 切换到测试${nextIndex}`);
-        this.prepareNextTest(nextIndex);
+        if (nextIndex === 0) this.prepareTable1();
+        else if (nextIndex === 1) this.prepareTable2();
+        else if (nextIndex === 2) this.prepareTable3();
       });
     }
   },
 
-  // 切换表格背景（新增颜色列表校验）
   changeTableColor() {
     const colors = ['#ffffff', '#f0f0f0', '#e0e0e0', '#d0d0d0'];
     const currentIndex = colors.indexOf(this.data.tableBackgroundColor);
-    if (currentIndex === -1) {
-      console.error('[颜色切换失败] 当前颜色不在预设列表中');
-      return;
-    }
     const nextIndex = (currentIndex + 1) % colors.length;
     this.setData({ tableBackgroundColor: colors[nextIndex] });
   },
 
-
-
-  // 生成随机点（保持原有逻辑）
   getRandomPoints(min, max) {
     const points = new Set();
     while (points.size < 2) {
