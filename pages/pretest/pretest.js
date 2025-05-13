@@ -202,7 +202,7 @@ Page({
     // 生成表格数据
     this.generateTable2Data();
     
-    // 生成4组，每组2个不重复的阳性符号
+    // 生成4组，每组2个不重复的阳性符号（0-7随机数）
     const groupPoints = Array.from({ length: this.data.table2TotalGroups }, () => 
       this.getRandomPoints(0, 7)
     );
@@ -213,7 +213,7 @@ Page({
     this.setData({
       table2GroupPoints: groupPoints,
       table2Points: groupPoints[0],          // 当前组取第一个数组的2个符号
-      table2NextPoints: groupPoints[1] || [],  // 下一组取第二个数组的2个符号
+      table2NextPoints: groupPoints[1] || [],  // 下一组取第二个数组的2个符号（若存在）
       table2CellBackground: background,
       table2CellIndex: 0,
       table2CurrentRow: 0,
@@ -275,7 +275,7 @@ Page({
     newBackground[currentRow][currentCol] = '#435869';
 
     const nextIndex = table2CellIndex + 1;
-    // 检查是否完成25格
+    // 检查是否完成25格（触发分组切换）
     if (nextIndex % 25 === 0 && nextIndex < table2TotalRows * table2TotalCols) {
       const nextGroup = table2CurrentGroup + 1;
       if (nextGroup < table2TotalGroups) {
@@ -286,7 +286,7 @@ Page({
           table2NextPoints: table2GroupPoints[nextGroup + 1] || []  // 预取下一组
         });
 
-        // 更新后续未操作格的背景颜色
+        // 更新后续未操作格的背景颜色（保留已选中的#435869，并高亮新组的阳性符号）
         for (let row = 0; row < table2TotalRows; row++) {
           for (let col = 0; col < table2TotalCols; col++) {
             const index = row * table2TotalCols + col;
@@ -363,14 +363,14 @@ Page({
     this.processTable2Selection(); 
   },
 
-  // 表3
+  // 准备表3，包括生成阳性符号、特殊符号、表格数据和初始化背景颜色
   prepareTable3() {
-    // 生成每组的阳性符号
+    // 生成每组的阳性符号（使用getRandomPoints确保不重复）
     const groupPoints = Array.from({ length: this.data.table3TotalGroups }, () => 
       this.getRandomPoints(0, 7)
     );
     
-    // 生成特殊符号
+    // 生成特殊符号（8或9）
     const special = Math.floor(Math.random() * 2) + 8;
     
     // 生成表格数据
@@ -470,7 +470,7 @@ Page({
 
     const nextIndex = table3CellIndex + 1;
     
-    // 检查是否完成25格
+    // 检查是否完成25格（触发分组切换）
     if (nextIndex % 25 === 0 && nextIndex < table3TotalRows * table3TotalCols) {
       const nextGroup = table3CurrentGroup + 1;
       if (nextGroup < table3TotalGroups) {
@@ -535,13 +535,13 @@ Page({
     const nextCol = nextIndex % table3TotalCols;
     newBackground[nextRow][nextCol] = '#87CEEB';
 
-    // 检查特殊符号逻辑
+    // 检查特殊符号逻辑：如果当前是特殊符号，且下一个是阳性符号，则标记为无效
     const currentValue = table3Data[currentRow][currentCol];
     const nextValue = table3Data[nextRow][nextCol];
     
     if (currentValue === table3Special && table3Points.includes(nextValue)) {
-      console.log('.');
-     
+      console.log('检测到特殊符号后紧跟阳性符号，应按无效按钮');
+      // 这里可以添加特殊处理逻辑
     }
 
     this.setData({
