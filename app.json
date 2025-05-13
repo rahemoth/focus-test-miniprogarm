@@ -4,7 +4,8 @@
     "pages/pretest/pretest",
     "pages/result/result",
     "pages/mine/mine",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/user_test/user_test"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -26,6 +27,8 @@
   },
   "usingComponents": {
     "td-button": "tdesign-miniprogram/button/button",
-    "td-input": "tdesign-miniprogram/input/input"
+    "td-input": "tdesign-miniprogram/input/input",
+    "t-tab-bar": "tdesign-miniprogram/tab-bar/tab-bar",
+    "t-tab-bar-item": "tdesign-miniprogram/tab-bar-item/tab-bar-item"
   }
 }

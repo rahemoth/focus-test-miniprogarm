@@ -10,11 +10,25 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/user_test/user_test",
+          "pathName": "pages/user_test/user_test",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/mine",
+          "pathName": "pages/mine/mine",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/home/home",
           "pathName": "pages/home/home",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/result/result",
