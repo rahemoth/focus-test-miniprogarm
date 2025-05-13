@@ -98,7 +98,7 @@ Page({
         const cellValue = this.data.table1Data[row][col];
         // 如果单元格值等于阳性符号，设置为黄色
         if (cellValue === points[0]) {
-          return '#FFFF00';
+          return '#ffffff';
         }
         // 否则初始化为白色
         return '#ffffff';
@@ -238,7 +238,7 @@ Page({
         
         // 如果单元格值是当前组的阳性符号，高亮为黄色
         if (currentPoints.includes(cellValue)) {
-          return '#FFFF00';
+          return table2GroupColors[groupIndex % table2GroupColors.length];;
         }
         
         // 否则使用组颜色
@@ -424,12 +424,12 @@ Page({
         
         // 标注阳性符号为黄色
         if (currentPoints.includes(cellValue)) {
-          return '#FFFF00'; // 黄色表示阳性符号
+          return table3GroupColors[groupIndex % table3GroupColors.length];
         }
         
         // 标注特殊符号为紫色
         if (cellValue === special) {
-          return '#ffa801'; 
+          return table3GroupColors[groupIndex % table3GroupColors.length];
         }
         
         // 否则使用组颜色
@@ -614,9 +614,13 @@ Page({
     this.setData({ tableBackgroundColor: colors[nextIndex] });
   },
 
-  StartFormalTest(){
-    wx.navigateTo({ url: '/pages/user_test/user_test' });
+  getmarkovChain(){
+
+    
+
   },
+
+
 
   getRandomPoints(min, max) {
     const points = new Set();
