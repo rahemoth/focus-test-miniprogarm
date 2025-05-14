@@ -1,34 +1,30 @@
 <!--pages/home/home.wxml-->
 
-
 <image 
-  src="/images/Ollama.ico" 
+  src="/images/Figure/Ollama.ico" 
   mode="aspectFit" 
   style="width: 543rpx; height: 462rpx; position: relative; left: 104rpx; top: 314rpx; display: inline-block; box-sizing: border-box">
 </image>
 
-
 <text 
   class="title" 
-  style="position: relative; left: 37rpx; top: 393rpx">
-  这是文本标题
+  style="position: relative; left: 241rpx; top: 627rpx">
+  神经智测
 </text>
 
 <text 
   class="content" 
-  style="position: relative; left: 37rpx; top: 375rpx">
-  这里是一段文本，有什么对作品的描述可以放在这里。
+  style="position: relative; left: 231rpx; top: 558rpx">
+  探索你的神经类型
 </text>
-
-
 <button 
   class="primary-btn"
-  style="position: relative; left: -5rpx; top: 522rpx">
-  这是一个按钮
+  style="position: relative; left: -4rpx; top: 589rpx">
+  开始测试
 </button>
 
-<button 
+<!-- <button 
   class="primary-btn"
-  style="position: relative; left: -4rpx; top: 558rpx">
+  style="position: relative; left: -7rpx; top: 610rpx">
   这是一个按钮
-</button><t-tab-bar value="label_1"><t-tab-bar-item wx:for="{{[{value: 'label_1',label: '标签栏一',icon: 'app'},{value: 'label_2',label: '标签栏二',icon: 'app'}]}}" wx:for-item="item" wx:for-index="index" wx:key="index" value="{{item.value}}">{{item.label}}</t-tab-bar-item></t-tab-bar>
+</button> -->

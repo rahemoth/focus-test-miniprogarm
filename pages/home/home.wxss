@@ -27,16 +27,22 @@
   box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
 }
 
+/* @font-face{
+  font-family:title_text
+  src:url('')  //以后再补充
+} */
+
 /* 这是那段文本以及文本标题的样式 */
 .title {
-  font-size: 18px;
-  font-weight: bold;
+  font-family: 'title_text', sans-serif;
+  font-size: 34px; /* 字体大小 */
+  font-weight: bold; /* 字体加粗 */
   color: #1a1a1a;
 }
 
 .content {
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.8;
-  color: #666;
+  color: #1a1a1a;
   text-align: justify;
 }

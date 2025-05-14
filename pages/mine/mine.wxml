@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <!-- style="background-image: url('/images/persons/mind_head_bg.jpg');" -->
     <view class="container_head">
-      <image class="head_img" src="/images/symbols/mine-background.png"></image>
+      <image class="head_img" src="/images/Figure/mine-background.png"></image>
       <view class="head_pers_info" bindtap="head_pers_info">
         <view class="head_pic">
           <image class="head_pic_content" mode="aspectFit" src="/images/symbols/2.png"></image>
