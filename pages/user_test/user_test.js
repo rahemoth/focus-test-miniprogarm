@@ -3,6 +3,7 @@ Page({
    // 当前测试的索引（用于切换不同测试表格）
    currentTestIndex: 0,
    sequenceData: null,
+   isSwiperDisabled : true,
     
    // 表1相关数据
    table1TotalRows: 40,          // 表1的总行数
@@ -74,14 +75,6 @@ Page({
   
   },
 
-  // 生成表1数据，使用随机数填充表格
-  // generateTable1Data() {
-  //   const data = Array.from({ length: this.data.table1TotalRows }, () => 
-  //     Array.from({ length: this.data.table1TotalCols }, () => Math.floor(Math.random() * 10))
-  //   );
-  //   this.setData({ table1Data: data });
-  // },
-
   // 准备表1，包括生成阳性符号和初始化背景颜色
   async prepareTable1() {
     try {
@@ -91,10 +84,10 @@ Page({
       const { table1TotalRows: rows, table1TotalCols: cols } = this.data; 
 
       //将一维sequence按行列拆分为二维数组
-      const Arraydata = Array.from({ length: rows }, (_, row) => 
+      const table1Data = Array.from({ length: rows }, (_, row) => 
         sequence.slice(row * cols, (row + 1) * cols)
       );
-      this.setData({ table1Data: Arraydata });
+      this.setData({ table1Data: table1Data });
 
       
       // 提取阳性符号（接口返回的selectedPoint1和selectedPoint2是数组，取第一个元素）
@@ -102,8 +95,8 @@ Page({
       const point2 = markovSequenceData.selectedPoint2;
 
       const points = [point1, point2]; // 实际符号值
-      console.log('阳性符号值', points);
-      console.log('符号数组', Arraydata);
+      console.log('表1阳性符号值', points);
+      console.log('表1符号数组', table1Data);
 
       // 初始化背景颜色
       const background = Array.from({ length: this.data.table1TotalRows }, () => 
@@ -215,6 +208,8 @@ Page({
         point1, 
         selectedPoint2[index]
       ]);
+      console.log('表2阳性符号值', groupPoints);
+      console.log('表2符号数组',table2Data);
   
       //初始化背景颜色
       const { table2TotalRows, table2TotalCols, table2GroupColors } = this.data;
@@ -367,11 +362,14 @@ Page({
         point1, 
         selectedPoint2[index]
       ]);
+      
 
       //生成表3数据
       const table3Data = Array.from({ length: rows }, (_, row) => 
         markovSequenceData.sequence.slice(row * cols, (row + 1) * cols)
       );
+      console.log('表3阳性符号值', groupPoints);
+      console.log('表3符号数组',table3Data);
   
       //初始化背景颜色
       const { table3TotalRows, table3TotalCols, table3GroupColors } = this.data;
@@ -582,7 +580,7 @@ Page({
             console.log('401 错误：认证失败', res.data);
             reject(res.data); // 传递错误信息
           } else {
-            console.log('调用成功', res.data);
+            console.log('表',index,'调用成功', res.data);
             resolve(res.data); // 返回接口数据
           }
         },

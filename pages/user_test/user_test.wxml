@@ -1,5 +1,5 @@
 <view class="page-wrapper">
-  <swiper class="swiper-container"  current="{{currentTestIndex}}"   bindchange="swiperChange">
+  <swiper   class="swiper-container"  current="{{currentTestIndex}}"   bindchange="swiperChange">
     <!-- 表1 -->
     <swiper-item>
       <view class="test-container">
