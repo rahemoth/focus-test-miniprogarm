@@ -31,4 +31,4 @@
   class="primary-btn"
   style="position: relative; left: -4rpx; top: 558rpx">
   这是一个按钮
-</button>
+</button><t-tab-bar value="label_1"><t-tab-bar-item wx:for="{{[{value: 'label_1',label: '标签栏一',icon: 'app'},{value: 'label_2',label: '标签栏二',icon: 'app'}]}}" wx:for-item="item" wx:for-index="index" wx:key="index" value="{{item.value}}">{{item.label}}</t-tab-bar-item></t-tab-bar>

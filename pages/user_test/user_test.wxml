@@ -1,5 +1,5 @@
 <view class="page-wrapper">
-  <swiper class="swiper-container" current="{{currentTestIndex}}" bindchange="swiperChange">
+  <swiper class="swiper-container"  current="{{currentTestIndex}}"   bindchange="swiperChange">
     <!-- 表1 -->
     <swiper-item>
       <view class="test-container">
@@ -169,9 +169,6 @@
           <button class="btn unrelated-btn" bindtap="handleTable3Unrelated">不相关</button>
           <button class="btn invalid-btn" bindtap="handleTable3Invalid">无效</button>
         </view>
-      
-      
-      
       </view>
     </swiper-item>
   </swiper>

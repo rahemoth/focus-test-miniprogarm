@@ -55,7 +55,7 @@ Page({
           setTimeout(() => {
               wx.hideLoading();
               wx.showToast({
-                  title: `欢迎回来，${userInfo.nickName}`,
+                  title: `欢迎回来`,
                   icon: 'success'
               });
               wx.navigateTo({ url: '/pages/pretest/pretest' });

@@ -2,9 +2,10 @@ Page({
   data: {
    // 当前测试的索引（用于切换不同测试表格）
    currentTestIndex: 0,
+   sequenceData: null,
     
    // 表1相关数据
-   table1TotalRows: 20,          // 表1的总行数
+   table1TotalRows: 40,          // 表1的总行数
    table1TotalCols: 5,           // 表1的总列数
    table1VisibleRows: 5,         // 表1可见区域的行数
    
@@ -19,7 +20,7 @@ Page({
    table1IsTestCompleted: false, // 表1测试是否完成的标志
    
    // 表2相关数据
-   table2TotalRows: 20,          // 表2的总行数
+   table2TotalRows: 40,          // 表2的总行数
    table2TotalCols: 5,           // 表2的总列数
    table2VisibleRows: 5,         // 表2可见区域的行数
    table2TotalGroups: 4,         // 总分组数（20行5列=100格，每25格一组）
@@ -39,7 +40,7 @@ Page({
    table2IsTestCompleted: false, // 表2测试是否完成的标志
    
    // 表3相关数据（支持分组和特殊符号）
-   table3TotalRows: 20,          // 表3的总行数
+   table3TotalRows: 40,          // 表3的总行数
    table3TotalCols: 5,           // 表3的总列数
    table3VisibleRows: 5,         // 表3可见区域的行数
    table3TotalGroups: 4,         // 总分组数
@@ -66,57 +67,61 @@ Page({
   },
 
   initializeAllTables() {
-    // 生成表1数据
-    this.generateTable1Data();
-    // 生成表2数据并初始化相关状态
-    this.generateTable2Data();
     this.prepareTable2();
     // 生成表3数据并初始化相关状态
     this.prepareTable3();
     this.prepareTable1();
+  
   },
 
   // 生成表1数据，使用随机数填充表格
-  generateTable1Data() {
-    const data = Array.from({ length: this.data.table1TotalRows }, () => 
-      Array.from({ length: this.data.table1TotalCols }, () => Math.floor(Math.random() * 10))
-    );
-    this.setData({ table1Data: data });
-  },
+  // generateTable1Data() {
+  //   const data = Array.from({ length: this.data.table1TotalRows }, () => 
+  //     Array.from({ length: this.data.table1TotalCols }, () => Math.floor(Math.random() * 10))
+  //   );
+  //   this.setData({ table1Data: data });
+  // },
 
   // 准备表1，包括生成阳性符号和初始化背景颜色
-  prepareTable1() {
-    // 生成表格数据
-    this.generateTable1Data();
+  async prepareTable1() {
+    try {
+      // 等待异步数据返回
+      const markovSequenceData = await this.getMarkovSequence(0);
+      const sequence = markovSequenceData.sequence; 
+      const { table1TotalRows: rows, table1TotalCols: cols } = this.data; 
+
+      //将一维sequence按行列拆分为二维数组
+      const Arraydata = Array.from({ length: rows }, (_, row) => 
+        sequence.slice(row * cols, (row + 1) * cols)
+      );
+      this.setData({ table1Data: Arraydata });
+
+      
+      // 提取阳性符号（接口返回的selectedPoint1和selectedPoint2是数组，取第一个元素）
+      const point1 = markovSequenceData.selectedPoint1; 
+      const point2 = markovSequenceData.selectedPoint2;
+
+      const points = [point1, point2]; // 实际符号值
+      console.log('阳性符号值', points);
+      console.log('符号数组', Arraydata);
+
+      // 初始化背景颜色
+      const background = Array.from({ length: this.data.table1TotalRows }, () => 
+        Array.from({ length: this.data.table1TotalCols }, () => '#FFFFFF')
+      );
+
+      // 设置初始选中单元格（左上角第一个单元格）
+      background[0][0] = '#87CEEB';
+
+      this.setData({
+        table1Points: points,
+        table1CellBackground: background
+      });
+
+    } catch (error) {
+      console.error('数据准备失败', error);
     
-    // 生成阳性符号
-    const points = this.getRandomPoints(0, 7);
-    
-    // 初始化背景颜色，将与阳性符号相同的符号直接标为黄色
-    const background = Array.from({ length: this.data.table1TotalRows }, (_, row) => 
-      Array.from({ length: this.data.table1TotalCols }, (_, col) => {
-        const cellValue = this.data.table1Data[row][col];
-        // 如果单元格值等于阳性符号，设置为黄色
-        if (cellValue === points[0]) {
-          return '#ffffff';
-        }
-        // 否则初始化为白色
-        return '#ffffff';
-      })
-    );
-    
-    // 设置初始选中单元格
-    background[0][0] = '#87CEEB';
-    
-    this.setData({
-      table1Points: points,
-      table1CellBackground: background,
-      table1CellIndex: 0,
-      table1CurrentRow: 0,
-      table1CurrentCol: 0,
-      table1VisibleStartRow: 0,
-      table1IsTestCompleted: false
-    });
+    }
   },
 
   // 处理表1的单元格选择逻辑
@@ -124,15 +129,16 @@ Page({
     if (this.data.table1IsTestCompleted) return;
     
     const { table1CellIndex, table1CellBackground, table1VisibleStartRow, table1VisibleRows, table1TotalCols, table1TotalRows } = this.data;
-    // 当前操作格坐标
+    // 当前格坐标
     const currentRow = Math.floor(table1CellIndex / table1TotalCols);
     const currentCol = table1CellIndex % table1TotalCols;
     
-    // 标记当前格为已选中颜色
+    //标记当前格为已选中颜色
     const newBackground = JSON.parse(JSON.stringify(table1CellBackground));
     newBackground[currentRow][currentCol] = '#435869';
     
-    // 计算下一个单元格的索引和坐标
+    
+    //计算下一个单元格的索引和坐标
     const nextIndex = table1CellIndex + 1;
     const nextRow = Math.floor(nextIndex / table1TotalCols);
     const nextCol = nextIndex % table1TotalCols;
@@ -189,66 +195,57 @@ Page({
   },
 
 
-  // 生成表2数据，使用随机数填充表格
-  generateTable2Data() {
-    const data = Array.from({ length: this.data.table2TotalRows }, () => 
-      Array.from({ length: this.data.table2TotalCols }, () => Math.floor(Math.random() * 10))
-    );
-    this.setData({ table2Data: data });
-  },
+  // 表2
+  async prepareTable2() {
+    try {
+      // 获取表2接口数据
+      const markovSequenceData = await this.getMarkovSequence(1); 
+      const { table2TotalRows: rows, table2TotalCols: cols } = this.data;
 
-  // 准备表2，包括生成阳性符号、初始化背景颜色和分组状态
-  prepareTable2() {
-    // 生成表格数据
-    this.generateTable2Data();
-    
-    // 生成4组，每组2个不重复的阳性符号（0-7随机数）
-    const groupPoints = Array.from({ length: this.data.table2TotalGroups }, () => 
-      this.getRandomPoints(0, 7)
-    );
-    
-    // 初始化背景颜色，同时高亮当前组的阳性符号
-    const background = this.initializeTable2Background(groupPoints);
-    
-    this.setData({
-      table2GroupPoints: groupPoints,
-      table2Points: groupPoints[0],          // 当前组取第一个数组的2个符号
-      table2NextPoints: groupPoints[1] || [],  // 下一组取第二个数组的2个符号（若存在）
-      table2CellBackground: background,
-      table2CellIndex: 0,
-      table2CurrentRow: 0,
-      table2CurrentCol: 0,
-      table2VisibleStartRow: 0,
-      table2IsTestCompleted: false,
-      table2CurrentGroup: 0
-    });
-  },
-
-  // 初始化表2的背景颜色，高亮当前组的阳性符号并设置组颜色
-  initializeTable2Background(groupPoints) {
-    const { table2TotalRows, table2TotalCols, table2GroupColors } = this.data;
-    const background = Array.from({ length: table2TotalRows }, (_, row) => 
-      Array.from({ length: table2TotalCols }, (_, col) => {
-        const index = row * table2TotalCols + col;
-        const groupIndex = Math.floor(index / 25);
-        const cellValue = this.data.table2Data[row][col];
-        
-        // 当前组的阳性符号
-        const currentPoints = groupPoints[groupIndex] || [];
-        
-        // 如果单元格值是当前组的阳性符号，高亮为黄色
-        if (currentPoints.includes(cellValue)) {
-          return table2GroupColors[groupIndex % table2GroupColors.length];;
-        }
-        
-        // 否则使用组颜色
-        return table2GroupColors[groupIndex % table2GroupColors.length];
-      })
-    );
-    
-    // 设置初始选中单元格
-    background[0][0] = '#87CEEB';
-    return background;
+      // 解构字段
+      const { selectedPoint1, selectedPoint2 } = markovSequenceData;
+  
+      //生成表2数据
+      const table2Data = Array.from({ length: rows }, (_, row) => 
+        markovSequenceData.sequence.slice(row * cols, (row + 1) * cols)
+      );
+  
+      //提取组阳性符号
+      const groupPoints = selectedPoint1.map((point1, index) => [
+        point1, 
+        selectedPoint2[index]
+      ]);
+  
+      //初始化背景颜色
+      const { table2TotalRows, table2TotalCols, table2GroupColors } = this.data;
+      const table2CellBackground = Array.from({ length: table2TotalRows }, (_, row) => 
+        Array.from({ length: table2TotalCols }, (_, col) => {
+          const index = row * table2TotalCols + col;
+          const groupIndex = Math.floor(index / 25); 
+          return table2GroupColors[groupIndex % table2GroupColors.length];
+        })
+      );
+      table2CellBackground[0][0] = '#87CEEB';
+  
+      //设置表2数据
+      this.setData({
+        table2Data,
+        table2GroupPoints: groupPoints,
+        table2Points: groupPoints[0],          
+        table2NextPoints: groupPoints[1] || [],  
+        table2CellBackground,
+        table2CellIndex: 0,
+        table2CurrentRow: 0,
+        table2CurrentCol: 0,
+        table2VisibleStartRow: 0,
+        table2IsTestCompleted: false,
+        table2CurrentGroup: 0
+      });
+  
+    } catch (error) {
+      console.error('表2准备失败', error);
+      wx.showToast({ title: '表2加载失败', icon: 'none' });
+    }
   },
 
   // 处理表2的单元格选择逻辑
@@ -265,17 +262,17 @@ Page({
       table2GroupPoints,
       table2TotalGroups
     } = this.data;
-
-    // 当前操作格坐标
+  
+    //当前操作格坐标
     const currentRow = Math.floor(table2CellIndex / table2TotalCols);
     const currentCol = table2CellIndex % table2TotalCols;
     
-    // 标记当前格为已选中颜色
+    //标记当前格为已选中颜色
     const newBackground = JSON.parse(JSON.stringify(table2CellBackground));
     newBackground[currentRow][currentCol] = '#435869';
-
     const nextIndex = table2CellIndex + 1;
-    // 检查是否完成25格（触发分组切换）
+
+    //检查是否完成25格
     if (nextIndex % 25 === 0 && nextIndex < table2TotalRows * table2TotalCols) {
       const nextGroup = table2CurrentGroup + 1;
       if (nextGroup < table2TotalGroups) {
@@ -285,8 +282,8 @@ Page({
           table2Points: table2GroupPoints[nextGroup],  // 切换当前阳性符号
           table2NextPoints: table2GroupPoints[nextGroup + 1] || []  // 预取下一组
         });
-
-        // 更新后续未操作格的背景颜色（保留已选中的#435869，并高亮新组的阳性符号）
+  
+        // 更新未操作格的背景颜色
         for (let row = 0; row < table2TotalRows; row++) {
           for (let col = 0; col < table2TotalCols; col++) {
             const index = row * table2TotalCols + col;
@@ -294,27 +291,19 @@ Page({
             
             // 只处理当前组及之后的单元格
             if (groupIndex >= nextGroup) {
-              const cellValue = this.data.table2Data[row][col];
-              const currentPoints = table2GroupPoints[groupIndex] || [];
-              
               // 如果是已选中的单元格，保持状态
               if (newBackground[row][col] === '#435869') {
                 continue;
               }
               
-              // 如果单元格值是当前组的阳性符号，高亮为黄色
-              if (currentPoints.includes(cellValue)) {
-                newBackground[row][col] = '#FFFF00';
-              } else {
-                // 否则使用组颜色
-                newBackground[row][col] = table2GroupColors[groupIndex % table2GroupColors.length];
-              }
+              // 直接使用组颜色
+              newBackground[row][col] = table2GroupColors[groupIndex % table2GroupColors.length];
             }
           }
         }
       }
     }
-
+  
     // 处理测试完成逻辑
     if (nextIndex >= table2TotalRows * table2TotalCols) {
       this.setData({
@@ -323,18 +312,18 @@ Page({
       });
       return;
     }
-
-    // 处理可见区域滚动
+  
+    //处理可见区域滚动
     const visibleEndRow = this.data.table2VisibleStartRow + this.data.table2VisibleRows - 1;
     if (currentRow > visibleEndRow - 3 && currentCol === 4) {
       this.setData({ table2VisibleStartRow: this.data.table2VisibleStartRow + 1 });
     }
-
-    // 设置下一个待选中格颜色
+  
+    //设置下一个格颜色
     const nextRow = Math.floor(nextIndex / table2TotalCols);
     const nextCol = nextIndex % table2TotalCols;
     newBackground[nextRow][nextCol] = '#87CEEB';
-
+  
     this.setData({
       table2CellIndex: nextIndex,
       table2CurrentRow: nextRow,
@@ -342,7 +331,6 @@ Page({
       table2CellBackground: newBackground
     });
   },
-
   // 处理表2的单元格点击事件
   handleTable2CellTap(e) { 
     // 原有逻辑
@@ -363,86 +351,61 @@ Page({
     this.processTable2Selection(); 
   },
 
-  // 准备表3，包括生成阳性符号、特殊符号、表格数据和初始化背景颜色
-  prepareTable3() {
-    // 生成每组的阳性符号（使用getRandomPoints确保不重复）
-    const groupPoints = Array.from({ length: this.data.table3TotalGroups }, () => 
-      this.getRandomPoints(0, 7)
-    );
-    
-    // 生成特殊符号（8或9）
-    const special = Math.floor(Math.random() * 2) + 8;
-    
-    // 生成表格数据
-    const getRandomValue = () => {
-      const baseNumbers = [0, 1, 2, 3, 4, 5, 6, 7];
-      const probability = 0.1; // 10%概率生成特殊符号
+    // 表3
+    /* 半夜一个人写代码，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞，好孤独好寂寞 */
+  async prepareTable3() {
+    try {
+      //获取表3接口数据
+      const markovSequenceData = await this.getMarkovSequence(2); 
+      const { table3TotalRows: rows, table3TotalCols: cols } = this.data;
+
+      // 解构
+      const { selectedPoint1, selectedPoint2, selectedSpecial } = markovSequenceData;
       
-      if (Math.random() < probability) {
-        return special; // 特殊符号
-      } else {
-        const randomIndex = Math.floor(Math.random() * baseNumbers.length);
-        return baseNumbers[randomIndex];
-      }
-    };
-    
-    const data = Array.from({ length: this.data.table3TotalRows }, () => 
-      Array.from({ length: this.data.table3TotalCols }, getRandomValue)
-    );
-    
-    // 初始化背景颜色，同时标注阳性符号和特殊符号
-    const background = this.initializeTable3Background(groupPoints, special, data);
-    
-    // 设置初始状态
-    this.setData({
-      table3GroupPoints: groupPoints,
-      table3Points: groupPoints[0],          // 当前组阳性符号
-      table3NextPoints: groupPoints[1] || [], // 下一组阳性符号
-      table3Special: special,                // 特殊符号
-      table3Data: data,
-      table3CellBackground: background,
-      table3CellIndex: 0,
-      table3CurrentRow: 0,
-      table3CurrentCol: 0,
-      table3VisibleStartRow: 0,
-      table3IsTestCompleted: false,
-      table3CurrentGroup: 0
-    });
+      // 提取组阳性符号
+      const groupPoints = selectedPoint1.map((point1, index) => [
+        point1, 
+        selectedPoint2[index]
+      ]);
+
+      //生成表3数据
+      const table3Data = Array.from({ length: rows }, (_, row) => 
+        markovSequenceData.sequence.slice(row * cols, (row + 1) * cols)
+      );
+  
+      //初始化背景颜色
+      const { table3TotalRows, table3TotalCols, table3GroupColors } = this.data;
+      const table3CellBackground = Array.from({ length: table3TotalRows }, (_, row) => 
+        Array.from({ length: table3TotalCols }, (_, col) => {
+          const index = row * table3TotalCols + col;
+          const groupIndex = Math.floor(index / 25); 
+          return table3GroupColors[groupIndex % table3GroupColors.length];
+        })
+      );
+      table3CellBackground[0][0] = '#87CEEB'; 
+  
+      //设置表3数据
+      this.setData({
+        table3Data,
+        table3GroupPoints: groupPoints,  
+        table3Points: groupPoints[0],          
+        table3NextPoints: groupPoints[1] || [],  // 下一组阳性符号
+        table3Special: selectedSpecial,  // 特殊符号
+        table3CellBackground,
+        table3CellIndex: 0,
+        table3CurrentRow: 0,
+        table3CurrentCol: 0,
+        table3VisibleStartRow: 0,
+        table3IsTestCompleted: false,
+        table3CurrentGroup: 0
+      });
+  
+    } catch (error) {
+      console.error('表3准备失败', error);
+      wx.showToast({ title: '表3加载失败', icon: 'none' });
+    }
   },
 
-  // 初始化表3的背景颜色，标注阳性符号和特殊符号并设置组颜色
-  initializeTable3Background(groupPoints, special, data) {
-    const { table3TotalRows, table3TotalCols, table3GroupColors } = this.data;
-    const background = Array.from({ length: table3TotalRows }, (_, row) => 
-      Array.from({ length: table3TotalCols }, (_, col) => {
-        const index = row * table3TotalCols + col;
-        const groupIndex = Math.floor(index / 25);
-        const cellValue = data[row][col];
-        
-        // 当前组的阳性符号
-        const currentPoints = groupPoints[groupIndex] || [];
-        
-        // 标注阳性符号为黄色
-        if (currentPoints.includes(cellValue)) {
-          return table3GroupColors[groupIndex % table3GroupColors.length];
-        }
-        
-        // 标注特殊符号为紫色
-        if (cellValue === special) {
-          return table3GroupColors[groupIndex % table3GroupColors.length];
-        }
-        
-        // 否则使用组颜色
-        return table3GroupColors[groupIndex % table3GroupColors.length];
-      })
-    );
-    
-    // 设置初始选中单元格
-    background[0][0] = '#87CEEB';
-    return background;
-  },
-
-  // 处理表格选择逻辑
   processTable3Selection() {
     if (this.data.table3IsTestCompleted) return;
     
@@ -455,14 +418,15 @@ Page({
       table3GroupColors,
       table3GroupPoints,
       table3TotalGroups,
-      table3Special,
-      table3Points,
-      table3Data
+      table3Special,  // 特殊符号值
+      table3Points,   // 当前组阳性符号数组
+      table3Data      
     } = this.data;
-
-    // 当前操作格坐标
+  
+    // 当前操作格坐标及值
     const currentRow = Math.floor(table3CellIndex / table3TotalCols);
     const currentCol = table3CellIndex % table3TotalCols;
+    const currentValue = table3Data[currentRow][currentCol];  // 当前单元格值
     
     // 标记当前格为已选中颜色
     const newBackground = JSON.parse(JSON.stringify(table3CellBackground));
@@ -470,45 +434,25 @@ Page({
 
     const nextIndex = table3CellIndex + 1;
     
-    // 检查是否完成25格（触发分组切换）
+    // 检查是否完成25格
     if (nextIndex % 25 === 0 && nextIndex < table3TotalRows * table3TotalCols) {
       const nextGroup = table3CurrentGroup + 1;
       if (nextGroup < table3TotalGroups) {
         // 更新分组状态
         this.setData({ 
           table3CurrentGroup: nextGroup,
-          table3Points: table3GroupPoints[nextGroup],  // 切换当前阳性符号
-          table3NextPoints: table3GroupPoints[nextGroup + 1] || []  // 预取下一组
+          table3Points: table3GroupPoints[nextGroup],  // 切换为下一组阳性符号数组
+          table3NextPoints: table3GroupPoints[nextGroup + 1] || []
         });
 
-        // 更新后续未操作格的背景颜色，重新标注阳性符号和特殊符号
+        // 更新后续未操作格的背景颜色
         for (let row = 0; row < table3TotalRows; row++) {
           for (let col = 0; col < table3TotalCols; col++) {
             const index = row * table3TotalCols + col;
             const groupIndex = Math.floor(index / 25);
             
-            // 只处理当前组及之后的单元格
-            if (groupIndex >= nextGroup) {
-              const cellValue = table3Data[row][col];
-              const currentPoints = table3GroupPoints[groupIndex] || [];
-              
-              // 如果是已选中的单元格，保持状态
-              if (newBackground[row][col] === '#435869') {
-                continue;
-              }
-              
-              // 标注阳性符号为黄色
-              if (currentPoints.includes(cellValue)) {
-                newBackground[row][col] = '#FFFF00';
-              } 
-              
-              else if (cellValue === table3Special) {
-                newBackground[row][col] = '#ffa801';
-              } 
-              // 否则使用组颜色
-              else {
-                newBackground[row][col] = table3GroupColors[groupIndex % table3GroupColors.length];
-              }
+            if (groupIndex >= nextGroup && newBackground[row][col] !== '#435869') {
+              newBackground[row][col] = table3GroupColors[groupIndex % table3GroupColors.length];
             }
           }
         }
@@ -530,20 +474,20 @@ Page({
       this.setData({ table3VisibleStartRow: this.data.table3VisibleStartRow + 1 });
     }
 
-    // 设置下一个待选中格颜色
+    // 计算下一个待选中格的坐标及值
     const nextRow = Math.floor(nextIndex / table3TotalCols);
     const nextCol = nextIndex % table3TotalCols;
+    const nextValue = table3Data[nextRow][nextCol];  // 下一个单元格值
+    
+    // 设置下一个待选中格颜色(蓝的)
     newBackground[nextRow][nextCol] = '#87CEEB';
 
-    // 检查特殊符号逻辑：如果当前是特殊符号，且下一个是阳性符号，则标记为无效
-    const currentValue = table3Data[currentRow][currentCol];
-    const nextValue = table3Data[nextRow][nextCol];
-    
+    // 检查 nextValue 是否在当前组阳性符号数组中
     if (currentValue === table3Special && table3Points.includes(nextValue)) {
-      console.log('检测到特殊符号后紧跟阳性符号，应按无效按钮');
-      // 这里可以添加特殊处理逻辑
+      console.log('检测到特殊符号后紧跟阳性符号');
     }
 
+    // 更新状态
     this.setData({
       table3CellIndex: nextIndex,
       table3CurrentRow: nextRow,
@@ -551,6 +495,8 @@ Page({
       table3CellBackground: newBackground
     });
   },
+
+
 
   // 处理单元格点击
   handleTable3CellTap(e) {
@@ -580,9 +526,9 @@ Page({
     const index = e.detail.current;
     this.setData({ currentTestIndex: index });
     
-    if (index === 0) this.prepareTable1();
-    else if (index === 1) this.prepareTable2();
-    else if (index === 2) this.prepareTable3();
+    // if (index === 0) this.prepareTable1();
+    // else if (index === 1) this.prepareTable2();
+    // else if (index === 2) this.prepareTable3();
   },
 
   touchStart(e) {
@@ -599,13 +545,14 @@ Page({
         ? (currentTestIndex - 1 + 3) % 3 
         : (currentTestIndex + 1) % 3;
       
-      this.setData({ currentTestIndex: nextIndex }, () => {
-        if (nextIndex === 0) this.prepareTable1();
-        else if (nextIndex === 1) this.prepareTable2();
-        else if (nextIndex === 2) this.prepareTable3();
-      });
+      // this.setData({ currentTestIndex: nextIndex }, () => {
+      //   if (nextIndex === 0) this.prepareTable1();
+      //   else if (nextIndex === 1) this.prepareTable2();
+      //   else if (nextIndex === 2) this.prepareTable3();
+      // });
     }
   },
+
 
   changeTableColor() {
     const colors = ['#ffffff', '#f0f0f0', '#e0e0e0', '#d0d0d0'];
@@ -614,13 +561,39 @@ Page({
     this.setData({ tableBackgroundColor: colors[nextIndex] });
   },
 
-  getmarkovChain(){
-
-    
-
+  getMarkovSequence(index) {
+    return new Promise((resolve, reject) => {
+      const url = 'http://localhost:8083/api/generate';
+      const token = wx.getStorageSync('token');
+  
+      if (!token) {
+        console.log('未检测到 Token');
+        reject('未登录'); // 传递错误信息
+        return;
+      }
+  
+      wx.request({
+        url: url,
+        method: 'GET',
+        data: { length: 200, type: index },
+        header: { 'Authorization': `Bearer ${token}` },
+        success: (res) => {
+          if (res.data.code === 401) {
+            console.log('401 错误：认证失败', res.data);
+            reject(res.data); // 传递错误信息
+          } else {
+            console.log('调用成功', res.data);
+            resolve(res.data); // 返回接口数据
+          }
+        },
+        fail: (err) => {
+          console.log('接口请求失败', err);
+          reject(err); // 传递错误信息
+        }
+      });
+    });
   },
-
-
+ 
 
   getRandomPoints(min, max) {
     const points = new Set();
