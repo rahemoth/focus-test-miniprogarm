@@ -121,10 +121,18 @@ Page({
   processTable1Selection() {
     if (this.data.table1IsTestCompleted) return;
     
-    const { table1CellIndex, table1CellBackground, table1VisibleStartRow, table1VisibleRows, table1TotalCols, table1TotalRows } = this.data;
+    const { table1CellIndex, table1CellBackground, table1VisibleStartRow, table1VisibleRows, table1TotalCols, table1TotalRows ,table1Data } = this.data;
     // 当前格坐标
     const currentRow = Math.floor(table1CellIndex / table1TotalCols);
     const currentCol = table1CellIndex % table1TotalCols;
+    console.log("位置",currentRow,currentCol,"索引",table1CellIndex);
+    console.log("当前符号",table1Data[currentRow][currentCol]);
+    if (table1CellIndex + 1 == table1TotalCols *  table1TotalRows) {
+      this.setData({ currentTestIndex: 1 });
+      return;
+    }
+
+
     
     //标记当前格为已选中颜色
     const newBackground = JSON.parse(JSON.stringify(table1CellBackground));
@@ -216,7 +224,7 @@ Page({
       const table2CellBackground = Array.from({ length: table2TotalRows }, (_, row) => 
         Array.from({ length: table2TotalCols }, (_, col) => {
           const index = row * table2TotalCols + col;
-          const groupIndex = Math.floor(index / 25); 
+          const groupIndex = Math.floor(index / 50); 
           return table2GroupColors[groupIndex % table2GroupColors.length];
         })
       );
@@ -255,20 +263,28 @@ Page({
       table2CurrentGroup,
       table2GroupColors,
       table2GroupPoints,
-      table2TotalGroups
+      table2TotalGroups,
+      table2Data
     } = this.data;
   
     //当前操作格坐标
     const currentRow = Math.floor(table2CellIndex / table2TotalCols);
     const currentCol = table2CellIndex % table2TotalCols;
+    console.log("位置",currentRow,currentCol,"索引",table2CellIndex);
+    console.log("当前符号",table2Data[currentRow][currentCol]);
+
+    if (table2CellIndex + 1 == table2TotalCols *  table2TotalRows) {
+      this.setData({ currentTestIndex: 2 });
+      return;
+    }
     
     //标记当前格为已选中颜色
     const newBackground = JSON.parse(JSON.stringify(table2CellBackground));
     newBackground[currentRow][currentCol] = '#435869';
     const nextIndex = table2CellIndex + 1;
 
-    //检查是否完成25格
-    if (nextIndex % 25 === 0 && nextIndex < table2TotalRows * table2TotalCols) {
+    //检查是否完成50格
+    if (nextIndex % 50 === 0 && nextIndex < table2TotalRows * table2TotalCols) {
       const nextGroup = table2CurrentGroup + 1;
       if (nextGroup < table2TotalGroups) {
         // 更新分组状态
@@ -327,8 +343,8 @@ Page({
     });
   },
   // 处理表2的单元格点击事件
-  handleTable2CellTap(e) { 
-    // 原有逻辑
+  handleTable2CellTap() { 
+    
   },
 
   // 处理表2的相关按钮点击事件
@@ -376,7 +392,7 @@ Page({
       const table3CellBackground = Array.from({ length: table3TotalRows }, (_, row) => 
         Array.from({ length: table3TotalCols }, (_, col) => {
           const index = row * table3TotalCols + col;
-          const groupIndex = Math.floor(index / 25); 
+          const groupIndex = Math.floor(index / 50); 
           return table3GroupColors[groupIndex % table3GroupColors.length];
         })
       );
@@ -425,6 +441,15 @@ Page({
     const currentRow = Math.floor(table3CellIndex / table3TotalCols);
     const currentCol = table3CellIndex % table3TotalCols;
     const currentValue = table3Data[currentRow][currentCol];  // 当前单元格值
+    console.log("位置",currentRow,currentCol,"索引",table3CellIndex);
+    console.log("当前符号",table3Data[currentRow][currentCol]);
+
+    if (table3CellIndex + 1 == table3TotalCols *  table3TotalRows) {
+      wx.navigateTo({
+        url: '/pages/result/result',
+      })
+      return;
+    }
     
     // 标记当前格为已选中颜色
     const newBackground = JSON.parse(JSON.stringify(table3CellBackground));
@@ -432,8 +457,8 @@ Page({
 
     const nextIndex = table3CellIndex + 1;
     
-    // 检查是否完成25格
-    if (nextIndex % 25 === 0 && nextIndex < table3TotalRows * table3TotalCols) {
+    // 检查是否完成50格
+    if (nextIndex % 50 === 0 && nextIndex < table3TotalRows * table3TotalCols) {
       const nextGroup = table3CurrentGroup + 1;
       if (nextGroup < table3TotalGroups) {
         // 更新分组状态
@@ -521,34 +546,16 @@ Page({
 
   // 公共方法
   swiperChange(e) {
-    const index = e.detail.current;
-    this.setData({ currentTestIndex: index });
     
-    // if (index === 0) this.prepareTable1();
-    // else if (index === 1) this.prepareTable2();
-    // else if (index === 2) this.prepareTable3();
   },
 
   touchStart(e) {
-    this.setData({ touchStartX: e.touches[0].clientX });
+    
   },
 
   touchEnd(e) {
-    const { touchStartX, currentTestIndex } = this.data;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diffX = touchEndX - touchStartX;
-
-    if (Math.abs(diffX) > 50) {
-      const nextIndex = diffX > 0 
-        ? (currentTestIndex - 1 + 3) % 3 
-        : (currentTestIndex + 1) % 3;
-      
-      // this.setData({ currentTestIndex: nextIndex }, () => {
-      //   if (nextIndex === 0) this.prepareTable1();
-      //   else if (nextIndex === 1) this.prepareTable2();
-      //   else if (nextIndex === 2) this.prepareTable3();
-      // });
-    }
+    
+    
   },
 
 
@@ -561,7 +568,7 @@ Page({
 
   getMarkovSequence(index) {
     return new Promise((resolve, reject) => {
-      const url = 'http://localhost:8083/api/generate';
+      const url = 'http://localhost:8084/api/generate';
       const token = wx.getStorageSync('token');
   
       if (!token) {
@@ -573,7 +580,7 @@ Page({
       wx.request({
         url: url,
         method: 'GET',
-        data: { length: 200, type: index },
+        data: { length: 200, type: index, ranks: 1 },
         header: { 'Authorization': `Bearer ${token}` },
         success: (res) => {
           if (res.data.code === 401) {

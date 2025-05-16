@@ -18,7 +18,7 @@ Page({
   // 测试服务器连接
   testServerConnection() {
       wx.request({
-          url: 'http://localhost:8083/api/registerWithInfo',
+          url: 'http://localhost:8084/api/registerWithInfo',
           method: 'POST',
           header: { 'Content-Type': 'application/json' },
           data: { 
@@ -138,7 +138,7 @@ Page({
           // 调用注册接口
           wx.showLoading({ title: '注册中...' });
           wx.request({
-              url: 'http://localhost:8083/api/registerWithInfo',
+              url: 'http://localhost:8084/api/registerWithInfo',
               method: 'POST',
               header: {
                   'Content-Type': 'application/json'
@@ -193,7 +193,7 @@ Page({
 
       wx.showLoading({ title: '登录中...' });
       wx.request({
-          url: 'http://localhost:8083/api/login',
+          url: 'http://localhost:8084/api/login',
           method: 'POST',
           header: {
               'Content-Type': 'application/json'
