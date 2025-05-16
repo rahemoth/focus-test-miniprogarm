@@ -19,7 +19,8 @@
 </text>
 <button 
   class="primary-btn"
-  style="position: relative; left: -4rpx; top: 589rpx">
+  style="position: relative; left: -4rpx; top: 589rpx"
+  bindtap="navigateTopretest">
   开始测试
 </button>
 

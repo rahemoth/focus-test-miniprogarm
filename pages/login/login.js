@@ -58,7 +58,7 @@ Page({
                   title: `欢迎回来`,
                   icon: 'success'
               });
-              wx.navigateTo({ url: '/pages/pretest/pretest' });
+              wx.switchTab({ url: '/pages/home/home' });
           }, 1500);
       }
   },
@@ -212,7 +212,7 @@ Page({
                   // 保存用户信息和 token 到本地存储
                   wx.setStorageSync('userInfo', res.data.data);
                   wx.setStorageSync('token', res.data.data.token);
-                  wx.navigateTo({ url: '/pages/pretest/pretest' });
+                  wx.switchTab({ url: '/pages/home/home' });
               } else {
                   const errorMsg = res.data && res.data.message? res.data.message : '未知错误';
                   wx.showToast({
