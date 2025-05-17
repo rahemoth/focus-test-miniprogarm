@@ -6,7 +6,7 @@ Page({
    isSwiperDisabled : true,
     
    // 表1相关数据
-   table1TotalRows: 40,          // 表1的总行数
+   table1TotalRows: 10,          // 表1的总行数
    table1TotalCols: 5,           // 表1的总列数
    table1VisibleRows: 5,         // 表1可见区域的行数
    
@@ -21,7 +21,7 @@ Page({
    table1IsTestCompleted: false, // 表1测试是否完成的标志
    
    // 表2相关数据
-   table2TotalRows: 40,          // 表2的总行数
+   table2TotalRows: 10,          // 表2的总行数
    table2TotalCols: 5,           // 表2的总列数
    table2VisibleRows: 5,         // 表2可见区域的行数
    table2TotalGroups: 4,         // 总分组数（20行5列=100格，每25格一组）
@@ -41,7 +41,7 @@ Page({
    table2IsTestCompleted: false, // 表2测试是否完成的标志
    
    // 表3相关数据（支持分组和特殊符号）
-   table3TotalRows: 40,          // 表3的总行数
+   table3TotalRows: 10,          // 表3的总行数
    table3TotalCols: 5,           // 表3的总列数
    table3VisibleRows: 5,         // 表3可见区域的行数
    table3TotalGroups: 4,         // 总分组数
@@ -59,29 +59,222 @@ Page({
    table3CurrentRow: 0,          // 当前选中单元格的行号
    table3CurrentCol: 0,          // 当前选中单元格的列号
    table3CurrentGroup: 0,        // 当前处理的分组序号
-   table3IsTestCompleted: false  // 表3测试是否完成的标志
+   table3IsTestCompleted: false,  // 表3测试是否完成的标志
+
+
+
+   testtime1: 300, // 表1的测试时间
+   testtime2: 300, // 表2的测试时间
+   testtime3: 300, // 表3的测试时间
+   remainingTime: 0, // 从0开始正向计时
+   startTime: null,
+   lastPressTime: null,
+   reactionTimes: [[], [], []],
+   responses: ['', '', ''],
+   recordIds: [null, null, null],
   },
 
   onLoad() {
     // 初始化所有表格数据和状态
     this.initializeAllTables();
+    this.startTimer();
   },
+
+
 
   initializeAllTables() {
-    this.prepareTable2();
-    // 生成表3数据并初始化相关状态
-    this.prepareTable3();
     this.prepareTable1();
-  
+    this.prepareTable2();
+    this.prepareTable3();
+    this.data.startTime = Date.now(); // 初始化 startTime 为当前时间
+    this.data.lastPressTime = this.data.startTime; // 重置 lastPressTime
+    console.log('现在的时间',this.data.lastPressTime)
   },
 
-  // 准备表1，包括生成阳性符号和初始化背景颜色
+
+  startTimer() {
+    //清除现有的计时器（防止重复启动）
+     clearInterval(this.timer);
+
+     // 重置剩余时间为0
+     this.remainingTime = 0;
+
+     //根据当前测试表选择对应的测试时间
+     console.log('currentTestIndex:', this.data.currentTestIndex);
+     let currentTestTime;
+     
+     switch(this.data.currentTestIndex) {
+       case 0:  // 表1
+         currentTestTime = this.data.testtime1;
+         break;
+       case 1:  // 表2
+         currentTestTime = this.data.testtime2;
+         break;
+       case 2:  // 表3
+         currentTestTime = this.data.testtime3;
+         break;
+       default:
+         currentTestTime = 30; // 默认值
+     }
+     console.log('currentTestTime:', currentTestTime);
+
+     //
+     this.timer = setInterval(() => {
+       // 增加剩余时间
+       this.remainingTime++;
+
+       // 检查是否达到或超过预设时间
+       if (this.remainingTime >= currentTestTime) {
+         // 清除计时器
+         clearInterval(this.timer);
+         //处理测试完成逻辑
+         this.handleTestCompletion();
+       }
+     }, 1000);  // 每1秒执行一次
+   },
+
+   handleTestCompletion(){
+    switch(this.data.currentTestIndex) {
+      case 0:  // 表1
+        this.setData({ currentTestIndex: 1 });
+        this.startTimer();
+        break;
+      case 1:  // 表2
+        this.setData({ currentTestIndex: 2 });
+        this.startTimer();
+        break;
+      case 2:  // 表3
+        this.submitData();
+        break;
+        
+    }
+
+   },
+
+   //计时器
+   getRestTimeText() {
+    const minutes = Math.floor(this.data.restCountdown / 60);
+    const seconds = this.data.restCountdown % 60;
+    return `测试将在 ${minutes > 0 ? `${minutes}分${seconds}秒` : `${seconds}秒`}后继续`;
+  },
+
+   btnprocess(index,IsTestCompleted){
+     try{
+          const now = Date.now();
+
+          const reactionTime = this.data.lastPressTime
+              ? (now - this.data.lastPressTime) / 1000
+              : 0;
+          this.data.lastPressTime = now;
+          
+        if(IsTestCompleted == false){
+          if (!Array.isArray(this.data.reactionTimes[this.data.currentTestIndex])) {
+            this.data.reactionTimes[this.data.currentTestIndex] = [];
+          }
+          this.data.reactionTimes[this.data.currentTestIndex].push(reactionTime);
+        }
+          console.log(this.data.reactionTimes);  
+
+
+        if (IsTestCompleted == false) {
+          console.log(IsTestCompleted);
+          switch (index) {
+            case 1:
+                this.data.responses[this.data.currentTestIndex] = (this.data.responses[this.data.currentTestIndex] || '') + "1";
+              break;
+            case 2:
+                this.data.responses[this.data.currentTestIndex] = (this.data.responses[this.data.currentTestIndex] || '') + "2";
+              break;
+            case 0:
+                this.data.responses[this.data.currentTestIndex] = (this.data.responses[this.data.currentTestIndex] || '') + "0";
+              break;
+          }
+          console.log(this.data.responses);
+        }
+     }
+
+     catch (error) {
+       console.error('Error in processKey:', error);
+       return null;
+     }
+   },
+
+   async submitData() {
+    try {
+      const userid = wx.getStorageSync('userInfo');
+      const testResult = {
+        userId: userid.id,
+        responses: this.data.responses,
+        reactionTimes: this.data.reactionTimes,
+        recordIds: this.data.recordIds,
+        gender: userid.gender,
+      };
+      console.log(testResult);
+
+     // 获取本地存储的token（微信小程序使用wx.getStorageSync）
+      const token = wx.getStorageSync('token');
+
+      // 构建请求参数
+      const requestParams = {
+        url: 'http://localhost:8084/api/submit', // API地址
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        data: testResult, // 自动JSON序列化，无需手动stringify
+        success: (res) => {
+          // 检查HTTP状态码（微信小程序中状态码在res.statusCode）
+          if (res.statusCode < 200 || res.statusCode >= 300) {
+            console.error('请求失败，状态码：', res.statusCode);
+            wx.showToast({
+              title: '提交失败：测试数据过少或为空',
+              icon: 'none'
+            });
+            return;
+          }
+          
+          // 存储结果到本地
+          wx.setStorageSync('result', res.data);
+          console.log(wx.getStorageSync('result'));
+          
+          // 跳转到结果页面
+          // wx.navigateTo({
+          //   url: '/pages/result/result'
+          // });
+        },
+        fail: (err) => {
+          console.error('请求失败', err);
+          wx.showToast({
+            title: '网络请求失败',
+            icon: 'none'
+          });
+        }
+      };
+
+      // 发送请求
+      wx.request(requestParams);
+
+    } catch (error) {
+      console.error('提交数据出错:', error);
+    } 
+  },
+
+
+
+  // 准备表1////////////////////////////////////////
   async prepareTable1() {
     try {
       // 等待异步数据返回
       const markovSequenceData = await this.getMarkovSequence(0);
       const sequence = markovSequenceData.sequence; 
+      
       const { table1TotalRows: rows, table1TotalCols: cols } = this.data; 
+
+      const ids = markovSequenceData.id;
+      this.data.recordIds[0] = ids
+      console.log('id',this.data.recordIds);
+
 
       //将一维sequence按行列拆分为二维数组
       const table1Data = Array.from({ length: rows }, (_, row) => 
@@ -97,6 +290,8 @@ Page({
       const points = [point1, point2]; // 实际符号值
       console.log('表1阳性符号值', points);
       console.log('表1符号数组', table1Data);
+      
+      
 
       // 初始化背景颜色
       const background = Array.from({ length: this.data.table1TotalRows }, () => 
@@ -170,33 +365,28 @@ Page({
     });
   },
 
-  // 处理表1的单元格点击事件
-  handleTable1CellTap(e) {
-    const row = e.currentTarget.dataset.row;
-    const col = e.currentTarget.dataset.col;
-    this.setData({
-      table1CurrentRow: row,
-      table1CurrentCol: col
-    });
-  },
+
 
   // 处理表1的相关按钮点击事件
   handleTable1Related() {
     this.processTable1Selection();
+    this.btnprocess(1,this.data.table1IsTestCompleted);
   },
 
   // 处理表1的不相关按钮点击事件
   handleTable1Unrelated() {
     this.processTable1Selection();
+    this.btnprocess(0,this.data.table1IsTestCompleted);
   },
 
   // 处理表1的无效按钮点击事件
   handleTable1Invalid() {
-    this.processTable1Selection();
+    // this.processTable1Selection();
+    // this.btnprocess(2,this.data.table1IsTestCompleted);
   },
 
 
-  // 表2
+  // 表2/////////////////////////////////////////////////////////////////////
   async prepareTable2() {
     try {
       // 获取表2接口数据
@@ -205,6 +395,9 @@ Page({
 
       // 解构字段
       const { selectedPoint1, selectedPoint2 } = markovSequenceData;
+      const ids = markovSequenceData.id;
+      this.data.recordIds[1] = ids
+      console.log('id',this.data.recordIds);
   
       //生成表2数据
       const table2Data = Array.from({ length: rows }, (_, row) => 
@@ -342,24 +535,23 @@ Page({
       table2CellBackground: newBackground
     });
   },
-  // 处理表2的单元格点击事件
-  handleTable2CellTap() { 
-    
-  },
+
 
   // 处理表2的相关按钮点击事件
   handleTable2Related() { 
     this.processTable2Selection(); 
+    this.btnprocess(1,this.data.table2IsTestCompleted);
   },
 
   // 处理表2的不相关按钮点击事件
   handleTable2Unrelated() { 
     this.processTable2Selection(); 
+    this.btnprocess(0,this.data.table2IsTestCompleted);
   },
 
   // 处理表2的无效按钮点击事件
   handleTable2Invalid() { 
-    this.processTable2Selection(); 
+    // this.processTable2Selection(); 
   },
 
     // 表3
@@ -372,6 +564,11 @@ Page({
 
       // 解构
       const { selectedPoint1, selectedPoint2, selectedSpecial } = markovSequenceData;
+
+      const ids = markovSequenceData.id;
+      this.data.recordIds[2] = ids
+      console.log('id',this.data.recordIds);
+      
       
       // 提取组阳性符号
       const groupPoints = selectedPoint1.map((point1, index) => [
@@ -445,9 +642,7 @@ Page({
     console.log("当前符号",table3Data[currentRow][currentCol]);
 
     if (table3CellIndex + 1 == table3TotalCols *  table3TotalRows) {
-      wx.navigateTo({
-        url: '/pages/result/result',
-      })
+      this.submitData();
       return;
     }
     
@@ -519,29 +714,23 @@ Page({
     });
   },
 
-
-
-  // 处理单元格点击
-  handleTable3CellTap(e) {
-    const row = e.currentTarget.dataset.row;
-    const col = e.currentTarget.dataset.col;
-    this.setData({
-      table3CurrentRow: row,
-      table3CurrentCol: col
-    });
-  },
-
   // 处理按钮点击
   handleTable3Related() {
     this.processTable3Selection();
+    this.btnprocess(1,this.data.table3IsTestCompleted);
+    console.log(this.data.table3IsTestCompleted)
   },
 
   handleTable3Unrelated() {
     this.processTable3Selection();
+    this.btnprocess(0,this.data.table3IsTestCompleted);
+    console.log(this.data.table3IsTestCompleted)
   },
 
   handleTable3Invalid() {
     this.processTable3Selection();
+    this.btnprocess(2,this.data.table3IsTestCompleted);
+    console.log(this.data.table3IsTestCompleted)
   },
 
   // 公共方法
@@ -580,7 +769,7 @@ Page({
       wx.request({
         url: url,
         method: 'GET',
-        data: { length: 200, type: index, ranks: 1 },
+        data: { length: 50, type: index, ranks: 1 },
         header: { 'Authorization': `Bearer ${token}` },
         success: (res) => {
           if (res.data.code === 401) {
