@@ -1,0 +1,59 @@
+/* pages/index/index.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  height: 100vh;
+}
+
+.button-group {
+  margin-bottom: 30rpx;
+}
+
+.vertical-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 15rpx 0;
+  padding: 20rpx 15rpx;
+  background-color: white;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.vertical-btn icon {
+  margin-right: 10rpx;
+}
+
+.table-container {
+  background-color: white;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.table-header {
+  padding: 15rpx 20rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.table-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.table-cell {
+  flex: 1;
+  padding: 10rpx 0;
+}
+
+.table-cell:last-child {
+  text-align: right;
+}
+
+/* 隐藏原生 radio 边框 */
+radio {
+  transform: scale(0.8);
+}

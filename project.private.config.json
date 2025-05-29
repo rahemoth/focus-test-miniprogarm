@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/preparetest/preparetest",
+          "pathName": "pages/preparetest/preparetest",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/user_test/user_test",
           "pathName": "pages/user_test/user_test",
           "query": "",

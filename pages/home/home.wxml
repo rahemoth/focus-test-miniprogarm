@@ -8,21 +8,28 @@
 
 <text 
   class="title" 
-  style="position: relative; left: 241rpx; top: 627rpx">
+  style="position: relative; left: 238rpx; top: 395rpx">
   神经智测
 </text>
 
 <text 
   class="content" 
-  style="position: relative; left: 231rpx; top: 558rpx">
+  style="position: relative; left: 231rpx; top: 351rpx">
   探索你的神经类型
 </text>
 <button 
   class="primary-btn"
-  style="position: relative; left: -4rpx; top: 589rpx"
-  bindtap="navigateTopretest">
+  style="position: relative; left: -20rpx; top: 550rpx"
+  bindtap="navigateTotest">
   开始测试
 </button>
+<button 
+  class="primary-btn"
+  style="position: relative; left: -17rpx; top: 320rpx"
+  bindtap="navigateTopretest">
+  开始预测试
+</button>
+
 
 <!-- <button 
   class="primary-btn"

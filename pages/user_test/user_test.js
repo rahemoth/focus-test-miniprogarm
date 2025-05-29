@@ -1,7 +1,7 @@
 Page({
   data: {
    // 当前测试的索引（用于切换不同测试表格）
-   currentTestIndex: 0,
+   currentTestIndex: 2,
    sequenceData: null,
    isSwiperDisabled : true,
     
@@ -787,6 +787,8 @@ Page({
       });
     });
   },
+
+ 
  
 
   getRandomPoints(min, max) {

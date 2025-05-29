@@ -5,7 +5,8 @@
     "pages/result/result",
     "pages/mine/mine",
     "pages/home/home",
-    "pages/user_test/user_test"
+    "pages/user_test/user_test",
+    "pages/preparetest/preparetest"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -31,7 +32,7 @@
     "t-tab-bar": "tdesign-miniprogram/tab-bar/tab-bar",
     "t-tab-bar-item": "tdesign-miniprogram/tab-bar-item/tab-bar-item"
   },
-  "tabBar":{
+  "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#3cc5f5",
     "borderStyle": "white",

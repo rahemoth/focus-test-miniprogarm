@@ -1,7 +1,7 @@
 <view class="page-wrapper">
   <swiper   class="swiper-container"  current="{{currentTestIndex}}"   bindchange="swiperChange">
     <!-- 表1 -->
-    <swiper-item>
+    <swiper-item catchtouchmove="false">
       <view class="test-container">
         <view class="test-header" style="position: relative; left: 0rpx; top: 131rpx">
           <view class="notice_box">
@@ -56,7 +56,7 @@
     </swiper-item>
 
     <!-- 表2 -->
-    <swiper-item>
+    <swiper-item catchtouchmove="false">
   <view class="test-container">
     <view class="test-header" style="position: relative; left: 0rpx; top: 131rpx; height: 327rpx; display: block; box-sizing: border-box">
       <view class="notice_box">
@@ -121,7 +121,7 @@
   </swiper-item>
 
     <!-- 表3 -->
-    <swiper-item>
+    <swiper-item catchtouchmove="false">
       <view class="test-container">
         <view class="test-header" style="position: relative; left: 0rpx; top: 102rpx; height: 332rpx; display: block; box-sizing: border-box">
           <view class="notice_box">

@@ -1,0 +1,36 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <!-- 纵向排列的按钮 -->
+  <view class="button-group">
+        <button 
+      class="vertical-btn" 
+      wx:for="{{buttonList}}" 
+      wx:key="index"
+      bindtap="handleButtonTap"
+      data-index="{{index}}" 
+     style="position: relative; left: 0rpx; top: 438rpx">
+      <icon type="{{item.icon}}" size="20" /> {{item.text}}
+    </button>
+  </view>
+
+  <!-- 单选表格 -->
+  <view class="table-container" style="position: relative; left: 0rpx; top: -243rpx; width: 522rpx; display: block; box-sizing: border-box">
+    <view class="table-header" style="position: relative; left: 0rpx; top: 0rpx">选项列表</view>
+    <view class="table-row" 
+      wx:for="{{optionList}}" 
+      wx:key="id"
+      data-index="{{index}}"
+      bindtap="handleOptionSelect"
+      style="background: {{selectedIndex === index ? '#f0f0f0' : 'white'}}"
+    >
+      <view class="table-cell">
+        <radio 
+          value="{{index}}" 
+          checked="{{selectedIndex === index}}" 
+          color="#409eff"
+        />
+      </view>
+      <view class="table-cell">{{item.text}}</view>
+    </view>
+  </view>
+</view>

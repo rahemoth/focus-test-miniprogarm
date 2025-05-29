@@ -14,6 +14,12 @@ Page({
     wx.navigateTo({ url: '/pages/pretest/pretest' });
 
   },
+
+  navigateTotest(){
+    wx.navigateTo({
+      url: '/pages/user_test/user_test',
+    });
+  },
   
 
 

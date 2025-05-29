@@ -8,9 +8,7 @@ Page({
           confirmPassword: '',
           gender: 'MALE',
           age: '24',
-          inviteCode: 'GYKTEST',
-          selectedCategory: '',
-          selectedSub: ''
+          inviteCode: 'GYKTEST'
       },
       registerButtonText: '注册账号'
   },
@@ -27,9 +25,7 @@ Page({
           confirmPassword: 'test',
           gender: 'MALE',
           age: '19',
-          inviteCode: 'GYKTEST',
-          selectedCategory: 'test',
-          selectedSub: 'test' 
+          inviteCode: 'GYKTEST'
         },
           success: () => {
               console.log('服务器连接成功');
@@ -149,9 +145,7 @@ Page({
                   role: 'USER',
                   gender: formData.gender,
                   age: formData.age,
-                  inviteCode: formData.inviteCode,
-                  selectedCategory: formData.selectedCategory,
-                  selectedSub: formData.selectedSub
+                  inviteCode: formData.inviteCode
               },
 
 
@@ -244,9 +238,7 @@ Page({
               role: '',
               gender: '',
               age: '',
-              inviteCode: '',
-              selectedCategory: '',
-              selectedSub: ''
+              inviteCode: ''
           }
       });
   }

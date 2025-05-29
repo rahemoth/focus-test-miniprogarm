@@ -22,8 +22,6 @@ page {
 /* Swiper 容器 */
 .swiper-container {
   height: 100%;
-  touch-action: none !important;
-  pointer-events: none;
 }
 
 /* 测试内容容器 */
@@ -181,8 +179,6 @@ page {
   display: flex;
   gap: 10px;
   margin-top: var(--gap);
-  touch-action: auto;
-  pointer-events: auto;
 }
 
 .btn {
@@ -227,7 +223,7 @@ page {
   }
 
   .btn {
-    flex: 1 1 45%; /* 小屏幕每行2个按钮 */
+    flex: 1 1 45%; 
   }
 
 }
