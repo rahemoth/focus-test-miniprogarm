@@ -1,7 +1,8 @@
 Page({
   data: {
    // 当前测试的索引（用于切换不同测试表格）
-   currentTestIndex: 2,
+   isWholeProcess: true,
+   currentTestIndex: 0,
    sequenceData: null,
    isSwiperDisabled : true,
     
@@ -72,9 +73,18 @@ Page({
    reactionTimes: [[], [], []],
    responses: ['', '', ''],
    recordIds: [null, null, null],
+   tableranks: 0,
   },
 
   onLoad() {
+    this.data.isWholeProcess = wx.getStorage('iswholeprocess');
+    this.data.tableranks = wx.getStorage('selectedRank');
+
+    if(!this.data.isWholeProcess){
+      this.data.currentTestIndex = wx.getStorage('selectedMode');
+    }  
+    
+    
     // 初始化所有表格数据和状态
     this.initializeAllTables();
     this.startTimer();

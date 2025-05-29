@@ -13,21 +13,56 @@ Page({
       { id: 3, text: '3阶' },
       { id: 4, text: '4阶' },
     ],
-    selectedIndex: -1, // 选中的选项索引（-1表示未选中）
+    selectedRank: -1, 
+    selectedMode: -1,
+    iswholeprocess: false,
+
   },
 
   handleButtonTap(e) {
     const index = e.currentTarget.dataset.index;
+    this.setData({
+      selectedMode: index,
+    });
     console.log(`点击按钮：${this.data.buttonList[index].text}`,index);
+    switch(index)
+    {
+      case 0:
+        wx.setStorageSync('selectedRank', res.data.data);
+        wx.setStorageSync('selectedMode', res.data.data);
+        wx.setStorageSync('iswholeprocess', res.data.data);
+        break;
+        
+      case 1:
+        wx.setStorageSync('selectedRank', res.data.data);
+        wx.setStorageSync('selectedMode', res.data.data);
+        wx.setStorageSync('iswholeprocess', res.data.data);
+        break;
+
+      case 2:
+        wx.setStorageSync('selectedRank', res.data.data);
+        wx.setStorageSync('selectedMode', res.data.data);
+        wx.setStorageSync('iswholeprocess', res.data.data);
+        break;    
+
+      case 3:
+        this.setData({
+          iswholeprocess: true,
+        });
+        wx.setStorageSync('selectedRank', res.data.data);
+        wx.setStorageSync('selectedMode', res.data.data);
+        wx.setStorageSync('iswholeprocess', res.data.data);
+        break;  
+    }
   },
 
   // 选项单选事件
   handleOptionSelect(e) {
     const index = e.currentTarget.dataset.index;
     this.setData({
-      selectedIndex: index,
+      selectedRank: index,
     });
     console.log(`选中选项：${this.data.optionList[index].text}`, index);
-    console.log(this.data.selectedIndex)
+    console.log(this.data.selectedRank)
   },
 });
