@@ -2,7 +2,6 @@ Page({
   data: {
    // 当前测试的索引（用于切换不同测试表格）
    isWholeProcess: true,
-   currentTestIndex: 0,
    sequenceData: null,
    isSwiperDisabled : true,
     
@@ -74,28 +73,71 @@ Page({
    responses: ['', '', ''],
    recordIds: [null, null, null],
    tableranks: 0,
+
+   currentTestIndex: null,
   },
 
   onLoad() {
-    this.data.isWholeProcess = wx.getStorage('iswholeprocess');
-    this.data.tableranks = wx.getStorage('selectedRank');
+    // 初始化 loading 状态
+    this.setData({
+      loading: true
+    });
+    
+    // 获取缓存数据
+    const isWholeProcess = wx.getStorageSync('iswholeprocess');
+    const tableranks = wx.getStorageSync('selectedRank');
+    
+    console.log('isWholeProcess:', isWholeProcess, 'tableranks:', tableranks);
+    
+    let currentTestIndex;
+    if (!isWholeProcess) {
+      currentTestIndex = wx.getStorageSync('selectedMode');
+      console.log('currentTestIndex:', currentTestIndex);
+    } else {
+      // 如果是全流程模式，设置默认值或从其他来源获取
+      currentTestIndex = 0; 
+    }
+    
+    // 使用 setData 更新视图数据
+    this.setData({
+      isWholeProcess,
+      tableranks,
+      currentTestIndex,
+      loading: false // 数据加载完成
+    });
 
-    if(!this.data.isWholeProcess){
-      this.data.currentTestIndex = wx.getStorage('selectedMode');
-    }  
-    
-    
-    // 初始化所有表格数据和状态
-    this.initializeAllTables();
-    this.startTimer();
+      // 初始化所有表格数据和状态
+      this.initializeAllTables();
+      this.startTimer();
   },
+    
+
+  
 
 
 
   initializeAllTables() {
-    this.prepareTable1();
-    this.prepareTable2();
-    this.prepareTable3();
+    switch (this.data.currentTestIndex) {
+      case 0:
+        this.prepareTable1();
+        break
+
+      case 1:
+        this.prepareTable2();
+        break;
+
+      case 2:
+        this.prepareTable3();
+        break;
+
+      case 3:
+        this.prepareTable1();
+        this.prepareTable2();
+        this.prepareTable3();
+        break;      
+
+    }
+
     this.data.startTime = Date.now(); // 初始化 startTime 为当前时间
     this.data.lastPressTime = this.data.startTime; // 重置 lastPressTime
     console.log('现在的时间',this.data.lastPressTime)
@@ -219,10 +261,18 @@ Page({
         recordIds: this.data.recordIds,
         gender: userid.gender,
       };
-      console.log(testResult);
+      if(!this.data.isWholeProcess)
+      {
+        for (let i = 0; i < 3; i++) {
+          testResult.recordIds[i] = this.data.recordIds[this.data.currentTestIndex]
+          console.log('Result',this.testResult);
+        }
+      }  
+      console.log('Result',testResult);
 
      // 获取本地存储的token（微信小程序使用wx.getStorageSync）
       const token = wx.getStorageSync('token');
+      console.log('获取的Token:', token); // 关键调试点
 
       // 构建请求参数
       const requestParams = {
@@ -332,9 +382,16 @@ Page({
     const currentCol = table1CellIndex % table1TotalCols;
     console.log("位置",currentRow,currentCol,"索引",table1CellIndex);
     console.log("当前符号",table1Data[currentRow][currentCol]);
+    //////////////////////////////////////////////////////////////////////////
     if (table1CellIndex + 1 == table1TotalCols *  table1TotalRows) {
-      this.setData({ currentTestIndex: 1 });
-      return;
+      if(this.data.isWholeProcess == false){
+          this.submitData();
+      }
+      else{
+        this.setData({ currentTestIndex: 1 });
+        return;
+      }
+
     }
 
 
@@ -475,10 +532,15 @@ Page({
     const currentCol = table2CellIndex % table2TotalCols;
     console.log("位置",currentRow,currentCol,"索引",table2CellIndex);
     console.log("当前符号",table2Data[currentRow][currentCol]);
-
+////////////////////////////////////////////////////////////////////////////////
     if (table2CellIndex + 1 == table2TotalCols *  table2TotalRows) {
+      if(this.data.isWholeProcess == false){
+        this.submitData();
+      }
+      else{
       this.setData({ currentTestIndex: 2 });
       return;
+      }
     }
     
     //标记当前格为已选中颜色

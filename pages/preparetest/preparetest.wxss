@@ -52,6 +52,37 @@
 .table-cell:last-child {
   text-align: right;
 }
+/* 添加自定义单选样式 */
+.custom-radio {
+  display: inline-block;
+  width: 20rpx;
+  height: 20rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+
+.custom-radio.checked {
+  border-color: #409eff;
+  background-color: #409eff;
+  position: relative;
+}
+
+.custom-radio.checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10rpx;
+  height: 10rpx;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.table-row.selected {
+  background-color: #f0f0f0;
+}
 
 /* 隐藏原生 radio 边框 */
 radio {

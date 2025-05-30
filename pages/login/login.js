@@ -80,8 +80,6 @@ Page({
                   gender: 'MALE',
                   age: '24',
                   inviteCode: 'GYKTEST',
-                  selectedCategory: '',
-                  selectedSub: ''
               }
           });
       }

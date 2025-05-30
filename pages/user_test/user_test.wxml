@@ -1,4 +1,9 @@
 <view class="page-wrapper">
+  <!-- 显示加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+  
   <swiper   class="swiper-container"  current="{{currentTestIndex}}"   bindchange="swiperChange">
     <!-- 表1 -->
     <swiper-item catchtouchmove="false">

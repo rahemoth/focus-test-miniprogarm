@@ -13,24 +13,20 @@
     </button>
   </view>
 
-  <!-- 单选表格 -->
-  <view class="table-container" style="position: relative; left: 0rpx; top: -243rpx; width: 522rpx; display: block; box-sizing: border-box">
-    <view class="table-header" style="position: relative; left: 0rpx; top: 0rpx">选项列表</view>
-    <view class="table-row" 
-      wx:for="{{optionList}}" 
-      wx:key="id"
-      data-index="{{index}}"
-      bindtap="handleOptionSelect"
-      style="background: {{selectedIndex === index ? '#f0f0f0' : 'white'}}"
-    >
-      <view class="table-cell">
-        <radio 
-          value="{{index}}" 
-          checked="{{selectedIndex === index}}" 
-          color="#409eff"
-        />
-      </view>
-      <view class="table-cell">{{item.text}}</view>
+  <view class="table-container">
+  <view class="table-header">选项列表</view>
+  <view 
+    class="table-row {{selectedRank === index ? 'selected' : ''}}" 
+    wx:for="{{optionList}}" 
+    wx:key="id"
+    data-index="{{index}}"
+    bindtap="handleOptionSelect"
+  >
+    <view class="table-cell">
+      <!-- 移除原生 radio 组件 -->
+      <view class="custom-radio {{selectedRank === index ? 'checked' : ''}}"></view>
     </view>
+    <view class="table-cell">{{item.text}}</view>
   </view>
+</view>
 </view>

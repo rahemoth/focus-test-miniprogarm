@@ -28,30 +28,42 @@ Page({
     switch(index)
     {
       case 0:
-        wx.setStorageSync('selectedRank', res.data.data);
-        wx.setStorageSync('selectedMode', res.data.data);
-        wx.setStorageSync('iswholeprocess', res.data.data);
+        wx.setStorageSync('selectedRank', this.data.selectedRank);
+        wx.setStorageSync('selectedMode', this.data.selectedMode);
+        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
+        wx.navigateTo({
+          url: '/pages/user_test/user_test',
+        })
         break;
         
       case 1:
-        wx.setStorageSync('selectedRank', res.data.data);
-        wx.setStorageSync('selectedMode', res.data.data);
-        wx.setStorageSync('iswholeprocess', res.data.data);
+        wx.setStorageSync('selectedRank', this.data.selectedRank);
+        wx.setStorageSync('selectedMode', this.data.selectedMode);
+        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
+        wx.navigateTo({
+          url: '/pages/user_test/user_test',
+        })
         break;
 
       case 2:
-        wx.setStorageSync('selectedRank', res.data.data);
-        wx.setStorageSync('selectedMode', res.data.data);
-        wx.setStorageSync('iswholeprocess', res.data.data);
+        wx.setStorageSync('selectedRank', this.data.selectedRank);
+        wx.setStorageSync('selectedMode', this.data.selectedMode);
+        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
+        wx.navigateTo({
+          url: '/pages/user_test/user_test',
+        })
         break;    
 
       case 3:
         this.setData({
           iswholeprocess: true,
         });
-        wx.setStorageSync('selectedRank', res.data.data);
-        wx.setStorageSync('selectedMode', res.data.data);
-        wx.setStorageSync('iswholeprocess', res.data.data);
+        wx.setStorageSync('selectedRank', this.data.selectedRank);
+        wx.setStorageSync('selectedMode', this.data.selectedMode);
+        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
+        wx.navigateTo({
+          url: '/pages/user_test/user_test',
+        })
         break;  
     }
   },
