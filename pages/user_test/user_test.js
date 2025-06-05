@@ -6,7 +6,7 @@ Page({
    isSwiperDisabled : true,
     
    // 表1相关数据
-   table1TotalRows: 10,          // 表1的总行数
+   table1TotalRows: 40,          // 表1的总行数
    table1TotalCols: 5,           // 表1的总列数
    table1VisibleRows: 5,         // 表1可见区域的行数
    
@@ -21,7 +21,7 @@ Page({
    table1IsTestCompleted: false, // 表1测试是否完成的标志
    
    // 表2相关数据
-   table2TotalRows: 10,          // 表2的总行数
+   table2TotalRows: 40,          // 表2的总行数
    table2TotalCols: 5,           // 表2的总列数
    table2VisibleRows: 5,         // 表2可见区域的行数
    table2TotalGroups: 4,         // 总分组数（20行5列=100格，每25格一组）
@@ -41,7 +41,7 @@ Page({
    table2IsTestCompleted: false, // 表2测试是否完成的标志
    
    // 表3相关数据（支持分组和特殊符号）
-   table3TotalRows: 10,          // 表3的总行数
+   table3TotalRows: 40,          // 表3的总行数
    table3TotalCols: 5,           // 表3的总列数
    table3VisibleRows: 5,         // 表3可见区域的行数
    table3TotalGroups: 4,         // 总分组数
@@ -841,7 +841,7 @@ Page({
       wx.request({
         url: url,
         method: 'GET',
-        data: { length: 50, type: index, ranks: 1 },
+        data: { length: 200, type: index, ranks: 1 },
         header: { 'Authorization': `Bearer ${token}` },
         success: (res) => {
           if (res.data.code === 401) {

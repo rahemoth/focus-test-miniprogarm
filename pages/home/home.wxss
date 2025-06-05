@@ -1,48 +1,89 @@
 /* pages/home/home.wxss */
-/* From Uiverse.io by ke1221 */ 
+/* 整体容器 */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 40rpx; /* 左右内边距适配不同屏幕 */
+  background: #f8f9fa; /* 更柔和的背景色 */
+}
+
+/* 图标 */
+.logo {
+  width: 320rpx;
+  height: 320rpx;
+  margin-bottom: 60rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 12, 40, 0.08); /* 调整阴影更自然 */
+}
+
+/* 标题组 */
+.title {
+  font-size: 48rpx; /* 转换为rpx单位适配 */
+  font-weight: 600;
+  color: #1f2d3d; /* 更清晰的主标题颜色 */
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  font-size: 32rpx; /* 内容文字使用rpx */
+  color: #64748b; /* 辅助文字颜色更柔和 */
+  margin-bottom: 80rpx;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* 主按钮（开始测试） */
 .primary-btn {
-  color: #090909;
-  padding: 0.7em 1.7em;
-  font-size: 18px;
-  border-radius: 0.5em;
-  background: #e8e8e8;
-  cursor: pointer;
-  border: 1px solid #e8e8e8;
+  width: 80%; /* 百分比宽度适配 */
+  height: 96rpx; /* 调整高度更符合移动端点击 */
+  padding: 0 24rpx; /* 内边距使用rpx */
+  font-size: 34rpx; /* 按钮文字大小 */
+  color: #1890ff; /* 主色调整为蓝色系 */
+  background: #f0f8ff; /* 按钮背景色 */
+  border: none; /* 移除原边框 */
+  border-radius: 48rpx; /* 更大的圆角更柔和 */
+  box-shadow: 0 6rpx 24rpx rgba(24, 144, 255, 0.15); /* 调整阴影方向 */
   transition: all 0.3s;
-  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .primary-btn:active {
-  color: #666;
-  box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
-}
- 
-/* 对应样式 */
-.fancy-text {
-  width: 90%;
-  margin: 20rpx auto;
-  padding: 20rpx;
-  border: 1rpx solid #eee;
-  border-radius: 12rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  color: #1890ff;
+  box-shadow: inset 0 4rpx 12rpx rgba(24, 144, 255, 0.1); /* 点击内阴影更柔和 */
+  transform: scale(0.98); /* 添加微缩动画 */
 }
 
-/* @font-face{
-  font-family:title_text
-  src:url('')  //以后再补充
-} */
-
-/* 这是那段文本以及文本标题的样式 */
-.title {
-  font-family: 'title_text', sans-serif;
-  font-size: 34px; /* 字体大小 */
-  font-weight: bold; /* 字体加粗 */
-  color: #1a1a1a;
+/* 次按钮（开始预测试） */
+.secondary-btn {
+  width: 80%;
+  height: 96rpx;
+  margin-top: 30rpx;
+  font-size: 34rpx;
+  color: #434e59; /* 次按钮文字颜色 */
+  background: #ffffff; /* 白色背景 */
+  border: 2rpx solid #e6f4ff; /* 浅色边框 */
+  border-radius: 48rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 12, 40, 0.05);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.content {
-  font-size: 18px;
-  line-height: 1.8;
-  color: #1a1a1a;
-  text-align: justify;
+.secondary-btn:active {
+  color: #555555;
+  box-shadow: inset 0 4rpx 12rpx rgba(24, 144, 255, 0.1); /* 点击内阴影更柔和 */
+  transform: scale(0.98); /* 添加微缩动画 */
 }
+
+/* 弹出组件样式（补充适配） */
+select-popup {
+  /* 确保弹窗层级正确 */
+  --z-index: 1000;
+}
+    

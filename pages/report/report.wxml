@@ -1,0 +1,34 @@
+<view class="container">
+  <!-- 卡片1：智商得分 -->
+  <view class="card black-card">
+    <view class="card-icon">
+      <icon type="info-circle" size="48rpx"></icon>
+    </view>
+    <view class="card-content">
+      <text class="card-title">智商：124 分</text>
+      <text class="card-desc">本轮测试得分基于国际通用的瑞文标准推理测验，理论依据为斯皮尔曼的智力二因素论，并与个体所属的常模相比较。人的智商呈正态分布，平均值为100分，标准差为15分。即68.2%的人的智商在85-115之间；95.4%的人的智商在70-130之间；99.6%的人的智商在55-145之间。</text>
+    </view>
+  </view>
+
+  <!-- 卡片2：同龄人对比 -->
+  <view class="card gray-card">
+    <view class="card-icon">
+      <icon type="user" size="48rpx"></icon>
+    </view>
+    <view class="card-content">
+      <text class="card-title">超过 95% 同龄人</text>
+      <text class="card-desc">你的智商在 20 岁男性群体中，超过了 95% 的同龄人，相当于每 20 名同龄人中，仅有 1 人与你智商相同。智商会随着年龄增长而变化，但对性别差异没有明显区别。</text>
+    </view>
+  </view>
+
+  <!-- 卡片3：用时统计 -->
+  <view class="card gray-card">
+    <view class="card-icon">
+      <icon type="clock" size="48rpx"></icon>
+    </view>
+    <view class="card-content">
+      <text class="card-title">用时：18 分 02 秒</text>
+      <text class="card-desc">答题没有时间限制，且不会影响测试结果，但通常应在 40 分钟内完成。</text>
+    </view>
+  </view>
+</view>

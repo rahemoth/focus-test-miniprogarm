@@ -1,0 +1,58 @@
+/* 容器布局 */
+.container {
+  padding: 16rpx; /* 页面内边距 */
+}
+
+/* 通用卡片样式 */
+.card {
+  display: flex;             /* 横向布局 */
+  flex-direction: row;      
+  align-items: flex-start;  /* 图标与文字顶部对齐 */
+  margin-bottom: 24rpx;     /* 卡片间距 */
+  padding: 24rpx;           /* 卡片内边距 */
+  border-radius: 16rpx;     /* 圆角 */
+}
+
+/* 深色卡片（智商模块） */
+.black-card {
+  background-color: #2E2E2E; /* 接近原图的深灰色背景 */
+  color: #FFFFFF;            /* 白色文字 */
+}
+
+/* 浅色卡片（同龄人、用时模块） */
+.gray-card {
+  background-color: #F5F5F5; /* 浅灰色背景 */
+  color: #333333;            /* 深色文字 */
+}
+
+/* 图标容器 */
+.card-icon {
+  margin-right: 20rpx; /* 图标与文字间距 */
+}
+
+/* 文字内容容器 */
+.card-content {
+  flex: 1; /* 占满剩余空间 */
+}
+
+/* 标题样式 */
+.card-title {
+  font-size: 32rpx;   /* 标题字号 */
+  font-weight: bold;  /* 加粗 */
+  display: block;     /* 独占一行 */
+  margin-bottom: 8rpx;/* 与描述间距 */
+}
+
+/* 描述文字样式 */
+.card-desc {
+  font-size: 24rpx;   /* 描述字号 */
+  line-height: 1.5;   /* 行高，提升可读性 */
+}
+
+/* 图标颜色适配 */
+.black-card .card-icon icon {
+  color: #FFFFFF; /* 深色卡片内图标为白色 */
+}
+.gray-card .card-icon icon {
+  color: #333333; /* 浅色卡片内图标为深色 */
+}

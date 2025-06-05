@@ -6,7 +6,7 @@
       <image class="head_img" src="/images/Figure/mine-background.png"></image>
       <view class="head_pers_info" bindtap="head_pers_info">
         <view class="head_pic">
-          <image class="head_pic_content" mode="aspectFit" src="/images/symbols/2.png"></image>
+          <image class="head_pic_content" mode="aspectFit" src="/images/Figure/NN.png"></image>
         </view>
         <view class="inf_content">
           <text class="user_info">张三</text>
@@ -16,50 +16,35 @@
  
     <view class="userItemListView">
       <view class="my_priview_md" bindtap="myappointpage">
-        <image class="my_priview" src="/images/symbols/0.png"></image>
+        <image class="my_priview" src="/images/Figure/result.png"></image>
         <text>测试结果</text>
         <view class="arrow"></view>
       </view>
-      <view class="my_priview_md" bindtap="openmyorder">
+      <!-- <view class="my_priview_md" bindtap="openmyorder">
         <image class="my_priview" src="/images/symbols/0.png"></image>
         <text>我的询问</text>
         <view class="arrow"></view>
-      </view>
-      <view class="my_priview_md" bindtap="myaid">
-        <image class="my_priview" src="/images/symbols/0.png"></image>
-        <text>我的救助</text>
-        <view class="arrow"></view>
-      </view>
-      <view class="my_priview_md" bindtap="myfriend">
-        <image class="my_priview" src="/images/symbols/0.png"></image>
-        <text>我的亲友</text>
-        <view class="arrow"></view>
-      </view>
-      <view class="my_priview_md" bindtap="mycollection">
-        <image class="my_priview" src="/images/symbols/0.png"></image>
-        <text>我的收藏</text>
-        <view class="arrow"></view>
-      </view>
+      </view> -->
     </view>
  
     <view class="userItemListView">
       <view class="my_priview_md" bindtap="bind">
-        <image class="my_priview" src="/images/symbols/0.png"></image>
+        <image class="my_priview" src="/images/Figure/mine.png"></image>
         <text>个人资料</text>
         <view class="arrow"></view>
       </view>
-      <view class="my_priview_md" bindtap="updatepassword">
+      <!-- <view class="my_priview_md" bindtap="updatepassword">
         <image class="my_priview" src="/images/symbols/0.png"></image>
         <text>修改密码</text>
         <view class="arrow"></view>
-      </view>
-      <view class="my_priview_md" bindtap="aboutus" hidden="true">
-        <image class="my_priview" src="/images/symbols/0.png"></image>
+      </view> -->
+      <!-- <view class="my_priview_md" bindtap="aboutus" hidden="true">
+        <image class="my_priview" src="/images/Figure/result.png"></image>
         <text>关于我们</text>
         <view class="arrow"></view>
-      </view>
+      </view> -->
       <view class="my_priview_md" bindtap="logout">
-        <image class="my_priview" src="/images/symbols/0.png"></image>
+        <image class="my_priview" src="/images/Figure/exit.png"></image>
         <text>退出登录</text>
         <view class="arrow"></view>
       </view>

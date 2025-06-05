@@ -1,32 +1,46 @@
 <!-- pages/index/index.wxml -->
 <view class="container">
-  <!-- 纵向排列的按钮 -->
+  <!-- 顶部标题装饰 -->
+  <view class="header-decor">
+    <text class="title">检测工具</text>
+    <view class="divider"></view>
+  </view>
+
+  <!-- 功能按钮组 -->
   <view class="button-group">
-        <button 
-      class="vertical-btn" 
+    <button 
+      class="function-btn" 
       wx:for="{{buttonList}}" 
       wx:key="index"
       bindtap="handleButtonTap"
-      data-index="{{index}}" 
-     style="position: relative; left: 0rpx; top: 438rpx">
-      <icon type="{{item.icon}}" size="20" /> {{item.text}}
+      data-index="{{index}}"
+    >
+      <text class="btn-text">{{item.text}}</text>
+      <view class="btn-underline"></view>
     </button>
   </view>
 
-  <view class="table-container">
-  <view class="table-header">选项列表</view>
-  <view 
-    class="table-row {{selectedRank === index ? 'selected' : ''}}" 
-    wx:for="{{optionList}}" 
-    wx:key="id"
-    data-index="{{index}}"
-    bindtap="handleOptionSelect"
-  >
-    <view class="table-cell">
-      <!-- 移除原生 radio 组件 -->
-      <view class="custom-radio {{selectedRank === index ? 'checked' : ''}}"></view>
+  <!-- 选项列表容器 -->
+  <view class="option-container">
+    <view class="option-header">
+      <text class="header-text">选择检测阶数</text>
+      <view class="header-icon"></view>
     </view>
-    <view class="table-cell">{{item.text}}</view>
+    
+    <view class="option-list">
+      <view 
+        class="option-item {{selectedRank === index ? 'active' : ''}}" 
+        wx:for="{{optionList}}" 
+        wx:key="id"
+        data-index="{{index}}"
+        bindtap="handleOptionSelect"
+      >
+        <view class="radio-box">
+          <view class="custom-radio {{selectedRank === index ? 'checked' : ''}}"></view>
+        </view>
+        <text class="option-text">{{item.text}}</text>
+      </view>
+    </view>
   </view>
 </view>
-</view>
+    

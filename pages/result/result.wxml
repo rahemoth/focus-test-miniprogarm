@@ -1,83 +1,66 @@
-<view class="page-wrapper">
-   <view class="page-container">
-    流星雨背景
-    <view class="night">
-      <view wx:for="{{Array(20).fill()}}" wx:key="index" class="shooting_star" style="{{getStarStyle(index)}}"></view> 
-    </view> 
+<view class="plan-card">
+  <view class="plan-content" style="width: 596rpx; display: block; box-sizing: border-box">
+    <!-- 当前体重 -->
+    <view class="plan-item" style="width: 530rpx; display: flex; box-sizing: border-box">
+      <text class="item-label">用户名：</text>
+      <text class="item-value">{{currentWeight}}斤</text>
+    </view>
 
-    <!-- 用户信息 -->
-    <view class="user-info">
-  <h2>用户信息</h2>
-  <view class="box">
-    <view class="info-item">
-      <p><strong>用户名：</strong>{{userInfo.username || '未知'}}</p>
+    <!-- 目标体重 -->
+    <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
+      <text class="item-label">用户ID：</text>
+      <text class="item-value">需减重</text>
     </view>
-    <view class="info-item">
-      <p><strong>用户ID：</strong>{{userInfo.id || '未知'}}</p>
+
+    <!-- 完成时间 -->
+    <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
+      <text class="item-label">用户角色</text>
+      <text class="item-value">需减重</text>
     </view>
-    <view class="info-item">
-      <p><strong>用户角色：</strong>{{userInfo.role || '未知'}}</p>
+
+   
+    
+  </view>
+</view>
+<view class="plan-card">
+  <view class="plan-content" style="width: 590rpx; display: block; box-sizing: border-box">
+    <!-- 当前体重 -->
+    <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
+      <text class="item-label">联合测验加权平均得分数</text>
+      <text class="item-value">
+        {{targetWeight}}斤，需减重 {{loseWeight}} 斤
+      </text>
+    </view>
+
+    <!-- 目标体重 -->
+    <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
+      <text class="item-label">联合测验加权平均漏百分率</text>
+      <text class="item-value">
+        {{targetWeight}}斤，需减重 {{loseWeight}} 斤
+      </text>
+    </view>
+
+    <!-- 完成时间 -->
+    <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
+      <text class="item-label">联合测验加权平均错百分率</text>
+      <text class="item-value">
+        {{endDate}}，需减重 {{duration}} 个月
+      </text>
+    </view>
+
+    <!-- 计划类型 -->
+    <view class="plan-type">
+      <text class="type-title">您的神经类型是</text>
+      <text class="type-tag gradient-tag">
+        <text class="tag-text" style="position: relative; left: 0rpx; top: -2rpx">健康型</text>
+      </text>
     </view>
   </view>
 </view>
-
-    <!-- 测试总结 -->
-    <view class="result-summary">
-      <h2>测试总结</h2>
-      <view class="metrics-container">
-        <view class="metrics-grid">
-          <view class="metric-row">
-            <view class="metric-item">
-              <view class="metric-icon">K</view>
-              <view class="metric-content">
-                <view class="metric-title">联合测验加权平均得分数</view>
-                <view class="metric-value">{{formatNumber(submitData.k)}}<text class="metric-unit">分</text></view>
-              </view>
-            </view>
-            <view class="metric-item">
-              <view class="metric-icon">H</view>
-              <view class="metric-content">
-                <view class="metric-title">联合测验加权平均漏百分率</view>
-                <view class="metric-value">{{formatNumber(submitData.h)}}<text class="metric-unit">%</text></view>
-              </view>
-            </view>
-            <view class="metric-item">
-              <view class="metric-icon">G</view>
-              <view class="metric-content">
-                <view class="metric-title">联合测验加权平均错百分率</view>
-                <view class="metric-value">{{formatNumber(submitData.g)}}<text class="metric-unit">%</text></view>
-              </view>
-            </view>
-          </view>
-          
-                </view>
-      </view>
-
-      <!-- 神经类型状态分析 -->
-      <view class="neural-type">
-        <p><strong>您的神经类型状态：</strong>
-          <span class="type-value">{{getNeuralType()}}</span>
-        </p>
-      </view>
-      <view class="type-analysis">
-        <view class="analysis-header">
-          <h3>初级类型分析</h3>
-          <view class="analysis-content" wx:if="{{matchNeuralType}}">
-            <view class="analysis-section" wx:for="{{matchNeuralType.sections}}" wx:key="index">
-              <h4>{{item.title}}</h4>
-              <view>
-                <view wx:for="{{item.content}}" wx:key="index">{{item}}</view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view> 
-    </view>
-
-    <!-- 按钮区域 -->
-    <view class="action-buttons">
-      <button class="btn btn-primary" bindtap="goToHome">返回首页</button>
-      <button class="btn btn-secondary" bindtap="downloadReport">下载报告</button>
-    </view>
-  </view>
+<view class="btn-group">
+  <!-- 查看解析报告（跳转页面） -->
+  <view class="btn view-btn" bindtap="goReport" style="width: 400rpx; display: block; box-sizing: border-box">查看解析报告</view>
+  <!-- 分享给好友（原生分享） -->
+  <button class="btn share-btn" open-type="share" style="width: 191rpx; display: block; box-sizing: border-box; left: 0rpx; top: 0rpx">分享给好友</button>
 </view>
+<button class="btn back-btn" bindtap="backTohome" style="width: 234rpx; display: block; box-sizing: border-box; left: 0rpx; top: 72rpx; position: relative; height: 80rpx">返回主页</button>

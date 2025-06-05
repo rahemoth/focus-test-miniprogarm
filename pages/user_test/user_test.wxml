@@ -11,24 +11,22 @@
         <view class="test-header" style="position: relative; left: 0rpx; top: 131rpx">
           <view class="notice_box">
             <view class="notice">
-              
-              
             </view>
           </view>
-          <text class="title" style="position: relative; left: 1rpx; top: -18rpx">神经类型调试表1</text>
-          <view class="header-decoration"></view>
-          <view class="targets-display">
+          <text class="title" style="text-align: center;">神经类型调试表1</text>
+          <view class="header-decoration"style="margin: 16rpx auto 24rpx;"></view>
+          <view class="targets-display"style="background: #fff; padding: 20rpx; border-radius: 16rpx; margin-bottom: 24rpx; display: flex; justify-content: center;">
             <view class="points-display">
               <text class="instruction">阳性符号:</text>
-              <view class="points-images">
+              <view class="points-images"style="display: flex; gap: 16rpx; padding: 12rpx;">
                 <block wx:for="{{table1Points}}" wx:key="index">
-                  <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" />
+                  <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" style="width: 60rpx; height: 60rpx; border-radius: 8rpx; box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);"/>
                 </block>
               </view>
             </view>
           </view>
         </view>
-        <view class="table-container" style="overflow: hidden; height: 500rpx; position: relative; left: 0rpx; top: 205rpx">
+        <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 80rpx">
           <view class="flex-container">
             <view 
               wx:for="{{table1Data}}" 
@@ -66,34 +64,32 @@
     <view class="test-header" style="position: relative; left: 0rpx; top: 131rpx; height: 327rpx; display: block; box-sizing: border-box">
       <view class="notice_box">
         <view class="notice">
-          
-          
         </view>
       </view>
-      <text class="title" style="position: relative; left: 1rpx; top: -18rpx">神经类型调试表2</text>
-      <view class="header-decoration"></view>
-      <view class="targets-display">
+      <text class="title" style="text-align: center;">神经类型调试表2</text>
+      <view class="header-decoration"style="margin: 16rpx auto 24rpx;"></view>
+      <view class="targets-display"style="background: #fff; padding: 20rpx; border-radius: 16rpx; margin-bottom: 24rpx; display: flex; justify-content: center;">
         <!-- 当前组阳性符号 -->
         <view class="points-display">
           <text class="instruction">当前阳性符号:</text>
-          <view class="points-images">
+          <view class="points-images"style="display: flex; gap: 16rpx; padding: 12rpx;">
             <block wx:for="{{table2Points}}" wx:key="index">
-              <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" />
+              <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" style="width: 60rpx; height: 60rpx; border-radius: 8rpx; box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);"/>
             </block>
           </view>
         </view>
         <!-- 下一组阳性符号（未完成时显示） -->
         <view class="points-display" wx:if="{{!table2IsTestCompleted && table2NextPoints.length}}">
           <text class="instruction">下一组阳性符号:</text>
-          <view class="points-images">
+          <view class="points-images"style="display: flex; gap: 16rpx; padding: 12rpx;">
             <block wx:for="{{table2NextPoints}}" wx:key="index">
-              <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" />
+              <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" style="width: 60rpx; height: 60rpx; border-radius: 8rpx; box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);" />
             </block>
           </view>
         </view>
       </view>
     </view>
-    <view class="table-container" style="overflow: hidden; height: 1000rpx; position: relative; left: 0rpx; top: 168rpx; display: block; box-sizing: border-box">
+    <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 80rpx; display: block; box-sizing: border-box">
       <view class="flex-container">
         <view 
           wx:for="{{table2Data}}" 
@@ -128,39 +124,39 @@
     <!-- 表3 -->
     <swiper-item catchtouchmove="false">
       <view class="test-container">
-        <view class="test-header" style="position: relative; left: 0rpx; top: 102rpx; height: 332rpx; display: block; box-sizing: border-box">
+        <view class="test-header" style="position: relative; left: 0rpx; top: 131rpx; height: 327rpx; display: block; box-sizing: border-box">
           <view class="notice_box">
             <view class="notice">
               
             </view>
           </view>
-          <text class="title" style="position: relative; left: 1rpx; top: -18rpx">神经类型调试表3</text>
-          <view class="header-decoration"></view>
-          <view class="targets-display">
-            <view class="points-display">
+          <text class="title" style="text-align: center;">神经类型调试表3</text>
+          <view class="header-decoration"style="margin: 16rpx auto 24rpx;"></view>
+          <view class="targets-display"style="background: #fff; padding: 20rpx; border-radius: 16rpx; margin-bottom: 24rpx; display: flex; justify-content: space-around; flex-direction: row; flex-wrap: wrap;">
+            <view class="points-display"style="flex: 1; max-width: 48%; margin-bottom: 16rpx;">
               <text class="instruction">阳性符号:</text>
-              <view class="points-images">
+              <view class="points-images"style="display: flex; gap: 16rpx; padding: 12rpx; justify-content: center;">
                 <block wx:if="{{table3Points.length}}" wx:for="{{table3Points}}" wx:key="index">
-                  <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" />
+                  <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" style="width: 60rpx; height: 60rpx; border-radius: 8rpx; box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);" />
                 </block>
               </view>
             </view>
-            <!-- 新增显示下一个阳性符号部分 -->
-            <view class="points-display" wx:if="{{table3NextPoints.length}}">
+            
+            <view class="points-display" wx:if="{{table3NextPoints.length}}"style="flex: 1; max-width: 48%; margin-bottom: 16rpx;">
               <text class="instruction">下一组阳性符号:</text>
-              <view class="points-images">
+              <view class="points-images" style="display: flex; gap: 16rpx; padding: 12rpx; justify-content: center;">
                 <block wx:for="{{table3NextPoints}}" wx:key="index">
-                  <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" />
+                  <image class="example-image" src="{{'/images/symbols/' + item + '.png'}}" mode="aspectFit" mode="aspectFit" style="width: 60rpx; height: 60rpx; border-radius: 8rpx; box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);"/>
                 </block>
               </view>
             </view>
-            <view class="special-display" style="margin-top: 10px;">
-              <text class="instruction" style="position: relative; left: 177rpx; top: -253rpx">特殊符号:</text>
-              <image class="example-image" src="{{'/images/symbols/' + table3Special + '.png'}}" mode="widthFix" style="width: 30px; height: 30px; position: relative; left: 106rpx; top: -178rpx" />
+            <view class="special-display" style="width: 100%; display: flex; justify-content: center; align-items: center;">
+              <text class="instruction" >特殊符号:</text>
+              <image class="example-image" src="{{'/images/symbols/' + table3Special + '.png'}}" mode="widthFix" style="width: 60rpx; height: 60rpx; border-radius: 8rpx; box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1); margin: 0 16rpx;" />
             </view>
           </view>
         </view>
-        <view class="table-container" style="overflow: hidden; height: 878rpx; position: relative; left: 0rpx; top: 161rpx; display: block; box-sizing: border-box">
+        <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 160rpx; display: block; box-sizing: border-box">
           <view class="flex-container">
             <view wx:for="{{table3Data}}" wx:for-index="rowIndex" wx:key="rowIndex" class="flex-row" wx:if="{{rowIndex >= table3VisibleStartRow && rowIndex < table3VisibleStartRow + table3VisibleRows}}">
               <view wx:for="{{item}}" wx:for-index="colIndex" wx:key="colIndex" class="flex-item" style="background-color: {{table3CellBackground[rowIndex][colIndex]}}" bindtap="handleTable3CellTap" data-row="{{rowIndex}}" data-col="{{colIndex}}">
@@ -169,7 +165,7 @@
             </view>
           </view>
         </view>
-        <view class="control-panel" style="position: relative; left: 0rpx; top: -70rpx">
+        <view class="control-panel" style="justify-content: center; margin: 32rpx 0 24rpx;">
           <button class="btn related-btn" bindtap="handleTable3Related">相关</button>
           <button class="btn unrelated-btn" bindtap="handleTable3Unrelated">不相关</button>
           <button class="btn invalid-btn" bindtap="handleTable3Invalid">无效</button>

@@ -1,6 +1,8 @@
 {
   "usingComponents": {
+    "selectRank": "/component/selectRank/selectRank",
     "t-tab-bar-item": "/miniprogram_npm/tdesign-miniprogram/tab-bar-item/tab-bar-item",
     "t-tab-bar": "/miniprogram_npm/tdesign-miniprogram/tab-bar/tab-bar"
+    
   }
 }

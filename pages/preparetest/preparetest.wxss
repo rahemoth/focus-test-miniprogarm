@@ -1,90 +1,136 @@
 /* pages/index/index.wxss */
+/* 整体容器 */
 .container {
-  padding: 20rpx;
-  background-color: #f8f8f8;
+  padding: 4% 5%; /* 百分比边距适配不同机型 */
   height: 100vh;
+  background: #f5f7fa; /* 柔和背景色 */
 }
 
+/* 顶部标题装饰 */
+.header-decor {
+  margin-bottom: 6%;
+}
+.title {
+  font-size: 40rpx;
+  color: #1f2d3d;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+.divider {
+  width: 20%;
+  height: 4rpx;
+  background: #1890ff;
+  border-radius: 2rpx;
+}
+
+/* 功能按钮组 */
 .button-group {
-  margin-bottom: 30rpx;
+  margin-bottom: 8%;
 }
-
-.vertical-btn {
-  display: block;
+.function-btn {
+  position: relative;
   width: 100%;
+  height: 100rpx;
+  margin: 3% 0;
+  padding: 0 4%;
+  background: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(24, 144, 255, 0.08);
   text-align: left;
-  margin: 15rpx 0;
-  padding: 20rpx 15rpx;
-  background-color: white;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  transition: all 0.3s;
+}
+.function-btn::after {
+  border: none; /* 去除小程序默认边框 */
+}
+.function-btn:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 6rpx 20rpx rgba(24, 144, 255, 0.12);
+}
+.btn-text {
+  font-size: 34rpx;
+  color: #1f2d3d;
+}
+.btn-underline {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+  height: 2rpx;
+  background: #e6f4ff;
 }
 
-.vertical-btn icon {
-  margin-right: 10rpx;
+/* 选项列表容器 */
+.option-container {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 4% 5%;
+  box-shadow: 0 4rpx 16rpx rgba(24, 144, 255, 0.06);
 }
-
-.table-container {
-  background-color: white;
-  border-radius: 10rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
-}
-
-.table-header {
-  padding: 15rpx 20rpx;
-  font-size: 32rpx;
-  font-weight: bold;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.table-row {
+.option-header {
   display: flex;
   align-items: center;
-  padding: 20rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 4%;
 }
-
-.table-cell {
-  flex: 1;
-  padding: 10rpx 0;
+.header-text {
+  font-size: 34rpx;
+  color: #1f2d3d;
+  font-weight: 500;
 }
-
-.table-cell:last-child {
-  text-align: right;
-}
-/* 添加自定义单选样式 */
-.custom-radio {
-  display: inline-block;
-  width: 20rpx;
-  height: 20rpx;
-  border: 2rpx solid #ddd;
+.header-icon {
+  width: 6rpx;
+  height: 6rpx;
+  background: #1890ff;
   border-radius: 50%;
-  margin-right: 10rpx;
+  margin-left: 12rpx;
 }
 
+/* 选项列表 */
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx; /* 选项间距 */
+}
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 3% 4%;
+  border-radius: 12rpx;
+  transition: all 0.3s;
+}
+.option-item.active {
+  background: #e6f4ff;
+}
+.option-item:hover {
+  background: #f0f8ff;
+}
+.radio-box {
+  margin-right: 20rpx;
+}
+.custom-radio {
+  width: 28rpx;
+  height: 28rpx;
+  border: 3rpx solid #d9d9d9;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
 .custom-radio.checked {
-  border-color: #409eff;
-  background-color: #409eff;
+  border-color: #1890ff;
+  background: #1890ff;
   position: relative;
 }
-
 .custom-radio.checked::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 10rpx;
-  height: 10rpx;
-  background-color: white;
+  width: 12rpx;
+  height: 12rpx;
+  background: #ffffff;
   border-radius: 50%;
 }
-
-.table-row.selected {
-  background-color: #f0f0f0;
+.option-text {
+  font-size: 32rpx;
+  color: #434e59;
 }
-
-/* 隐藏原生 radio 边框 */
-radio {
-  transform: scale(0.8);
-}
+     

@@ -1,38 +1,36 @@
 <!--pages/home/home.wxml-->
+<view class="home-container">
+  <!-- 图标 -->
+  <image 
+    src="/images/Figure/NN.png" 
+    mode="aspectFit" 
+    class="logo"
+  ></image>
 
-<image 
-  src="/images/Figure/Ollama.ico" 
-  mode="aspectFit" 
-  style="width: 543rpx; height: 462rpx; position: relative; left: 104rpx; top: 314rpx; display: inline-block; box-sizing: border-box">
-</image>
+  <!-- 标题 -->
+  <text class="title">神经智测</text>
+  <text class="subtitle">探索你的神经类型</text>
 
-<text 
-  class="title" 
-  style="position: relative; left: 238rpx; top: 395rpx">
-  神经智测
-</text>
+  <!-- 开始测试按钮（触发弹窗） -->
+  <button 
+    class="primary-btn"
+    bindtap="showPopup"
+  >
+    开始测试
+  </button>
 
-<text 
-  class="content" 
-  style="position: relative; left: 231rpx; top: 351rpx">
-  探索你的神经类型
-</text>
-<button 
-  class="primary-btn"
-  style="position: relative; left: -20rpx; top: 550rpx"
-  bindtap="navigateTotest">
-  开始测试
-</button>
-<button 
-  class="primary-btn"
-  style="position: relative; left: -17rpx; top: 320rpx"
-  bindtap="navigateTopretest">
-  开始预测试
-</button>
+  <!-- 预测试按钮（保留原功能） -->
+  <button 
+    class="secondary-btn"
+    bindtap="navigateTopretest"
+  >
+    开始预测试
+  </button>
 
-
-<!-- <button 
-  class="primary-btn"
-  style="position: relative; left: -7rpx; top: 610rpx">
-  这是一个按钮
-</button> -->
+ 
+  <selectRank
+    show="{{popupShow}}" 
+    bind:select="handleSelectResult"
+    bind:close="closePopup"
+  />
+</view>

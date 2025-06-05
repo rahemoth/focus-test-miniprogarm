@@ -57,7 +57,23 @@ Page({
    table3CurrentRow: 0,          // 当前选中单元格的行号
    table3CurrentCol: 0,          // 当前选中单元格的列号
    table3CurrentGroup: 0,        // 当前处理的分组序号
-   table3IsTestCompleted: false  // 表3测试是否完成的标志
+   table3IsTestCompleted: false,  // 表3测试是否完成的标志
+
+
+    showPopup: false,
+    popupText: '',
+    // 预设三段长文本
+    rules: {
+      A: `这是第一段长文本内容，可能包含多行文字和复杂的规则说明。
+           需要自动换行显示，并且在内容过长时出现滚动条。
+           这里可以添加具体的条款1、条款2、条款3等详细内容...`,
+      B: `第二段长文本内容，可能涉及不同的规则体系。
+           例如：使用场景说明、适用范围、例外情况等。
+           这里需要展示详细的操作步骤和注意事项...`,
+      C: `第三段长文本内容，可能包含特殊条款或补充说明。
+           比如：版权声明、联系方式、版本更新记录等。
+           此处可添加更多详细信息以满足具体需求...`
+    }
   },
 
   onLoad() {
@@ -624,5 +640,47 @@ Page({
       points.add(Math.floor(Math.random() * (max - min + 1)) + min);
     }
     return Array.from(points);
+  },
+
+  showPopupA() {
+    this.setData({
+      popupShow: true,
+      popupType: 'typeA'
+    });
+    console.log('111')
+    console.log('数据更新后:', this.data.popupShow);
+  },
+
+  showPopupB() {
+    this.setData({
+      popupShow: true,
+      popupType: 'typeB'
+    });
+  },
+
+  showPopupC() {
+    this.setData({
+      popupShow: true,
+      popupType: 'typeB'
+    });
+    console.log('数据更新后:', this.data.popupShow);
+  },
+
+  showPopup(e) {
+    const type = e.currentTarget.dataset.type;
+    this.setData({
+      showPopup: true,
+      popupText: this.data.rules[type]
+    });
+  },
+
+  // 隐藏弹窗
+  hidePopup() {
+    this.setData({
+      showPopup: false,
+      popupText: ''
+    });
   }
+
+
 });
