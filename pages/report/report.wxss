@@ -1,58 +1,92 @@
-/* 容器布局 */
+/* pages/index/index.wxss */
+/* 页面级适配（确保容器撑满屏幕） */
+page {
+  height: 100vh;
+  margin: 0;
+  background-color: #F0F0F0; /* 可选背景色 */
+}
+
 .container {
-  padding: 16rpx; /* 页面内边距 */
+  padding: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%; /* 撑满父容器高度 */
+  box-sizing: border-box;
 }
 
 /* 通用卡片样式 */
 .card {
-  display: flex;             /* 横向布局 */
-  flex-direction: row;      
-  align-items: flex-start;  /* 图标与文字顶部对齐 */
-  margin-bottom: 24rpx;     /* 卡片间距 */
-  padding: 24rpx;           /* 卡片内边距 */
-  border-radius: 16rpx;     /* 圆角 */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  width: 100%;
+  max-width: 600rpx; /* 限制最大宽度（可根据设计调整） */
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1); /* 可选阴影效果 */
 }
 
 /* 深色卡片（智商模块） */
 .black-card {
-  background-color: #2E2E2E; /* 接近原图的深灰色背景 */
-  color: #FFFFFF;            /* 白色文字 */
+  background-color: #2E2E2E;
+  color: #FFFFFF;
 }
 
 /* 浅色卡片（同龄人、用时模块） */
 .gray-card {
-  background-color: #F5F5F5; /* 浅灰色背景 */
-  color: #333333;            /* 深色文字 */
+  background-color: #FFFFFF; /* 改为白色背景更通用 */
+  color: #333333;
 }
 
 /* 图标容器 */
 .card-icon {
-  margin-right: 20rpx; /* 图标与文字间距 */
+  margin-right: 20rpx;
 }
 
 /* 文字内容容器 */
 .card-content {
-  flex: 1; /* 占满剩余空间 */
+  flex: 1;
 }
 
 /* 标题样式 */
 .card-title {
-  font-size: 32rpx;   /* 标题字号 */
-  font-weight: bold;  /* 加粗 */
-  display: block;     /* 独占一行 */
-  margin-bottom: 8rpx;/* 与描述间距 */
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
 }
 
 /* 描述文字样式 */
 .card-desc {
-  font-size: 24rpx;   /* 描述字号 */
-  line-height: 1.5;   /* 行高，提升可读性 */
+  font-size: 24rpx;
+  line-height: 1.5;
 }
 
 /* 图标颜色适配 */
 .black-card .card-icon icon {
-  color: #FFFFFF; /* 深色卡片内图标为白色 */
+  color: #FFFFFF;
 }
 .gray-card .card-icon icon {
-  color: #333333; /* 浅色卡片内图标为深色 */
+  color: #333333;
+}
+
+
+/* 按钮容器样式 */
+.button-container {
+  width: 100%;
+  margin-top: 40rpx; /* 按钮与卡片的间距 */
+  text-align: center; /* 按钮水平居中 */
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 16rpx 48rpx;
+  font-size: 28rpx;
+  border-radius: 24rpx;
+  background-color: #3b3b3b; /* 蓝色按钮 */
+  color: #FFFFFF;
+  border: none;
 }
