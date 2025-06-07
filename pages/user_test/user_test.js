@@ -186,6 +186,8 @@ Page({
    },
 
    handleTestCompletion(){
+    if(this.data.isWholeProcess)
+    {
     switch(this.data.currentTestIndex) {
       case 0:  // 表1
         this.setData({ currentTestIndex: 1 });
@@ -200,6 +202,10 @@ Page({
         break;
         
     }
+  }
+  else{
+    this.submitData();
+  }
 
    },
 
@@ -260,7 +266,9 @@ Page({
         reactionTimes: this.data.reactionTimes,
         recordIds: this.data.recordIds,
         gender: userid.gender,
+        ranks: this.data.tableranks
       };
+      const tableIndex = this.data.currentTestIndex
       if(!this.data.isWholeProcess)
       {
         for (let i = 0; i < 3; i++) {
@@ -276,7 +284,7 @@ Page({
 
       // 构建请求参数
       const requestParams = {
-        url: 'http://localhost:8084/api/submit', // API地址
+        url:  `http://localhost:8084/api/submit/processSingle?tableIndex=${tableIndex+1}`,
         method: 'POST',
         header: {
           'Content-Type': 'application/json',
@@ -291,6 +299,7 @@ Page({
               title: '提交失败：测试数据过少或为空',
               icon: 'none'
             });
+            console.log('发送的 tableIndex:', tableIndex); // 检查是否为数字
             return;
           }
           
@@ -311,9 +320,55 @@ Page({
           });
         }
       };
+      const requestParamswholeprocess = {
+        url:  `http://localhost:8084/api/submit/process`,
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        data: testResult, // 自动JSON序列化，无需手动stringify
+        success: (res) => {
+          // 检查HTTP状态码（微信小程序中状态码在res.statusCode）
+          if (res.statusCode < 200 || res.statusCode >= 300) {
+            console.error('请求失败，状态码：', res.statusCode);
+            wx.showToast({
+              title: '提交失败：测试数据过少或为空',
+              icon: 'none'
+            });
+            console.log('发送的 tableIndex:', tableIndex); // 检查是否为数字
+            return;
+          }
+          
+          // 存储结果到本地
+          wx.setStorageSync('result', res.data);
+          console.log(wx.getStorageSync('result'));
+          
+          // 跳转到结果页面
+          // wx.navigateTo({
+          //   url: '/pages/result/result'
+          // });
+        },
+        fail: (err) => {
+          console.error('请求失败', err);
+          wx.showToast({
+            title: '网络请求失败',
+            icon: 'none'
+          });
+        }
+      };
+      if(this.data.isWholeProcess)
+        {
+          wx.request(requestParamswholeprocess);
+        }
+      else{
+        wx.request(requestParams);
+      }
 
-      // 发送请求
-      wx.request(requestParams);
+      wx.navigateTo({
+        url: '/pages/result/result',
+      })
+      
 
     } catch (error) {
       console.error('提交数据出错:', error);
@@ -563,7 +618,7 @@ Page({
         for (let row = 0; row < table2TotalRows; row++) {
           for (let col = 0; col < table2TotalCols; col++) {
             const index = row * table2TotalCols + col;
-            const groupIndex = Math.floor(index / 25);
+            const groupIndex = Math.floor(index / 50);
             
             // 只处理当前组及之后的单元格
             if (groupIndex >= nextGroup) {
@@ -712,11 +767,7 @@ Page({
     const currentValue = table3Data[currentRow][currentCol];  // 当前单元格值
     console.log("位置",currentRow,currentCol,"索引",table3CellIndex);
     console.log("当前符号",table3Data[currentRow][currentCol]);
-
-    if (table3CellIndex + 1 == table3TotalCols *  table3TotalRows) {
-      this.submitData();
-      return;
-    }
+    
     
     // 标记当前格为已选中颜色
     const newBackground = JSON.parse(JSON.stringify(table3CellBackground));
@@ -739,7 +790,7 @@ Page({
         for (let row = 0; row < table3TotalRows; row++) {
           for (let col = 0; col < table3TotalCols; col++) {
             const index = row * table3TotalCols + col;
-            const groupIndex = Math.floor(index / 25);
+            const groupIndex = Math.floor(index / 50);
             
             if (groupIndex >= nextGroup && newBackground[row][col] !== '#435869') {
               newBackground[row][col] = table3GroupColors[groupIndex % table3GroupColors.length];
@@ -755,6 +806,7 @@ Page({
         table3IsTestCompleted: true,
         table3CellBackground: newBackground
       });
+      this.submitData();
       return;
     }
 
@@ -776,6 +828,8 @@ Page({
     if (currentValue === table3Special && table3Points.includes(nextValue)) {
       console.log('检测到特殊符号后紧跟阳性符号');
     }
+//////////////////////////////////////
+    
 
     // 更新状态
     this.setData({
@@ -841,7 +895,7 @@ Page({
       wx.request({
         url: url,
         method: 'GET',
-        data: { length: 200, type: index, ranks: 1 },
+        data: { length: 200, type: index, ranks: this.data.tableranks },
         header: { 'Authorization': `Bearer ${token}` },
         success: (res) => {
           if (res.data.code === 401) {

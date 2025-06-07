@@ -3,19 +3,19 @@
     <!-- 当前体重 -->
     <view class="plan-item" style="width: 530rpx; display: flex; box-sizing: border-box">
       <text class="item-label">用户名：</text>
-      <text class="item-value">{{currentWeight}}斤</text>
+      <text class="item-value">{{ userInfo.username || '未知' }}</text>
     </view>
 
     <!-- 目标体重 -->
     <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
       <text class="item-label">用户ID：</text>
-      <text class="item-value">需减重</text>
+      <text class="item-value">{{ userInfo.id || '未知' }}</text>
     </view>
 
     <!-- 完成时间 -->
     <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
       <text class="item-label">用户角色</text>
-      <text class="item-value">需减重</text>
+      <text class="item-value">{{ userInfo.role || '未知' }}</text>
     </view>
 
    
@@ -28,7 +28,7 @@
     <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
       <text class="item-label">联合测验加权平均得分数</text>
       <text class="item-value">
-        {{targetWeight}}斤，需减重 {{loseWeight}} 斤
+        {{submitData.k !== undefined ? submitData.k : submitData.K}}分
       </text>
     </view>
 
@@ -36,7 +36,7 @@
     <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
       <text class="item-label">联合测验加权平均漏百分率</text>
       <text class="item-value">
-        {{targetWeight}}斤，需减重 {{loseWeight}} 斤
+        {{submitData.h !== undefined ? submitData.h : submitData.H}}%
       </text>
     </view>
 
@@ -44,7 +44,7 @@
     <view class="plan-item" style="width: 530rpx; display: block; box-sizing: border-box">
       <text class="item-label">联合测验加权平均错百分率</text>
       <text class="item-value">
-        {{endDate}}，需减重 {{duration}} 个月
+        {{submitData.g !== undefined ? submitData.g : submitData.G}}%
       </text>
     </view>
 
@@ -52,7 +52,7 @@
     <view class="plan-type">
       <text class="type-title">您的神经类型是</text>
       <text class="type-tag gradient-tag">
-        <text class="tag-text" style="position: relative; left: 0rpx; top: -2rpx">健康型</text>
+        <text class="tag-text" style="position: relative; left: 0rpx; top: -2rpx">{{neuralType}}</text>
       </text>
     </view>
   </view>

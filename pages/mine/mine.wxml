@@ -9,17 +9,17 @@
           <image class="head_pic_content" mode="aspectFit" src="/images/Figure/NN.png"></image>
         </view>
         <view class="inf_content">
-          <text class="user_info">张三</text>
+          <text class="user_info">{{ userInfo.username || '未知' }}</text>
         </view>
       </view>
     </view>
  
     <view class="userItemListView">
-      <view class="my_priview_md" bindtap="myappointpage">
+      <!-- <view class="my_priview_md" bindtap="getTestResults">
         <image class="my_priview" src="/images/Figure/result.png"></image>
         <text>测试结果</text>
         <view class="arrow"></view>
-      </view>
+      </view> -->
       <!-- <view class="my_priview_md" bindtap="openmyorder">
         <image class="my_priview" src="/images/symbols/0.png"></image>
         <text>我的询问</text>
@@ -28,7 +28,7 @@
     </view>
  
     <view class="userItemListView">
-      <view class="my_priview_md" bindtap="bind">
+      <view class="my_priview_md" bindtap="myInfo">
         <image class="my_priview" src="/images/Figure/mine.png"></image>
         <text>个人资料</text>
         <view class="arrow"></view>
