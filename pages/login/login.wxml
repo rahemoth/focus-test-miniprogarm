@@ -8,6 +8,20 @@
         <!-- 确认密码输入 -->
         <block wx:if="{{!isLogin}}">
             <td-input label="确认密码" placeholder="请再次输入密码" data-name="confirmPassword" password bordered clearable value="{{formData.confirmPassword}}" bind:change="onInputChange"></td-input>
+            <td-input label="年龄" placeholder="输入年龄" data-name="age" password bordered clearable value="{{formData.age}}" bind:change="onInputChange"></td-input>
+
+            <view class="gender-selector" style="position: relative; left: 30rpx; top: 0rpx; width: 503rpx; display: flex; box-sizing: border-box; height: 110rpx">
+              <text class="gender-label">性别：</text>
+              <!-- 添加 radio-group 组件 -->
+              <radio-group class="radio-group" bindchange="onGenderChange">
+                <label class="radio-item" wx:for="{{genders}}" wx:key="*this">
+                  <radio value="{{item.value}}" checked="{{formData.gender === item.value}}" />
+                  <text>{{item.label}}</text>
+                </label>
+              </radio-group>
+            </view>
+
+
         </block>
 
         <!-- 登录注册按钮 -->
@@ -26,10 +40,11 @@
     </view>
 
     <!-- 微信授权登录 -->
-    <view class="auth-section" wx:if="{{isLogin}}">
+    <!-- <view class="auth-section" wx:if="{{isLogin}}">
         <text class="auth-tip">其他登录方式</text>
         <button class="auth-btn" open-type="getUserInfo" bindgetuserinfo="handleUserInfo">
             微信一键登录
         </button>
-    </view>
+    </view> -->
+    <div class="positive-symbol" style="height: 42rpx; display: flex; box-sizing: border-box; position: relative; left: 0rpx; top: 238rpx">神经智测</div>
 </view>

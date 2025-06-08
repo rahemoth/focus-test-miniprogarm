@@ -2,6 +2,11 @@
 Page({
   data: {
       isLogin: true,
+
+      genders: [
+        { label: '男', value: 'male' },
+        { label: '女', value: 'female' }
+      ],
       formData: {
           username: '',
           password: '',
@@ -96,6 +101,13 @@ Page({
       } else {
           console.error('Input name is undefined');
       }
+  },
+
+  onGenderChange(e) {
+    this.setData({
+      'formData.gender': e.detail.value
+    });
+    console.log(this.data.formData.gender);
   },
 
   // 统一表单提交

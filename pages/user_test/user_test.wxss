@@ -14,6 +14,7 @@ page {
 /* 页面容器 */
 .page-wrapper {
   height: 100vh;
+  
   display: flex;
   flex-direction: column;
   justify-content: center; /* 垂直居中内容 */
@@ -25,6 +26,7 @@ page {
 /* 滑动容器 */
 .swiper-container {
   height: calc(100vh - 0rpx);
+  
   border-radius: 24rpx;
   overflow: hidden;
   box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
@@ -35,14 +37,20 @@ page {
 
 /* 测试内容容器 */
 .test-container {
-  height: 100%;
+  
   display: flex;
   flex-direction: column;
   padding: var(--gap);
   box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.test-container::-webkit-scrollbar {
+  display: none;
 }
 
 .swiper-item {
+  
   padding: 20rpx;
   box-sizing: border-box;
   align-items: center;
@@ -56,6 +64,7 @@ page {
   margin-bottom: var(--gap);
   text-align: center;
   box-shadow: 0 3rpx 8rpx rgba(0,0,0,0.04); /* 减小阴影强度 */
+  
   width: 100%;
   box-sizing: border-box;
 }
@@ -252,4 +261,16 @@ page {
 .points-images {
   justify-content: center !important; /* 强制图片居中排列 */
   flex-wrap: nowrap; /* 禁止图片换行 */
+}
+
+.positive-symbol {
+  /* 水平居中 */
+  text-align: center; 
+  
+
+  height: 20px; 
+  
+  /* 垂直靠底部对齐 */
+  display: flex;
+  justify-content: center; /* 可选：若需要水平居中（已通过 text-align 实现，此处可省略） */
 }

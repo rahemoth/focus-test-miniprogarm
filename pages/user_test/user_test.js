@@ -75,6 +75,7 @@ Page({
    tableranks: 0,
 
    currentTestIndex: null,
+   restTimeText: '',
   },
 
   onLoad() {
@@ -149,7 +150,7 @@ Page({
      clearInterval(this.timer);
 
      // 重置剩余时间为0
-     this.remainingTime = 0;
+     this.data.remainingTime = 0;
 
      //根据当前测试表选择对应的测试时间
      console.log('currentTestIndex:', this.data.currentTestIndex);
@@ -173,10 +174,18 @@ Page({
      //
      this.timer = setInterval(() => {
        // 增加剩余时间
-       this.remainingTime++;
+      this.data.remainingTime++;
+      const restCountdown = currentTestTime - this.data.remainingTime;
+      const minutes = Math.floor(restCountdown / 60);
+      const seconds = restCountdown % 60;
+      console.log(minutes,seconds);
+      const text = `测试将在 ${minutes > 0 ? `${minutes}分${seconds}秒` : `${seconds}秒`}后结束`;
+      this.setData({
+        restTimeText: text
+      });
 
        // 检查是否达到或超过预设时间
-       if (this.remainingTime >= currentTestTime) {
+       if (this.data.remainingTime >= currentTestTime) {
          // 清除计时器
          clearInterval(this.timer);
          //处理测试完成逻辑
@@ -211,9 +220,7 @@ Page({
 
    //计时器
    getRestTimeText() {
-    const minutes = Math.floor(this.data.restCountdown / 60);
-    const seconds = this.data.restCountdown % 60;
-    return `测试将在 ${minutes > 0 ? `${minutes}分${seconds}秒` : `${seconds}秒`}后继续`;
+    
   },
 
    btnprocess(index,IsTestCompleted){

@@ -15,8 +15,10 @@
           </view>
           <text class="title" style="text-align: center;">神经类型调试表1</text>
           <view class="header-decoration"style="margin: 16rpx auto 24rpx;"></view>
+          <div class="positive-symbol">{{restTimeText}}</div>
           <view class="targets-display"style="background: #fff; padding: 20rpx; border-radius: 16rpx; margin-bottom: 24rpx; display: flex; justify-content: center;">
             <view class="points-display">
+              
               <text class="instruction">阳性符号:</text>
               <view class="points-images"style="display: flex; gap: 16rpx; padding: 12rpx;">
                 <block wx:for="{{table1Points}}" wx:key="index">
@@ -26,7 +28,7 @@
             </view>
           </view>
         </view>
-        <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 80rpx">
+        <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 115rpx">
           <view class="flex-container">
             <view 
               wx:for="{{table1Data}}" 
@@ -68,9 +70,12 @@
       </view>
       <text class="title" style="text-align: center;">神经类型调试表2</text>
       <view class="header-decoration"style="margin: 16rpx auto 24rpx;"></view>
+      <div class="positive-symbol">{{restTimeText}}</div>
       <view class="targets-display"style="background: #fff; padding: 20rpx; border-radius: 16rpx; margin-bottom: 24rpx; display: flex; justify-content: center;">
+        
         <!-- 当前组阳性符号 -->
         <view class="points-display">
+          
           <text class="instruction">当前阳性符号:</text>
           <view class="points-images"style="display: flex; gap: 16rpx; padding: 12rpx;">
             <block wx:for="{{table2Points}}" wx:key="index">
@@ -89,7 +94,7 @@
         </view>
       </view>
     </view>
-    <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 80rpx; display: block; box-sizing: border-box">
+    <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 110rpx; display: block; box-sizing: border-box">
       <view class="flex-container">
         <view 
           wx:for="{{table2Data}}" 
@@ -132,7 +137,9 @@
           </view>
           <text class="title" style="text-align: center;">神经类型调试表3</text>
           <view class="header-decoration"style="margin: 16rpx auto 24rpx;"></view>
+          <div class="positive-symbol">{{restTimeText}}</div>
           <view class="targets-display"style="background: #fff; padding: 20rpx; border-radius: 16rpx; margin-bottom: 24rpx; display: flex; justify-content: space-around; flex-direction: row; flex-wrap: wrap;">
+            
             <view class="points-display"style="flex: 1; max-width: 48%; margin-bottom: 16rpx;">
               <text class="instruction">阳性符号:</text>
               <view class="points-images"style="display: flex; gap: 16rpx; padding: 12rpx; justify-content: center;">
@@ -143,6 +150,7 @@
             </view>
             
             <view class="points-display" wx:if="{{table3NextPoints.length}}"style="flex: 1; max-width: 48%; margin-bottom: 16rpx;">
+              
               <text class="instruction">下一组阳性符号:</text>
               <view class="points-images" style="display: flex; gap: 16rpx; padding: 12rpx; justify-content: center;">
                 <block wx:for="{{table3NextPoints}}" wx:key="index">
@@ -156,7 +164,7 @@
             </view>
           </view>
         </view>
-        <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 160rpx; display: block; box-sizing: border-box">
+        <view class="table-container" style="overflow: hidden; height: 900rpx; position: relative; left: 0rpx; top: 195rpx; display: block; box-sizing: border-box">
           <view class="flex-container">
             <view wx:for="{{table3Data}}" wx:for-index="rowIndex" wx:key="rowIndex" class="flex-row" wx:if="{{rowIndex >= table3VisibleStartRow && rowIndex < table3VisibleStartRow + table3VisibleRows}}">
               <view wx:for="{{item}}" wx:for-index="colIndex" wx:key="colIndex" class="flex-item" style="background-color: {{table3CellBackground[rowIndex][colIndex]}}" bindtap="handleTable3CellTap" data-row="{{rowIndex}}" data-col="{{colIndex}}">

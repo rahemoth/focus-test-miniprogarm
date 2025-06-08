@@ -28,11 +28,45 @@
     </view>
  
     <view class="userItemListView">
-      <view class="my_priview_md" bindtap="myInfo">
+      <view class="my_priview_md" bindtap="myInfo" style="position: relative; left: 0rpx; top: -2rpx">
         <image class="my_priview" src="/images/Figure/mine.png"></image>
         <text>个人资料</text>
         <view class="arrow"></view>
+
+        <!-- 保留原有bindtap名称 -->
+        <view 
+          class="profile-popup {{showProfilePopup ? 'active' : ''}}" 
+          wx:if="{{showProfilePopup}}" 
+          style="position: fixed; left: 0; top: 0;" 
+          bindtap="closeProfilePopup"
+        >
+          <view class="mask"></view>
+          <view class="popup-content" catchtap="stopPropagation">
+            <view class="header">
+              <image class="avatar" src="/images/Figure/NN.png" mode="aspectFill"></image>
+              <text class="name">{{ userInfo.username || '未知' }}</text>
+              <button class="close-btn" bindtap="closeProfilePopup" style="width: 88rpx; display: flex; box-sizing: border-box; left: 210rpx; top: -63rpx; position: relative; height: 70rpx">×</button>
+            </view>
+            
+            <view class="content">
+              <!-- 使用原始数据结构 -->
+              <view class="item">
+                <text class="label">ID</text>
+                <text class="value">{{userInfo.id || '未知'}}</text>
+              </view>
+              <view class="item">
+                <text class="label">性别</text>
+                <text class="value">{{userInfo.gender || '未知'}}</text>
+              </view>
+              <view class="item">
+                <text class="label">年龄</text>
+                <text class="value">{{userInfo.age || '未知'}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
       </view>
+        
       <!-- <view class="my_priview_md" bindtap="updatepassword">
         <image class="my_priview" src="/images/symbols/0.png"></image>
         <text>修改密码</text>

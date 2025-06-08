@@ -62,6 +62,7 @@
           <button class="btn unrelated-btn" bindtap="handleTable1Unrelated">不相关</button>
           <button class="btn invalid-btn" bindtap="handleTable1Invalid">无效</button>
         </view>
+        <div class="positive-symbol">右滑查看下一页</div>
       </view>
     </swiper-item>
 
@@ -133,6 +134,7 @@
           <button class="btn unrelated-btn" bindtap="handleTable2Unrelated">不相关</button>
           <button class="btn invalid-btn" bindtap="handleTable2Invalid">无效</button>
         </view>
+        <div class="positive-symbol">右滑查看下一页</div>
       </view>
     </swiper-item>
 

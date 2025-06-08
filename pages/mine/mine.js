@@ -1,12 +1,14 @@
 // pages/mine/mine.js
 Page({
-
+  showProfilePopup: false, // 控制弹出层显示/隐藏
   
   data: {
     userInfo: {
       id: null,
       username: '',
-      role: ''
+      role: '',
+      age: '',
+      gender: ''
     },
   },
 
@@ -23,7 +25,7 @@ Page({
       this.setData({
         userInfo: userInfo
       });
-      console.log('用户ID:', this.data.userInfo.id);
+      console.log('用户ID:', this.data.userInfo);
     } else {
       this.setData({
         userInfo: {}
@@ -99,10 +101,16 @@ Page({
 
 
   myInfo(){
-
+    this.setData({ showProfilePopup: true });
   },
 
+  closeProfilePopup() {
+    this.setData({ showProfilePopup: false });
+  },
 
+  stopPropagation() {
+    // 空函数，阻止冒泡到遮罩层
+  },
 
   logout(){
     wx.navigateTo({
