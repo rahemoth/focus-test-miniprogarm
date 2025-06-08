@@ -200,7 +200,7 @@ Page({
 
   // 处理表1的无效按钮点击事件
   handleTable1Invalid() {
-    this.processTable1Selection();
+    // this.processTable1Selection();
   },
 
 
@@ -375,7 +375,7 @@ Page({
 
   // 处理表2的无效按钮点击事件
   handleTable2Invalid() { 
-    this.processTable2Selection(); 
+    // this.processTable2Selection(); 
   },
 
   // 表3
