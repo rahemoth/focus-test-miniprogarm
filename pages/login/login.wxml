@@ -12,7 +12,7 @@
 
             <view class="gender-selector" style="position: relative; left: 30rpx; top: 0rpx; width: 503rpx; display: flex; box-sizing: border-box; height: 110rpx">
               <text class="gender-label">性别：</text>
-              <!-- 添加 radio-group 组件 -->
+            
               <radio-group class="radio-group" bindchange="onGenderChange">
                 <label class="radio-item" wx:for="{{genders}}" wx:key="*this">
                   <radio value="{{item.value}}" checked="{{formData.gender === item.value}}" />

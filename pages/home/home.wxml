@@ -11,7 +11,7 @@
   <text class="title">神经智测</text>
   <text class="subtitle">探索你的神经类型</text>
 
-  <!-- 开始测试按钮（触发弹窗） -->
+
   <button 
     class="primary-btn"
     bindtap="showPopup"
@@ -19,7 +19,7 @@
     开始测试
   </button>
 
-  <!-- 预测试按钮（保留原功能） -->
+
   <button 
     class="secondary-btn"
     bindtap="navigateTopretest"

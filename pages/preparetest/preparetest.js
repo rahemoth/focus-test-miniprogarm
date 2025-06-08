@@ -1,80 +1,66 @@
-// pages/index/index.js
+// pages/preparetest/preparetest.js
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    buttonList: [
-      { icon: 'none', text: '表一' },
-      { icon: 'none', text: '表二' },
-      { icon: 'none', text: '表三' },
-      { icon: 'none', text: '全流程' },
-    ],
-    optionList: [
-      { id: 1, text: '1阶' },
-      { id: 2, text: '2阶' },
-      { id: 3, text: '3阶' },
-      { id: 4, text: '4阶' },
-    ],
-    selectedRank: -1, 
-    selectedMode: -1,
-    iswholeprocess: false,
 
   },
 
-  handleButtonTap(e) {
-    const index = e.currentTarget.dataset.index;
-    this.setData({
-      selectedMode: index,
-    });
-    console.log(`点击按钮：${this.data.buttonList[index].text}`,index);
-    switch(index)
-    {
-      case 0:
-        wx.setStorageSync('selectedRank', this.data.selectedRank);
-        wx.setStorageSync('selectedMode', this.data.selectedMode);
-        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
-        wx.navigateTo({
-          url: '/pages/user_test/user_test',
-        })
-        break;
-        
-      case 1:
-        wx.setStorageSync('selectedRank', this.data.selectedRank);
-        wx.setStorageSync('selectedMode', this.data.selectedMode);
-        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
-        wx.navigateTo({
-          url: '/pages/user_test/user_test',
-        })
-        break;
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
 
-      case 2:
-        wx.setStorageSync('selectedRank', this.data.selectedRank);
-        wx.setStorageSync('selectedMode', this.data.selectedMode);
-        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
-        wx.navigateTo({
-          url: '/pages/user_test/user_test',
-        })
-        break;    
-
-      case 3:
-        this.setData({
-          iswholeprocess: true,
-        });
-        wx.setStorageSync('selectedRank', this.data.selectedRank);
-        wx.setStorageSync('selectedMode', this.data.selectedMode);
-        wx.setStorageSync('iswholeprocess', this.data.iswholeprocess);
-        wx.navigateTo({
-          url: '/pages/user_test/user_test',
-        })
-        break;  
-    }
   },
 
-  // 选项单选事件
-  handleOptionSelect(e) {
-    const index = e.currentTarget.dataset.index;
-    this.setData({
-      selectedRank: index,
-    });
-    console.log(`选中选项：${this.data.optionList[index].text}`, index);
-    console.log(this.data.selectedRank)
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
   },
-});
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  }
+})

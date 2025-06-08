@@ -189,7 +189,10 @@ Page({
          // 清除计时器
          clearInterval(this.timer);
          //处理测试完成逻辑
-         this.handleTestCompletion();
+         if(IsTestCompleted == false){
+          this.handleTestCompletion();
+         }
+         
        }
      }, 1000);  // 每1秒执行一次
    },
@@ -218,10 +221,7 @@ Page({
 
    },
 
-   //计时器
-   getRestTimeText() {
-    
-  },
+
 
    btnprocess(index,IsTestCompleted){
      try{
@@ -285,9 +285,9 @@ Page({
       }  
       console.log('Result',testResult);
 
-     // 获取本地存储的token（微信小程序使用wx.getStorageSync）
+     // 获取本地存储的token
       const token = wx.getStorageSync('token');
-      console.log('获取的Token:', token); // 关键调试点
+      console.log('获取的Token:', token); 
 
       // 构建请求参数
       const requestParams = {
@@ -334,7 +334,7 @@ Page({
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        data: testResult, // 自动JSON序列化，无需手动stringify
+        data: testResult, 
         success: (res) => {
           // 检查HTTP状态码（微信小程序中状态码在res.statusCode）
           if (res.statusCode < 200 || res.statusCode >= 300) {

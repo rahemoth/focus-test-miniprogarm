@@ -3,7 +3,7 @@
 page {
   height: 100vh;
   margin: 0;
-  background-color: #F0F0F0; /* 可选背景色 */
+  background-color: #F0F0F0;
 }
 
 .container {
@@ -12,7 +12,7 @@ page {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100%; /* 撑满父容器高度 */
+  min-height: 100%; 
   box-sizing: border-box;
 }
 
@@ -25,8 +25,8 @@ page {
   padding: 24rpx;
   border-radius: 16rpx;
   width: 100%;
-  max-width: 600rpx; /* 限制最大宽度（可根据设计调整） */
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1); /* 可选阴影效果 */
+  max-width: 600rpx; 
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
 }
 
 /* 深色卡片（智商模块） */
@@ -37,7 +37,7 @@ page {
 
 /* 浅色卡片（同龄人、用时模块） */
 .gray-card {
-  background-color: #FFFFFF; /* 改为白色背景更通用 */
+  background-color: #FFFFFF; 
   color: #333333;
 }
 
@@ -77,8 +77,8 @@ page {
 /* 按钮容器样式 */
 .button-container {
   width: 100%;
-  margin-top: 40rpx; /* 按钮与卡片的间距 */
-  text-align: center; /* 按钮水平居中 */
+  margin-top: 40rpx;
+  text-align: center;
 }
 
 /* 按钮样式 */
@@ -86,7 +86,7 @@ page {
   padding: 16rpx 48rpx;
   font-size: 28rpx;
   border-radius: 24rpx;
-  background-color: #3b3b3b; /* 蓝色按钮 */
+  background-color: #3b3b3b;
   color: #FFFFFF;
   border: none;
 }

@@ -15,7 +15,7 @@
 
 /* 替代方案使用内置图标 */
 .t-cell__left-icon::before {
-  content: '\e7ae'; /* 使用微信原生图标 */
+  content: '\e7ae';
   font-family: 'weui';
 }
 
@@ -41,9 +41,9 @@
   border: 1rpx solid #07c160 !important;
   color: #07c160 !important;
   border-radius: 50rpx;
-  padding: 24rpx 80rpx; /* 调整左右内边距 */
-  width: auto; /* 改为自适应宽度 */
-  min-width: 400rpx; /* 设置最小宽度 */
+  padding: 24rpx 80rpx; 
+  width: auto; 
+  min-width: 400rpx; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,17 +55,17 @@
   width: 40rpx;
   height: 40rpx;
   margin-right: 20rpx;
-  /* 如果.auth-icon 是用于显示图标，你可能需要进一步调整其样式以确保图标正确显示 */
+
 }
 
 /* 调整分割线位置 */
 .divider {
-  margin: 80rpx 0 160rpx; /* 增大上下间距 */
+  margin: 80rpx 0 160rpx; 
 }
 
 .container {
   min-height: 100vh;
-  padding-bottom: 300rpx; /* 留出底部空间 */
+  padding-bottom: 300rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -74,7 +74,7 @@
 .center-container {
   display: flex;
   flex-direction: column;
-  /* 移除 justify-content: center; */
+ 
   align-items: center;
   min-height: 100vh;
 }
@@ -96,7 +96,7 @@
   font-size: 30rpx;
   width: 400rpx;
   padding: 24rpx 80rpx;
-  margin-top: 5rpx; /* 减小上边距，使按钮更靠近上方按钮 */
+  margin-top: 5rpx;
 }
 
 
@@ -125,7 +125,7 @@
 .radio-item {
   display: flex;
   align-items: center;
-  margin-right: 90rpx; /* 恢复右侧间距 */
+  margin-right: 90rpx; 
   white-space: nowrap;
 }
 
@@ -138,11 +138,11 @@
   /* 水平居中 */
   text-align: center; 
   
-  /* 容器需设置高度，否则垂直对齐无效果 */
-  height: 100px; /* 示例高度，可根据实际需求调整 */
+ 
+  height: 100px; 
   
   /* 垂直靠底部对齐 */
   display: flex;
   align-items: flex-end;
-  justify-content: center; /* 可选：若需要水平居中（已通过 text-align 实现，此处可省略） */
+  justify-content: center; 
 }

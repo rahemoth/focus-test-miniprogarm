@@ -41,10 +41,10 @@ Page({
   getTestResults() {
     wx.showLoading({ title: '加载中' });
     const token = wx.getStorageSync('token'); 
-    const userId = this.data.userInfo.id; // 实际需从用户信息中获取，或根据业务传参
+    const userId = this.data.userInfo.id; 
     
     wx.request({
-        url: 'http://localhost:8084/api/USER/results', // 替换为实际后端接口地址
+        url: 'http://localhost:8084/api/USER/results', 
         method: 'GET',
         header: { 'Authorization': `Bearer ${token}` },
         data: {
@@ -74,7 +74,7 @@ Page({
     const idList = [];
     const tableNames = ['summaryResults', 'table1Results', 'table2Results', 'table3Results'];
 
-    // 步骤1：收集所有有效id及对应表名
+ 
     tableNames.forEach(tableName => {
         const tableData = apiData[tableName];
         if (Array.isArray(tableData) && tableData.length > 0) {
@@ -87,14 +87,14 @@ Page({
         }
     });
 
-    // 步骤2：无有效id时返回空数组
+
     if (idList.length === 0) return [];
 
-    // 步骤3：找到最大id对应的表名
+    
     const maxId = Math.max(...idList.map(item => item.id));
     const targetTableName = idList.find(item => item.id === maxId)?.tableName;
 
-    // 步骤4：直接返回目标表的数组（确保返回数组，避免undefined）
+
     return targetTableName ? apiData[targetTableName] || [] : [];
   },
 
@@ -109,7 +109,7 @@ Page({
   },
 
   stopPropagation() {
-    // 空函数，阻止冒泡到遮罩层
+    
   },
 
   logout(){

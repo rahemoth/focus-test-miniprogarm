@@ -6,8 +6,8 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 0 40rpx; /* 左右内边距适配不同屏幕 */
-  background: #f8f9fa; /* 更柔和的背景色 */
+  padding: 0 40rpx;
+  background: #f8f9fa;
 }
 
 /* 图标 */
@@ -16,20 +16,20 @@
   height: 320rpx;
   margin-bottom: 60rpx;
   border-radius: 24rpx;
-  box-shadow: 0 8rpx 32rpx rgba(0, 12, 40, 0.08); /* 调整阴影更自然 */
+  box-shadow: 0 8rpx 32rpx rgba(0, 12, 40, 0.08); 
 }
 
 /* 标题组 */
 .title {
-  font-size: 48rpx; /* 转换为rpx单位适配 */
+  font-size: 48rpx; 
   font-weight: 600;
-  color: #1f2d3d; /* 更清晰的主标题颜色 */
+  color: #1f2d3d; 
   margin-bottom: 16rpx;
 }
 
 .subtitle {
-  font-size: 32rpx; /* 内容文字使用rpx */
-  color: #64748b; /* 辅助文字颜色更柔和 */
+  font-size: 32rpx; 
+  color: #64748b;
   margin-bottom: 80rpx;
   text-align: center;
   line-height: 1.5;
@@ -37,15 +37,15 @@
 
 /* 主按钮（开始测试） */
 .primary-btn {
-  width: 80%; /* 百分比宽度适配 */
-  height: 96rpx; /* 调整高度更符合移动端点击 */
-  padding: 0 24rpx; /* 内边距使用rpx */
-  font-size: 34rpx; /* 按钮文字大小 */
-  color: #1890ff; /* 主色调整为蓝色系 */
-  background: #f0f8ff; /* 按钮背景色 */
-  border: none; /* 移除原边框 */
-  border-radius: 48rpx; /* 更大的圆角更柔和 */
-  box-shadow: 0 6rpx 24rpx rgba(24, 144, 255, 0.15); /* 调整阴影方向 */
+  width: 80%; 
+  height: 96rpx;
+  padding: 0 24rpx;
+  font-size: 34rpx;
+  color: #1890ff;
+  background: #f0f8ff; 
+  border: none; 
+  border-radius: 48rpx; 
+  box-shadow: 0 6rpx 24rpx rgba(24, 144, 255, 0.15); 
   transition: all 0.3s;
   display: flex;
   align-items: center;
@@ -54,8 +54,8 @@
 
 .primary-btn:active {
   color: #1890ff;
-  box-shadow: inset 0 4rpx 12rpx rgba(24, 144, 255, 0.1); /* 点击内阴影更柔和 */
-  transform: scale(0.98); /* 添加微缩动画 */
+  box-shadow: inset 0 4rpx 12rpx rgba(24, 144, 255, 0.1);
+  transform: scale(0.98); 
 }
 
 /* 次按钮（开始预测试） */
@@ -64,9 +64,9 @@
   height: 96rpx;
   margin-top: 30rpx;
   font-size: 34rpx;
-  color: #434e59; /* 次按钮文字颜色 */
-  background: #ffffff; /* 白色背景 */
-  border: 2rpx solid #e6f4ff; /* 浅色边框 */
+  color: #434e59; 
+  background: #ffffff;
+  border: 2rpx solid #e6f4ff; 
   border-radius: 48rpx;
   box-shadow: 0 4rpx 16rpx rgba(0, 12, 40, 0.05);
   transition: all 0.3s;
@@ -77,13 +77,13 @@
 
 .secondary-btn:active {
   color: #555555;
-  box-shadow: inset 0 4rpx 12rpx rgba(24, 144, 255, 0.1); /* 点击内阴影更柔和 */
-  transform: scale(0.98); /* 添加微缩动画 */
+  box-shadow: inset 0 4rpx 12rpx rgba(24, 144, 255, 0.1); 
+  transform: scale(0.98); 
 }
 
-/* 弹出组件样式（补充适配） */
+
 select-popup {
-  /* 确保弹窗层级正确 */
+
   --z-index: 1000;
 }
     

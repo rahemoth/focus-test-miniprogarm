@@ -6,9 +6,8 @@
     "pages/mine/mine",
     "pages/home/home",
     "pages/user_test/user_test",
-
     "pages/report/report",
-    "component/testrules/testrules"
+    "pages/preparetest/preparetest"
   ],
   "window": {
     "navigationBarTextStyle": "black",

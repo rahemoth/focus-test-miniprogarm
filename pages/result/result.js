@@ -90,7 +90,7 @@ Page({
     const result = wx.getStorageSync('result');
     if (result && result.data) {
       const testData = result.data;
-      // 合并新数据到 submitData（避免覆盖原有数据）
+      // 合并新数据到 submitData
       const newSubmitData = {
         ...this.data.submitData, // 保留原有数据
         // 基础信息
@@ -110,8 +110,8 @@ Page({
         x3: testData.x3,
         e: testData.e,
         ex: testData.ex,
-        // K/G/H 指标（兼容大小写，优先使用后端返回的字段）
-        k1: testData.k1 ?? testData.K1 ?? 0, // 优先取 k1，若无则取 K1，默认 0
+        // K/G/H 指标
+        k1: testData.k1 ?? testData.K1 ?? 0, 
         k2: testData.k2 ?? testData.K2 ?? 0,
         k3: testData.k3 ?? testData.K3 ?? 0,
         k: testData.k ?? testData.K ??  0,
@@ -127,7 +127,7 @@ Page({
         t1: testData.t1,
         t2: testData.t2,
         t3: testData.t3,
-        // 评分（优先使用后端返回的字段，兼容大小写）
+        // 评分
         scoreK: testData.scoreK ?? testData.score_k ?? null,
         scoreG: testData.scoreG ?? testData.score_g ?? null,
         scoreH: testData.scoreH ?? testData.score_h ?? null,
@@ -135,7 +135,7 @@ Page({
 
       
   
-      // 关键：通过 setData 同步数据到视图层
+    
       this.setData({
         submitData: newSubmitData
       });
@@ -156,7 +156,7 @@ Page({
     }
   },
   formatNumber(value) {
-    console.log('传入的 value 类型:', typeof value); // 输出类型（如 'string'、'number'）
+    console.log('传入的 value 类型:', typeof value); // 输出类型
     console.log('value 是否为有效数值:', !isNaN(value) && isFinite(value)); // 检查是否为有效数值
     return value !== null && value !== undefined ? value.toFixed(2) : '—';
   },
@@ -220,11 +220,11 @@ Page({
     wx.switchTab({ url: '/pages/home/home' });
   },
 
-  // 右侧分享：定义分享内容（必写，否则分享无内容）
+  // 右侧分享：定义分享内容
   onShareAppMessage() {
     return {
       title: '分享解析报告给好友', // 分享标题
-      path: '/pages/report/report', // 分享的页面路径（需与 goReport 一致）
+      path: '/pages/result/result', // 分享的页面路径
       imageUrl: '/images/Figure/NN.png', // 可选：分享封面图
     };
   },

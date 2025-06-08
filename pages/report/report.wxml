@@ -1,6 +1,6 @@
 <!-- pages/index/index.wxml -->
 <view class="container">
-  <!-- 卡片1：智商得分 -->
+
   <view class="card black-card">
     <view class="card-icon">
       <icon type="info-circle" size="48rpx"></icon>
@@ -11,7 +11,7 @@
     </view>
   </view>
 
-  <!-- 卡片2：同龄人对比 -->
+ 
   <view class="card gray-card">
     <view class="card-icon">
       <icon type="user" size="48rpx"></icon>
@@ -22,7 +22,7 @@
     </view>
   </view>
 
-  <!-- 卡片3：用时统计 -->
+
   <view class="card gray-card">
     <view class="card-icon">
       <icon type="clock" size="48rpx"></icon>
